@@ -10,27 +10,21 @@ class Atom(object):
     """
     Atom class is a basic element class used for crystal structures.
 
-    :attr:`name` is a string representing the element symbol. :attr:`position` is a one-dimensional tuple with three elements.
-
-    :attr:`U` is the value of U. :attr:`Occupancy` is the float value.  # ? U?
-
     Args:
-        name (str): The atomic symbol of the atom.
-        position (tuple, optional): The position of the atom in 3D space. Defaults to (0, 0, 0).
-        U (int, optional): Atomic displacement parameter.
-        Occupancy (float, optional): The occupancy of the atom.
+        name (str or int): The atomic symbol or atomic number of the atom.
+        position (length 3 sequence of float or sympy expression, optional): The fractional coordinates of the atom in 3D space. Defaults to (0, 0, 0).
+        U (float or 3 x 3 array like or length 6 sequence of float, optional): Atomic displacement parameter. If U is scalar, it assume that U is isotropic. If U is length 6 sequence, it gives U11, 22, 33, 12, 23, 31.
+        occupancy (float between 0 and 1, optional): The occupancy of the atom.
         **kwargs: Additional keyword arguments to set attributes of the atom.
 
     Example::
 
-        >>> from lys_mat import Atom
-        >>> at = Atom("H", (0,0.5,0.5))
-        >>> print(at)
-        H (Z = 1, Occupancy = 1) Pos = (0.00000, 0.50000, 0.50000)
+        from lys_mat import Atom
+        at = Atom("H", (0,0.5,0.5))
+        print(at)     # H (Z = 1, Occupancy = 1) Pos = (0.00000, 0.50000, 0.50000)
 
-        >>> at = Atom("H", (0,0.5,0.5),U=1,Occupancy=0.5)
-        >>> print(at)
-        H (Z = 1, Occupancy = 0.5) Pos = (0.00000, 0.50000, 0.50000)
+        at = Atom("H", (0,0.5,0.5), U = 1, occupancy = 0.5)
+        print(at)     # H (Z = 1, Occupancy = 0.5) Pos = (0.00000, 0.50000, 0.50000)
 
     """
 
@@ -39,40 +33,50 @@ class Atom(object):
                 'Np': 237.0, 'Re': 186.207, 'As': 74.9216, 'Nb': 92.90638, 'Ga': 69.723, 'Po': 210.0, 'Cs': 132.9054519, 'Gd': 157.25, 'N': 14.0067, 'Sb': 121.76, 'Se': 78.96, 'Lu': 174.967, 'Ag': 107.8682, 'At': 210.0, 'Zn': 65.409, 'Es': 252.0, 'S': 32.065, 'Li': 6.941, 'Be': 9.012182, 'Pa': 231.03588, 'Rb': 85.4678, 'W': 183.84, 'Pt': 195.084, 'Hg': 200.59, 'Ti': 47.867, 'Eu': 151.964, 'Si': 28.0855, 'Bi': 208.9804, 'Al': 26.9815386, 'Sc': 44.955912, 'Cf': 251.0, 'F': 18.9984032, 'Ge': 72.64, 'Au': 196.966569, 'Ta': 180.94788, 'U': 238.02891, 'Te': 127.6, 'Tl': 204.3833, 'Cl': 35.453, 'Mg': 24.305, 'No': 259.0, 'Sr': 87.62, 'Cr': 51.9961, 'Pb': 207.2, 'Pm': 145.0, 'Mo': 95.94, 'Os': 190.23, 'I': 126.90447, 'Pd': 106.42, 'Na': 22.98976928, 'Ba': 137.327}
 
     def __init__(self, name, position=(0, 0, 0), U=0, occu=None, **kwargs):
-
-        self.Z = Atom.__numbers[name]
-        self.Element = name
-        self.Position = np.array(position)
+        if isinstance(name, int):
+            self.element = self.getAtomicName(name)
+        else:
+            self.element = name
+        self.position = np.array(position)
         if occu is not None:
-            warnings.warn("[Atom] Initializing Ocuupancy by 'occu' is deprecated. Use 'Occupancy' instead.")
-            self.Occupancy = occu
-        self.__loadU(U)
+            warnings.warn("[Atom] Initializing Ocuupancy by 'occu' is deprecated. Use 'occupancy' instead.")
+            self.occupancy = occu
+        self.Uani = self.__loadU(U)
+        
+        # Set all keyward arguments as attributes.
         for key, value in kwargs.items():
             setattr(self, key, value)
 
-    def __getattribute__(self, key):
-        if key == "Occupancy":
-            if "Occupancy" not in self.__dict__:
-                return 1
-        return super().__getattribute__(key)
-
     def __loadU(self, U):
         if not hasattr(U, "__iter__"):
-            self.Uani = U * np.eye(3)
-        elif len(U) == 6:  # Uaniso->11,22,33,12,13,23
-            self.Uani = np.array([[U[0], U[3], U[4]], [U[3], U[1], U[5]], [U[4], U[5], U[2]]])
+            Uani = U * np.eye(3)
+        elif len(U) == 6:  # Uaniso->11,22,33,12,23,13
+            Uani = np.array([[U[0], U[3], U[5]], [U[3], U[1], U[4]], [U[5], U[4], U[2]]])
         else:
-            self.Uani = np.array(U)
+            Uani = np.array(U)
+        return Uani
+
+    def __getattribute__(self, key):
+        if key == "occupancy":
+            if "occupancy" not in self.__dict__:
+                return 1
+        if key == "Occupancy":
+            return self.occupancy
+        if key == "Position":
+            return self.position
+        if key == "Element":
+            return self.element
+        return super().__getattribute__(key)
 
     def __str__(self):
-        res = self.Element + " (Z = " + str(self.Z)
-        if hasattr(self, "Occupancy"):
+        res = self.element + " (Z = " + str(self.Z)
+        if hasattr(self, "occupancy"):
             res += ", Occupancy = " + str(self.Occupancy)
         res += ")"
-        if spf.isSympyObject(self.Position):
-            res += " Pos = ({:}, {:}, {:})".format(*self.Position)
+        if spf.isSympyObject(self.position):
+            res += " Pos = ({:}, {:}, {:})".format(*self.position)
         else:
-            res += " Pos = ({:.5f}, {:.5f}, {:.5f})".format(*self.Position)
+            res += " Pos = ({:.5f}, {:.5f}, {:.5f})".format(*self.position)
         if hasattr(self, "spin"):
             res += " Spin = " + str(self.spin) + "mu_B"
         return res
@@ -85,6 +89,16 @@ class Atom(object):
             Atom: A deep copy of the current object.
         """
         return copy.deepcopy(self)
+    
+    @property
+    def Z(self):
+        """
+        Returns the atomic number of the current object.
+
+        Returns:
+            int: The atomic number of the current object.
+        """
+        return self.getAtomicNumber(self.element)
 
     # Sympy related methods
     def subs(self, *args, **kwargs):
@@ -92,11 +106,24 @@ class Atom(object):
         Substitute the given arguments and keyword arguments in the Sympy objects of the current object.
 
         Parameters:
-            *args: The positional arguments to be substituted.
-            **kwargs: The keyword arguments to be substituted.
+            args: see example.
+            kwargs: see example.
 
         Returns:
             Atom: A new Atom object with the substituted Sympy objects.
+
+        Examples::
+
+            import sympy as sp
+            from lys_mat import Atom
+
+            x,y,z = sp.symbols("x,y,z")
+            at = Atom("H", (x, y, z))
+
+            # There are many ways to substitute.
+            at.subs(x=0.2, y=0.3)           # H (Z = 1) Pos = (0.2, 0.3, z)
+            at.subs(x, 0.3)                 # H (Z = 1) Pos = (0.3, y, z)
+            at.subs({x:0.2, y:0.3, z:0.4})  # H (Z = 1) Pos = (0.2, 0.3, 0.4)
         """
 
         res = self.duplicate()
@@ -107,24 +134,21 @@ class Atom(object):
 
     def isSympyObject(self):
         """
-        Check if any value in the object's dictionary is a Sympy object.
+        Check if the atom is a sympy object.
 
         Returns:
-            bool: True if any value is a Sympy object, False otherwise.
+            bool: True if the atom is a sympy object, False otherwise.
         """
 
         return np.array([spf.isSympyObject(val) for val in self.__dict__.values()]).any()
 
-
-
-
     @property
     def free_symbols(self):
         """
-        Returns the set of free symbols in the Sympy objects of the current object.
+        Returns the set of free symbols in the current object.
 
         Returns:
-            set: The set of free symbols in the Sympy objects of the current object.
+            set: The set of free symbols in the current object.
         """
         res = [spf.free_symbols(val) for val in self.__dict__.values() if spf.isSympyObject(val)]
         return set().union(*res)
@@ -136,7 +160,6 @@ class Atom(object):
         Get the atomic number of an element given its name.
 
         Args:
-            cls (class): The class object.
             name (str): The name of the element.
 
         Returns:
@@ -144,6 +167,21 @@ class Atom(object):
         """
 
         return cls.__numbers[name]
+    
+    @classmethod
+    def getAtomicName(cls, number):
+        """
+        Get the name of an element given its atomic number.
+
+        Args:
+            number (int): The atomic number of the element.
+
+        Returns:
+            str: The name of the element.
+        """
+        for key, val in cls.__numbers.items():
+            if val == number:
+                return key
 
     @ classmethod
     def getAtomicMass(cls, name):
@@ -151,7 +189,6 @@ class Atom(object):
         Get the atomic mass of an element given its name.
 
         Args:
-            cls (class): The class object.
             name (str): The name of the element.
 
         Returns:
@@ -159,54 +196,76 @@ class Atom(object):
         """
         return cls.__masses[name]
 
-    def saveAsDictionary(self):
+    def saveAsDictionary(self): # save as string like
         """
         Generates a dictionary representation of the `Atom` object.
 
         Returns:
-            dict: A dictionary containing the element name, position coordinates, and free symbols.
+            dict: A dictionary containing the all information of the atom.
         """
-        d = {"Element": self.Element}
-        for i, p in enumerate(self.Position):
-            if spf.isSympyObject(p):
-                d["Position_" + str(i)] = str(p)
-            else:
-                d["Position_" + str(i)] = p
-        d["free_symbols"] = [str(s) for s in self.free_symbols]
+        d = {"Element": self.element}
+        for i, p in enumerate(self.position):
+            d["Position_" + str(i)] = self._parse(p)
+
+        for k, v in self.__dict__.items():
+            if k in ["position", "element"]:
+                continue
+            d[k] = self._parse(v)
         return d
 
     @classmethod
     def loadFromDictionary(cls, d):
         """
-        Load an `Atom` object from a dictionary representation.
+        Load an `Atom` object from a dictionary representation, which is generated by `saveAsDictionary`.
 
         Args:
-            cls (class): The class object.
-            d (dict): A dictionary containing the element name, position coordinates, and free symbols.
+            d (dict): A dictionary generated by `saveAsDictionary`.
 
         Returns:
             Atom: An `Atom` object with the loaded data.
 
-        Raises:
-            KeyError: If the dictionary is missing the "Element" key or any of the "Position_" keys.
+        Example::
 
-        This class method loads an `Atom` object from a dictionary representation. It takes a dictionary `d` as input, where the "Element" key represents the name of the element, and the "Position_" keys represent the position coordinates. The method also checks if the dictionary contains any free symbols and creates a list of `sympy` symbols accordingly. It then iterates over the "Position_" keys and appends the corresponding position coordinate to the `pos` list. Finally, it returns an `Atom` object with the loaded data.
+            at = Atom("H", (0, 0.5, 0.5))
+            d = at.saveAsDictionary()
 
-        Example:
-            >>> d = {"Element": "H", "Position_0": 0, "Position_1": 0.5, "Position_2": 0.5, "free_symbols": ["x", "y"]}
-            >>> Atom.loadFromDictionary(d)
-            Atom(H, (0, 0.5, 0.5))
+            at_load = Atom.loadFromDictionary(d)
+            type(at_load)  # Atom
         """
         e = d["Element"]
-        if len(d["free_symbols"]) > 0:
-            symbols = sp.symbols(",".join(d["free_symbols"]))
         i = 0
         pos = []
         while "Position_" + str(i) in d:
-            item = d["Position_" + str(i)]
-            if isinstance(item, str):
-                pos.append(sp.sympify(item))
-            else:
-                pos.append(item)
+            item = cls._deparse(d["Position_" + str(i)])
+            pos.append(item)
             i += 1
-        return Atom(e, pos)
+
+        kwargs = {}
+        for k, v in d.items():
+            if k in ["Element", "Position_0", "Position_1", "Position_2"]:
+                continue
+            kwargs[k] = cls._deparse(v)
+        return Atom(e, pos, **kwargs)
+    
+    @classmethod
+    def _parse(cls, x):
+        if isinstance(x, str):
+            return "[String]" + x
+        elif hasattr(x, "__iter__"):
+            return [cls._parse(y) for y in x]
+        elif spf.isSympyObject(x):
+            return str(x)
+        else:
+            return x
+        
+    @classmethod
+    def _deparse(cls, x):
+        if isinstance(x, str):
+            if x.startswith("[String]"):
+                return x[8:]
+            else:
+                return sp.simplify(x)
+        elif hasattr(x, "__iter__"):
+            return [cls._deparse(y) for y in x]
+        else:
+            return x

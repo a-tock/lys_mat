@@ -1,7 +1,7 @@
 import numpy as np
 
 
-def subs(x, *args, **kwargs):
+def subs(_x, *args, **kwargs):
     """
     Substitute symbols in an expression with given values.
 
@@ -30,9 +30,9 @@ def subs(x, *args, **kwargs):
         else:
             return x
     try:
-        res = np.vectorize(_subs)(x)
+        res = np.vectorize(_subs)(_x)
     except TypeError:
-        res = np.vectorize(_subs, otypes=[object])(x)
+        res = np.vectorize(_subs, otypes=[object])(_x)
     if isinstance(res, np.ndarray):
         if len(res.shape) == 0:
             return res.item()
@@ -54,8 +54,9 @@ def isSympyObject(x):
             return y.isSympyObject()
         else:
             return hasattr(y, "subs")
-    if len(x)==0:
-        return False
+    if hasattr(x, "__iter__"):
+        if len(x)==0:
+            return False
     return np.vectorize(_isSympy)(x).any()
 
 
@@ -74,7 +75,7 @@ def free_symbols(x):
             return y.free_symbols
         else:
             return {}
-    if len(x)==0:
+    if not isSympyObject(x):
         return set()
     symbols = np.vectorize(_get)(x)
     if len(symbols.shape) == 0:
