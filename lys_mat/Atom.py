@@ -12,12 +12,12 @@ class Atom(object):
 
     :attr:`name` is a string representing the element symbol. :attr:`position` is a one-dimensional tuple with three elements.
 
-    :attr:`U` is the value of U. :attr:`Occupancy` is the float value.  # ? Uは何？
+    :attr:`U` is the value of U. :attr:`Occupancy` is the float value.  # ? U?
 
     Args:
         name (str): The atomic symbol of the atom.
         position (tuple, optional): The position of the atom in 3D space. Defaults to (0, 0, 0).
-        U (int, optional): The value of U. Defaults to 0.   # ? Uは何？
+        U (int, optional): Atomic displacement parameter.
         Occupancy (float, optional): The occupancy of the atom.
         **kwargs: Additional keyword arguments to set attributes of the atom.
 

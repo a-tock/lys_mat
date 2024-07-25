@@ -1,14 +1,8 @@
 *.pyc
 *~
-test
-.com_settings
-_com_settings
-valtest
-*.grf
-*.npz
-*.dic
-*.val
-*.str
 *dist
 *__pycache__
 *.egg-info
+docs_src2
+docs_src/build/
+.pytest_cache
