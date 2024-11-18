@@ -119,7 +119,7 @@ class TestAtom(unittest.TestCase):
         #at2 = at.subs(x=0.1, y=0.2, z=0.3)
         #self.assertEqual(at2.position[0], 0.1)
         #self.assertEqual(at2.position[1], 0.2)
-        
+
         at = Atom("H", spin=s, occupancy=oc)
         self.assertTrue(at.isSympyObject())
         self.assertEqual(at.free_symbols, set({s,oc}))

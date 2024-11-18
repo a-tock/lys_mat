@@ -42,7 +42,7 @@ class Atom(object):
             warnings.warn("[Atom] Initializing Ocuupancy by 'occu' is deprecated. Use 'occupancy' instead.")
             self.occupancy = occu
         self.Uani = self.__loadU(U)
-        
+
         # Set all keyward arguments as attributes.
         for key, value in kwargs.items():
             setattr(self, key, value)
@@ -89,7 +89,7 @@ class Atom(object):
             Atom: A deep copy of the current object.
         """
         return copy.deepcopy(self)
-    
+
     @property
     def Z(self):
         """
@@ -103,14 +103,14 @@ class Atom(object):
     # Sympy related methods
     def subs(self, *args, **kwargs):
         """
-        Substitute the given arguments and keyword arguments in the Sympy objects of the current object.
+        Substitute the given arguments and keyword arguments in the sympy objects of the current object.
 
         Parameters:
             args: see example.
             kwargs: see example.
 
         Returns:
-            Atom: A new Atom object with the substituted Sympy objects.
+            Atom: A new Atom object with the substituted sympy objects.
 
         Examples::
 
@@ -140,7 +140,7 @@ class Atom(object):
             bool: True if the atom is a sympy object, False otherwise.
         """
 
-        return np.array([spf.isSympyObject(val) for val in self.__dict__.values()]).any()
+        return bool(np.array([spf.isSympyObject(val) for val in self.__dict__.values()]).any())
 
     @property
     def free_symbols(self):
@@ -154,7 +154,7 @@ class Atom(object):
         return set().union(*res)
 
     # static methods
-    @ classmethod
+    @classmethod
     def getAtomicNumber(cls, name):
         """
         Get the atomic number of an element given its name.
@@ -167,7 +167,7 @@ class Atom(object):
         """
 
         return cls.__numbers[name]
-    
+
     @classmethod
     def getAtomicName(cls, number):
         """
@@ -183,7 +183,7 @@ class Atom(object):
             if val == number:
                 return key
 
-    @ classmethod
+    @classmethod
     def getAtomicMass(cls, name):
         """
         Get the atomic mass of an element given its name.
@@ -196,7 +196,7 @@ class Atom(object):
         """
         return cls.__masses[name]
 
-    def saveAsDictionary(self): # save as string like
+    def saveAsDictionary(self):  # save as string like
         """
         Generates a dictionary representation of the `Atom` object.
 
@@ -246,7 +246,7 @@ class Atom(object):
                 continue
             kwargs[k] = cls._deparse(v)
         return Atom(e, pos, **kwargs)
-    
+
     @classmethod
     def _parse(cls, x):
         if isinstance(x, str):
@@ -257,7 +257,7 @@ class Atom(object):
             return str(x)
         else:
             return x
-        
+
     @classmethod
     def _deparse(cls, x):
         if isinstance(x, str):

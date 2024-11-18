@@ -1,25 +1,44 @@
 import numpy as np
+import sympy as sp
+
+# TODO: define sympy objects
+# ? An nested array but not a tensor is not a sympy object?
+# ? A dictionary is not a sympy object?
+
+# must have free_symbols and subs
 
 
 def subs(_x, *args, **kwargs):
     """
-    Substitute symbols in an expression with given values.
+    Substitute the given arguments and keyword arguments in the sympy objects of the given object.
+
+    If the given object is not an sympy object, it will be returned as is.
 
     Args:
-        x (Union[sympy.Expr, numpy.ndarray]): The expression or array of expressions to substitute symbols in.
-        *args: Positional arguments to pass to the `subs` method of each expression in `x`.
-        **kwargs: Keyword arguments to pass to the `subs` method of each expression in `x`.
+        _x (object): The expression or array of expressions to substitute symbols in.
+        args: see example.
+        kwargs: see example.
 
     Returns:
-        Union[sympy.Expr, numpy.ndarray]: The expression(s) with symbols substituted. If `x` is an array, the output will also be an array.
+        object: The expression(s) with symbols substituted. If the given object is not an sympy object, it will be returned as is.
 
-    Raises:
-        TypeError: If the `subs` method of an expression in `x` is not callable.
+    Examples::
 
-    Note:
-        This function uses the `np.vectorize` function to apply the `subs` method to each element of `x`.
-        If `x` is an array, the output will also be an array.
+        import sympy as sp
+        from lys_mat import sympyFuncs as spf
+
+        x,y,z = sp.symbols("x,y,z")
+        expr = 2*x + y
+        print(spf.subs(expr, x, 0.3))           # y + 0.6
+        print(spf.subs(expr, {y: 0.5})          # 2*x + 0.5
+        print(spf.subs(expr, [(x, z), (y, 0.8)]))         # 2*z + 0.8
+
+        arr = [x, y, z]
+        print(spf.subs(arr, {x: 0.2, y: 0.3, z: 0.4}))       # [0.2 0.3 0.4]
+        print(spf.subs(arr, [(x, 1), (y, 2)]))               # [1.0 2.0 z]
+
     """
+
     def _subs(x):
         if hasattr(x, "subs"):
             res = x.subs(*args, **kwargs)
@@ -29,6 +48,10 @@ def subs(_x, *args, **kwargs):
             return res
         else:
             return x
+    if not isSympyObject(_x):
+        return _x
+    elif not hasattr(_x, "__iter__"):
+        return _subs(_x)
     try:
         res = np.vectorize(_subs)(_x)
     except TypeError:
@@ -41,40 +64,42 @@ def subs(_x, *args, **kwargs):
 
 def isSympyObject(x):
     """
-    Check if any element in the input array is a Sympy object.
-    
+    Check if the input object is a sympy object.
+
     Args:
-        x (array): The array of elements to check.
-    
+        x (object): The input object to check.
+
     Returns:
-        bool: True if any element in the array is a Sympy object, False otherwise.
+        bool: True if the input object is a sympy object, False otherwise.
     """
     def _isSympy(y):
         if hasattr(y, "isSympyObject"):
             return y.isSympyObject()
         else:
-            return hasattr(y, "subs")
+            return isinstance(y, sp.Basic)
+#            return hasattr(y, "subs")
     if hasattr(x, "__iter__"):
-        if len(x)==0:
+        if len(x) == 0:
             return False
-    return np.vectorize(_isSympy)(x).any()
+    return bool(np.vectorize(_isSympy)(x).any())
 
 
 def free_symbols(x):
     """
-    Calculate the free symbols in the input array x.
+    Get the free symbols in the given object.
 
     Args:
-        x (array): The array to extract free symbols from.
+        x (object): The expression or array of expressions to get free symbols from.
 
     Returns:
-        set: The set of free symbols extracted from the input array x.
+        set or float: The set of free symbols in the object if `x` is an array like, or a float if `x` is a scalar. An empty set will be returned if `x` is not a sympy object.
     """
+
     def _get(y):
         if hasattr(y, "free_symbols"):
             return y.free_symbols
         else:
-            return {}
+            return set()
     if not isSympyObject(x):
         return set()
     symbols = np.vectorize(_get)(x)
