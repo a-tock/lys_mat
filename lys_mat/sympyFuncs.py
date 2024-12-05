@@ -2,15 +2,6 @@
 *sympyFuncs* module gives functions for working with sympy objects and iterables of sympy objects.
 
 Sympy objects must have "free_symbols" and "subs" attributes.
-
-This module provides the following functions:
-
-Functions:
-    isSympyObject: Check if the given object is a sympy object.
-    subs: Substitute the given arguments and keyword arguments in the sympy objects of the given object.
-    free_symbols: Get the free symbols in the given object.
-    einsum: Calculate the Einstein summation convention on the given arrays.
-
 """
 
 
@@ -18,14 +9,14 @@ import numpy as np
 import sympy as sp
 
 
-def subs(_x, *args, **kwargs):
+def subs(obj, *args, **kwargs):
     """
     Substitute the given arguments and keyword arguments in the sympy objects of the given object.
 
     If the given object is not an sympy object, it will be returned as is.
 
     Args:
-        _x (object): The expression or array of expressions to substitute symbols in.
+        obj (object): The expression or array of expressions to substitute symbols in.
         args: see example.
         kwargs: see example.
 
@@ -49,79 +40,79 @@ def subs(_x, *args, **kwargs):
 
     """
 
-    if not isSympyObject(_x):
-        return _x
+    if not isSympyObject(obj):
+        return obj
 
-    if hasattr(_x, "__iter__"):
-        if isinstance(_x, dict):
+    if hasattr(obj, "__iter__"):
+        if isinstance(obj, dict):
             res = {}
-            for key, value in _x.items():
+            for key, value in obj.items():
                 res[key] = subs(value, *args, **kwargs)
         else:
             res = []
-            for value in _x:
+            for value in obj:
                 res.append(subs(value, *args, **kwargs))
     else:
-        if hasattr(_x, "subs"):
-            res = _x.subs(*args, **kwargs)
+        if hasattr(obj, "subs"):
+            res = obj.subs(*args, **kwargs)
             if hasattr(res, "is_number"):
                 if res.is_number:
                     return float(res)
         else:
-            return _x
+            return obj
 
     return res
 
 
-def isSympyObject(_x):
+def isSympyObject(obj):
     """
     Check if the input object is a sympy object.
 
     Args:
-        _x (object): The input object to check.
+        obj (object): The input object to check.
 
     Returns:
         bool: True if the input object is a sympy object, False otherwise.
     """
-    if hasattr(_x, "__iter__"):
-        if len(_x) == 0:
+    if hasattr(obj, "__iter__"):
+        if len(obj) == 0:
             return False
-        if isinstance(_x, dict):
-            return any([isSympyObject(value) for value in _x.values()])
-        elif type(_x) in (list, tuple, np.ndarray):
-            return any([isSympyObject(y) for y in _x])
+        if isinstance(obj, dict):
+            return any([isSympyObject(value) for value in obj.values()])
+        elif type(obj) in (list, tuple, np.ndarray):
+            return any([isSympyObject(y) for y in obj])
 
-    if hasattr(_x, "free_symbols"):
-        return len(_x.free_symbols) > 0
+    if hasattr(obj, "free_symbols"):
+        return len(obj.free_symbols) > 0
     else:
-        return isinstance(_x, sp.Basic)
+        return isinstance(obj, sp.Basic)
 
 
-def free_symbols(_x):
+def free_symbols(obj):
     """
     Get the free symbols in the given object.
 
     Args:
-        _x (object): The expression or array of expressions to get free symbols from.
+        obj (object): The expression or array of expressions to get free symbols from.
 
     Returns:
-        set or float: The set of free symbols in the object if `x` is an array like, or a float if `x` is a scalar. An empty set will be returned if `x` is not a sympy object.
+        set: The set of free symbols in the object. An empty set will be returned if `obj` is not a sympy object.
     """
 
-    if not isSympyObject(_x):
+    if not isSympyObject(obj):
         return set()
 
     symbols = set()
-    if hasattr(_x, "__iter__"):
-        if isinstance(_x, dict):
-            for value in _x.values():
+    if hasattr(obj, "__iter__"):
+        if isinstance(obj, dict):
+            for value in obj.values():
                 symbols.update(free_symbols(value))
         else:
-            for value in _x:
+            for value in obj:
                 symbols.update(free_symbols(value))
     else:
-        if hasattr(_x, "free_symbols"):
-            return _x.free_symbols
+        if hasattr(obj, "free_symbols"):
+            return obj.free_symbols
         else:
             return set()
 

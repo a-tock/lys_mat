@@ -1,7 +1,6 @@
-lys_mat
-=======
+python
+======
 
 .. toctree::
    :maxdepth: 4
 
-   lys_mat
