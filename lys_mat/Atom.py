@@ -121,7 +121,6 @@ class Atom(object):
             at = Atom("H", (x, y, z))
 
             # There are many ways to substitute.
-            at.subs(x=0.2, y=0.3)           # H (Z = 1) Pos = (0.2, 0.3, z)
             at.subs(x, 0.3)                 # H (Z = 1) Pos = (0.3, y, z)
             at.subs({x:0.2, y:0.3, z:0.4})  # H (Z = 1) Pos = (0.2, 0.3, 0.4)
         """
@@ -131,16 +130,6 @@ class Atom(object):
             if spf.isSympyObject(val):
                 setattr(res, key, spf.subs(val, *args, **kwargs))
         return res
-
-    def isSympyObject(self):
-        """
-        Check if the atom is a sympy object.
-
-        Returns:
-            bool: True if the atom is a sympy object, False otherwise.
-        """
-
-        return bool(np.array([spf.isSympyObject(val) for val in self.__dict__.values()]).any())
 
     @property
     def free_symbols(self):
