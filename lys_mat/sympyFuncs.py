@@ -1,7 +1,21 @@
+"""
+*sympyFuncs* module gives functions for working with sympy objects and iterables of sympy objects.
+
+Sympy objects must have "free_symbols" and "subs" attributes.
+
+This module provides the following functions:
+
+Functions:
+    isSympyObject: Check if the given object is a sympy object.
+    subs: Substitute the given arguments and keyword arguments in the sympy objects of the given object.
+    free_symbols: Get the free symbols in the given object.
+    einsum: Calculate the Einstein summation convention on the given arrays.
+
+"""
+
+
 import numpy as np
 import sympy as sp
-
-# must have free_symbols and subs
 
 
 def subs(_x, *args, **kwargs):
@@ -35,26 +49,27 @@ def subs(_x, *args, **kwargs):
 
     """
 
-    def _subs(_y):
-        if hasattr(_y, "subs"):
-            res = _y.subs(*args, **kwargs)
+    if not isSympyObject(_x):
+        return _x
+
+    if hasattr(_x, "__iter__"):
+        if isinstance(_x, dict):
+            res = {}
+            for key, value in _x.items():
+                res[key] = subs(value, *args, **kwargs)
+        else:
+            res = []
+            for value in _x:
+                res.append(subs(value, *args, **kwargs))
+    else:
+        if hasattr(_x, "subs"):
+            res = _x.subs(*args, **kwargs)
             if hasattr(res, "is_number"):
                 if res.is_number:
                     return float(res)
-            return res
         else:
-            return _y
-    if not isSympyObject(_x):
-        return _x
-    elif not hasattr(_x, "__iter__"):
-        return _subs(_x)
-    try:
-        res = np.vectorize(_subs)(_x)
-    except TypeError:
-        res = np.vectorize(_subs, otypes=[object])(_x)
-    if isinstance(res, np.ndarray):
-        if len(res.shape) == 0:
-            return res.item()
+            return _x
+
     return res
 
 
@@ -63,7 +78,7 @@ def isSympyObject(_x):
     Check if the input object is a sympy object.
 
     Args:
-        x (object): The input object to check.
+        _x (object): The input object to check.
 
     Returns:
         bool: True if the input object is a sympy object, False otherwise.
@@ -87,24 +102,30 @@ def free_symbols(_x):
     Get the free symbols in the given object.
 
     Args:
-        x (object): The expression or array of expressions to get free symbols from.
+        _x (object): The expression or array of expressions to get free symbols from.
 
     Returns:
         set or float: The set of free symbols in the object if `x` is an array like, or a float if `x` is a scalar. An empty set will be returned if `x` is not a sympy object.
     """
 
-    def _get(_y):
-        if hasattr(_y, "free_symbols"):
-            return _y.free_symbols
-        else:
-            return set()
     if not isSympyObject(_x):
         return set()
-    symbols = np.vectorize(_get)(_x)
-    if len(symbols.shape) == 0:
-        return symbols.item()
-    res = set().union(*np.ravel(symbols))
-    return res
+
+    symbols = set()
+    if hasattr(_x, "__iter__"):
+        if isinstance(_x, dict):
+            for value in _x.values():
+                symbols.update(free_symbols(value))
+        else:
+            for value in _x:
+                symbols.update(free_symbols(value))
+    else:
+        if hasattr(_x, "free_symbols"):
+            return _x.free_symbols
+        else:
+            return set()
+
+    return symbols
 
 
 def einsum(string, *arrays):
@@ -119,19 +140,14 @@ def einsum(string, *arrays):
         numpy.ndarray: The result of the Einstein summation.
 
     Notes:
-        does not support "..." or list input and will see "...", etc. as three times
-        an axes identifier, tries normal einsum first!
+        This function tries numpy.einsum first. If it fails, it tries its own version of einsum.
+        This does not support "...", list input or repeating the same axes identifier like 'ii'.
     """
 
     try:
-        pass
-#        return np.einsum(string, *arrays)
+        return np.einsum(string, *arrays)
     except TypeError:
         pass
-
-    if string == "jii -> ji":
-        #    print("use original einsum")
-        print(arrays)
 
     s = string.split('->')
     in_op = s[0].split(',')
@@ -159,52 +175,30 @@ def einsum(string, *arrays):
                 else:
                     return []
 
-    if string == "jii -> ji":
-        print("in_op:", in_op)
-        print("out_op:", out_op)
-        print("all_axes:", all_axes)
-
     perm_dict = {_[1]: _[0] for _ in enumerate(all_axes)}
-
-    if string == "jii -> ji":
-        print("perm_dict:", perm_dict)
 
     dims = len(perm_dict)
     op_axes = []
     for axes in (in_op + list((out_op,))):
-        #        print("axes:", axes)
-        op = [-1] * dims  # dims -> len(axes)
+        op = [-1] * dims
         for i, ax in enumerate(axes):
-            #            print(i, ax)
             op[perm_dict[ax]] = i
         op_axes.append(op)
-
-    if string == "jii -> ji":
-        op_axes = [[1, 2, 0], [1, 0, -1]]
-        print("op_axes:", op_axes)
 
     op_flags = [('readonly',)] * len(in_op) + [('readwrite', 'allocate')]
     dtypes = [np.object_] * (len(in_op) + 1)  # cast all to object
 
     nditer = np.nditer(arrays + (None,), op_axes=op_axes, flags=[
         'buffered', 'delay_bufalloc', 'reduce_ok', 'grow_inner', 'refs_ok'], op_dtypes=dtypes, op_flags=op_flags)
-#    print("nditer.operands:", nditer.operands)
 
     nditer.operands[-1][...] = 0
     nditer.reset()
 
     for vals in nditer:
-        #        print("vals:", vals)
         out = vals[-1]
         prod = vals[0]
-#        print("out:", out)
-#        print("prod:", prod)
         for value in vals[1:-1]:
             prod = prod * value
         out += prod
-#        print(nditer.operands)
-#        print("out:", out)
 
-    if string == "jii -> ji":
-        print(nditer.operands[-1])
     return nditer.operands[-1]
