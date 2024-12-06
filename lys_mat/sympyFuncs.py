@@ -52,6 +52,10 @@ def subs(obj, *args, **kwargs):
             res = []
             for value in obj:
                 res.append(subs(value, *args, **kwargs))
+            if type(obj) is np.ndarray:
+                res = np.array(res)
+            else:
+                res = type(obj)(res)
     else:
         if hasattr(obj, "subs"):
             res = obj.subs(*args, **kwargs)
@@ -75,11 +79,11 @@ def isSympyObject(obj):
         bool: True if the input object is a sympy object, False otherwise.
     """
     if hasattr(obj, "__iter__"):
-        if len(obj) == 0:
+        if type(obj) is str or len(obj) == 0:
             return False
         if isinstance(obj, dict):
             return any([isSympyObject(value) for value in obj.values()])
-        elif type(obj) in (list, tuple, np.ndarray):
+        else:
             return any([isSympyObject(y) for y in obj])
 
     if hasattr(obj, "free_symbols"):
