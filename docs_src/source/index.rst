@@ -7,10 +7,11 @@ Welcome to lys_mat's documentation!
 ===================================
 
 .. toctree::
-   :maxdepth: 4
+   :maxdepth: 2
    :caption: Contents:
 
    lys_mat
+   sympy
 
 
 Indices and tables

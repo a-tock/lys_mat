@@ -20,13 +20,6 @@ lys\_mat.CrystalStructure module
    :undoc-members:
    :show-inheritance:
 
-lys\_mat.sympyFuncs module
---------------------------
-
-.. automodule:: lys_mat.sympyFuncs
-   :members:
-   :undoc-members:
-   :show-inheritance:
 
 Module contents
 ---------------
