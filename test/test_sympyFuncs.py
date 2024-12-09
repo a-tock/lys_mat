@@ -68,15 +68,15 @@ class TestSympyFuncs(unittest.TestCase):
         np.testing.assert_array_equal(spf.einsum("ij", a), a)
         np.testing.assert_array_equal(spf.einsum("ji", a), a.T)
 
-#        b = np.array(random.choices(arr, k=9)).reshape(3, 3)
-#        np.testing.assert_array_equal(spf.einsum("ii -> i", b), np.diag(b))
+        b = np.array(random.choices(arr, k=9)).reshape(3, 3)
+        np.testing.assert_array_equal(spf.einsum("ii -> i", b), np.diag(b))
 
-#        c = np.array(random.choices(arr, k=27)).reshape(3, 3, 3)
-#        np.testing.assert_array_equal(spf.einsum("jii -> ji", c), [[x[i, i] for i in range(3)] for x in c])
-#        np.testing.assert_array_equal(spf.einsum("iij -> ji", c), [[x[i, i] for i in range(3)] for x in c.transpose(2, 0, 1)])
-#        np.testing.assert_array_equal(spf.einsum("jii -> ij", c), [c[:, i, i] for i in range(3)])
-#        np.testing.assert_array_equal(spf.einsum("iij -> ij", c), [c.transpose(2, 0, 1)[:, i, i] for i in range(3)])
-#        np.testing.assert_array_equal(spf.einsum("iii -> i", c), [c[i, i, i] for i in range(3)])
+        c = np.array(random.choices(arr, k=27)).reshape(3, 3, 3)
+        np.testing.assert_array_equal(spf.einsum("jii -> ji", c), [[x[i, i] for i in range(3)] for x in c])
+        np.testing.assert_array_equal(spf.einsum("iij -> ji", c), [[x[i, i] for i in range(3)] for x in c.transpose(2, 0, 1)])
+        np.testing.assert_array_equal(spf.einsum("jii -> ij", c), [c[:, i, i] for i in range(3)])
+        np.testing.assert_array_equal(spf.einsum("iij -> ij", c), [c.transpose(2, 0, 1)[:, i, i] for i in range(3)])
+        np.testing.assert_array_equal(spf.einsum("iii -> i", c), [c[i, i, i] for i in range(3)])
 
         d = np.array(random.choices(arr, k=24)).reshape(2, 3, 4)
         np.testing.assert_array_equal(spf.einsum("ijk -> jik", d), d.swapaxes(0, 1))
@@ -93,8 +93,8 @@ class TestSympyFuncs(unittest.TestCase):
             np.testing.assert_array_equal(spf.einsum("ijk -> ij", a), np.sum(a, axis=-1))
             np.testing.assert_array_equal(spf.einsum("ijk -> jk", a), np.sum(a, axis=0))
 
-#            a = np.array(random.choices(arr, k=n * n)).reshape(n, n)
-#            np.testing.assert_array_equal(spf.einsum("ii", a), np.trace(a))
+            a = np.array(random.choices(arr, k=n * n)).reshape(n, n)
+            np.testing.assert_array_equal(spf.einsum("ii", a), np.trace(a))
 
             self.assertEqual(spf.einsum(",", 3, n), 3 * n)
             a = np.array(random.choices(arr, k=3 * n)).reshape(3, n)
