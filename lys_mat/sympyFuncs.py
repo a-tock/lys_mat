@@ -21,7 +21,10 @@ def subs(obj, *args, **kwargs):
         kwargs: see example.
 
     Returns:
-        object: The expression(s) with symbols substituted. If the given object is not an sympy object, it will be returned as is.
+        The expression(s) with symbols substituted. If the given object is not an sympy object, it will be returned as is.
+
+    Return type:
+        same type as the given object
 
     Examples::
 
@@ -45,25 +48,18 @@ def subs(obj, *args, **kwargs):
 
     if hasattr(obj, "__iter__"):
         if isinstance(obj, dict):
-            res = {}
-            for key, value in obj.items():
-                res[key] = subs(value, *args, **kwargs)
+            res = {key: subs(value, *args, **kwargs) for key, value in obj.items()}
         else:
-            res = []
-            for value in obj:
-                res.append(subs(value, *args, **kwargs))
+            res = [subs(value, *args, **kwargs) for value in obj]
             if type(obj) is np.ndarray:
                 res = np.array(res)
             else:
                 res = type(obj)(res)
     else:
-        if hasattr(obj, "subs"):
-            res = obj.subs(*args, **kwargs)
-            if hasattr(res, "is_number"):
-                if res.is_number:
-                    return float(res)
-        else:
-            return obj
+        res = obj.subs(*args, **kwargs)
+        if hasattr(res, "is_number"):
+            if res.is_number:
+                return float(res)
 
     return res
 
@@ -76,7 +72,10 @@ def isSympyObject(obj):
         obj (object): The input object to check.
 
     Returns:
-        bool: True if the input object is a sympy object, False otherwise.
+        True if the input object is a sympy object, False otherwise.
+
+    Return type:
+        bool
     """
     if hasattr(obj, "__iter__"):
         if type(obj) is str or len(obj) == 0:
@@ -88,8 +87,8 @@ def isSympyObject(obj):
 
     if hasattr(obj, "free_symbols"):
         return len(obj.free_symbols) > 0
-    else:
-        return isinstance(obj, sp.Basic)
+
+    return False
 
 
 def free_symbols(obj):
@@ -100,27 +99,26 @@ def free_symbols(obj):
         obj (object): The expression or array of expressions to get free symbols from.
 
     Returns:
-        set: The set of free symbols in the object. An empty set will be returned if `obj` is not a sympy object.
+        The set of free symbols in the object. An empty set will be returned if `obj` is not a sympy object.
+
+    Return type:
+        set
     """
 
     if not isSympyObject(obj):
         return set()
 
-    symbols = set()
     if hasattr(obj, "__iter__"):
+        symbols = set()
         if isinstance(obj, dict):
             for value in obj.values():
-                symbols.update(free_symbols(value))
+                symbols |= free_symbols(value)
         else:
             for value in obj:
-                symbols.update(free_symbols(value))
+                symbols |= free_symbols(value)
+        return symbols
     else:
-        if hasattr(obj, "free_symbols"):
-            return obj.free_symbols
-        else:
-            return set()
-
-    return symbols
+        return obj.free_symbols
 
 
 def einsum(string, *arrays):
@@ -132,66 +130,56 @@ def einsum(string, *arrays):
         *arrays (numpy.ndarray): The arrays to perform the summation on. Elements can include sympy objects.
 
     Returns:
-        numpy.ndarray: The result of the Einstein summation.
+        The result of the Einstein summation.
+
+    Return type:
+        numpy.ndarray
 
     Notes:
         This function tries numpy.einsum first. If it fails, it tries its own version of einsum.
         This does not support "...", list input or repeating the same axes identifier like 'ii'.
     """
-
     try:
         return np.einsum(string, *arrays)
     except TypeError:
         pass
 
     s = string.split('->')
-    in_op = s[0].split(',')
+    in_op = [axes.replace(' ', '') for axes in s[0].split(',')]
+    for axes in in_op:
+        if len(set(axes)) != len(axes):
+            raise RuntimeError("spf.einsum does not support repeating the same axes identifier like 'ii' for general object")
     out_op = None if len(s) == 1 else s[1].replace(' ', '')
 
-    in_op = [axes.replace(' ', '') for axes in in_op]
-    all_axes = set()
-
-    for axes in in_op:
-        all_axes.update(axes)
-
+    all_axes = set("".join(in_op))
     if out_op is None:
-        out_op = []
-        for axes in sorted(all_axes):
-            if s[0].count(axes) == 1:
-                out_op.append(axes)
+        out_op = [axes for axes in sorted(all_axes) if s[0].count(axes) == 1]
     else:
         all_axes.update(out_op)
+    all_axes = list(all_axes)
 
     for array in arrays:
         if type(array) in (list, tuple, np.ndarray):
             if len(array) == 0:
-                if len(out_op) == 0:
-                    return 0
-                else:
-                    return []
+                return 0 if len(out_op) == 0 else []
 
-    perm_dict = {_[1]: _[0] for _ in enumerate(all_axes)}
-
-    dims = len(perm_dict)
     op_axes = []
-    for axes in (in_op + list((out_op,))):
-        op = [-1] * dims
+    for axes in in_op + [out_op]:
+        op = [-1] * len(all_axes)
         for i, ax in enumerate(axes):
-            op[perm_dict[ax]] = i
+            op[all_axes.index(ax)] = i
         op_axes.append(op)
 
     op_flags = [('readonly',)] * len(in_op) + [('readwrite', 'allocate')]
     dtypes = [np.object_] * (len(in_op) + 1)  # cast all to object
 
-    nditer = np.nditer(arrays + (None,), op_axes=op_axes, flags=[
-        'buffered', 'delay_bufalloc', 'reduce_ok', 'grow_inner', 'refs_ok'], op_dtypes=dtypes, op_flags=op_flags)
+    nditer = np.nditer(arrays + (None,), op_axes=op_axes, flags=['buffered', 'delay_bufalloc', 'reduce_ok', 'grow_inner', 'refs_ok'], op_dtypes=dtypes, op_flags=op_flags)
 
     nditer.operands[-1][...] = 0
     nditer.reset()
 
     for vals in nditer:
-        out = vals[-1]
-        prod = vals[0]
+        out, prod = vals[-1], vals[0]
         for value in vals[1:-1]:
             prod = prod * value
         out += prod
