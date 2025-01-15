@@ -21,10 +21,7 @@ def subs(obj, *args, **kwargs):
         kwargs: see example.
 
     Returns:
-        The expression(s) with symbols substituted. If the given object is not an sympy object, it will be returned as is.
-
-    Return type:
-        same type as the given object
+        same type as the given object: The expression(s) with symbols substituted. If the given object is not an sympy object, it will be returned as is.
 
     Examples::
 
@@ -72,10 +69,7 @@ def isSympyObject(obj):
         obj (object): The input object to check.
 
     Returns:
-        True if the input object is a sympy object, False otherwise.
-
-    Return type:
-        bool
+        bool: True if the input object is a sympy object, False otherwise.
     """
     if hasattr(obj, "__iter__"):
         if type(obj) is str or len(obj) == 0:
@@ -99,10 +93,7 @@ def free_symbols(obj):
         obj (object): The expression or array of expressions to get free symbols from.
 
     Returns:
-        The set of free symbols in the object. An empty set will be returned if `obj` is not a sympy object.
-
-    Return type:
-        set
+        set: The set of free symbols in the object. An empty set will be returned if `obj` is not a sympy object.
     """
 
     if not isSympyObject(obj):
@@ -130,10 +121,7 @@ def einsum(string, *arrays):
         *arrays (numpy.ndarray): The arrays to perform the summation on. Elements can include sympy objects.
 
     Returns:
-        The result of the Einstein summation.
-
-    Return type:
-        numpy.ndarray
+        numpy.ndarray: The result of the Einstein summation.
 
     Notes:
         This function tries numpy.einsum first. If it fails, it tries its own version of einsum.
