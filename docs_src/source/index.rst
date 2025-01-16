@@ -12,6 +12,9 @@ Welcome to lys_mat's documentation!
 
    lys_mat
    sympy
+   Atom
+   Lattice
+
 
 
 Indices and tables
