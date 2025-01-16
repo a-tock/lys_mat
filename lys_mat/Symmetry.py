@@ -2,9 +2,15 @@ import spglib
 import seekpath
 import numpy as np
 import random
+import sympyFuncs as spf
 
 
-class Symmetry(CrystalBase):
+class Symmetry(object):
+    def __init__(self, atoms, lattice):
+        super().__init__()
+        self._atoms = atoms
+        self._lattice = lattice
+
     def standardPath(self):
         """
         Get the standard path of Brillouin zone.
@@ -44,14 +50,18 @@ class Symmetry(CrystalBase):
         Returns:
             tuple: A tuple containing the lattice and atomic positions.
         """
-        crys = self.crys
-        if crys.isSympyObject():
-            crys = crys.subs({s: random.random() for s in crys.free_symbols})
-        lattice = crys.unit
+
+        lattice = self._lattice.unit
+        atoms = self._atoms
+        if spf.isSympyObject(lattice):
+            lattice = lattice.subs({s: random.random() for s in lattice.free_symbols})
+        if spf.isSympyObject(atoms):
+            atoms = atoms.subs({s: random.random() for s in atoms.free_symbols})
+
         pos = []
         num = []
-        for i, e in enumerate(crys.getElements()):
-            for at in crys.atoms:
+        for i, e in enumerate(atoms.getElements()):
+            for at in atoms:
                 if at.Element == e:
                     pos.append(at.Position)
                     num.append(i + 1)
