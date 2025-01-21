@@ -8,8 +8,15 @@ class Lattice(object):
     """
     Lattice class is a basic lattice class used for crystal structures.
 
-        Args:
-            cell (array-like): An array of length 6 representing the cell parameters (a, b, c, alpha, beta, gamma) in Angstrom and degrees.
+    Args:
+        cell (array-like): An array of length 6 representing the cell parameters (a, b, c, alpha, beta, gamma) in Angstrom and degrees.
+
+    Example::
+
+        from lys_mat import Lattice
+        cell = [4.0, 5.0, 10.0, 90.0, 90.5, 60.0]
+        lattice = Lattice(cell)
+        print(lattice.latticeInfo())    #a = 4.00000, b = 5.00000, c = 10.00000, alpha = 90.00000, beta = 90.50000, gamma = 60.00000
 
     """
 
@@ -136,6 +143,24 @@ class CartesianLattice(Lattice):
         e1 vector: pallarell to the x-axis
         e2 vector: parallel to the xy plane
         e3 vector: determined by a vector, b vector, alpha, beta, gamma
+
+    Example::
+
+        import numpy as np
+        from lys_mat import CartesianLattice
+
+        cell = [4.0, 5.0, 10.0, 90.0, 90.0, 60.0]
+        lattice = CartesianLattice(cell)
+        print(lattice.unit)     #[[4. 0. 0.], [2.5 4.33012702 0.], [0. 0. 10.]]
+
+        lattice = CartesianLattice(cell, basis = [[0, 1, 0], [0, 1/2, np.sqrt(3)/2], [1, 0, 0]])
+        print(lattice.unit)     #[[0. 4. 0.], [0. 2.5 4.33012702], [10. 0. 0.]]
+
+        cell = [[0.0, 4.0, 0.0], [0.0, 2.5, 5*np.sqrt(3)/2], [10.0, 0.0, 0.0]]
+        lattice = CartesianLattice(cell)
+        print(lattice.latticeInfo())    #a = 4.00000, b = 5.00000, c = 10.00000, alpha = 90.00000, beta = 90.00000, gamma = 60.00000
+        print(lattice.unit)     #[[4. 0. 0.], [2.5 4.33012702 0.], [0. 0. 10.]]
+
     """
 
     def __init__(self, cell, basis=None):
@@ -256,14 +281,6 @@ class CartesianLattice(Lattice):
                 raise ValueError("basis must be a 3x3 array.")
             else:
                 if not spf.isSympyObject(self.cell):
-                    #                    freeSymbols = spf.free_symbols([basis, self.cell])
-                    #                    tmpdic = {sym: 80 + np.random.random() * 10 for sym in freeSymbols}
-                    #                    if np.allclose(np.array([spf.subs(sp.Matrix(v).norm(), tmpdic) for v in basis]), np.ones(3)) is False:
-                    #                        raise ValueError("Norm of basis must be 1.")
-                    #                    al, be, ga = [sp.deg(sp.acos(cos)) for cos in [np.dot(basis[1], basis[2]), np.dot(basis[2], basis[0]), np.dot(basis[0], basis[1])]]
-                    #                    if np.allclose(spf.subs([al, be, ga], tmpdic), spf.subs([self.alpha, self.beta, self.gamma], tmpdic)) is False:
-                    #                        raise ValueError("Angles of basis must be alpha, beta, gamma.")
-                    #                else:
                     if np.allclose(np.array([np.linalg.norm(v) for v in basis]), np.ones(3)) is False:
                         raise ValueError("Norm of basis must be 1.")
                     al, be, ga = [np.rad2deg(np.arccos(cos)) for cos in [np.dot(basis[1], basis[2]), np.dot(basis[2], basis[0]), np.dot(basis[0], basis[1])]]
