@@ -6,16 +6,15 @@ from .Atom import Atom
 
 
 class Atoms(object):
-    def __init__(self, atoms, sym):
-        """
-        Initialize an Atoms object with a list of atoms and symmetry operations.
+    """
+    A class representing a list of atoms in a crystal structure.
 
-        Args:
-            atoms (list of Atom): The list of Atom objects to initialize the Atoms object with.
-            sym (list of (3x3 rotation matrix, 3-length translation vector)): The symmetry operations to apply.
+    Args:
+        atoms (list of Atom): The list of Atom objects to initialize the Atoms object with.
+        sym (list of (3x3 rotation matrix, 3-length translation vector)): The symmetry operations to apply.
+    """
 
-        This method calls the setAtoms method to set the atoms and apply the symmetry operations.
-        """
+    def __init__(self, atoms, sym=None):
         super().__init__()
         self.setAtoms(atoms, sym)
 
@@ -71,15 +70,12 @@ class Atoms(object):
 
     def setAtoms(self, atoms, sym=None):
         """
-        Set the atoms of the CrystalStructure, with optional symmetry reduction
+        Set the list of atoms in the CrystalStructure.
 
         Args:
-            atoms (list of Atom): The list of atoms to set
-            sym (list of (3x3 rotation matrix, 3-length translation vector) or None):
-                The list of symmetry operations to use to reduce the atoms. If None, no reduction is performed.
-
-        Notes:
-            The atoms are reordered by element after setting or reduction.
+            atoms (list of Atom): The list of Atom objects to set.
+            sym (list of (3x3 rotation matrix, 3-length translation vector), optional):
+            The symmetry operations to apply. If None, the list of atoms is set as is. Otherwise, the list of atoms is extracted by the symmetry operations.
         """
         if sym is None:
             self._atoms = copy.deepcopy(atoms)
@@ -117,39 +113,6 @@ class Atoms(object):
                 elements.append(at.Element)
         return sorted(elements)
 
-    def getAtomicPositions(self, external=True):
-        """
-        Retrieve the atomic positions in the crystal structure.
-
-        Args:
-            external (bool): If True, returns the atomic positions in the external coordinate system
-                             by applying the unit transformation. If False, returns the atomic positions
-                             in the internal coordinate system.
-
-        Returns:
-            numpy.ndarray: An array of atomic positions. The positions are transformed if external is True,
-            otherwise they are returned as stored.
-        """
-        if external:
-            u = np.array(self.crys.unit.T)
-            return np.array([u.dot(at.Position) for at in self._atoms])
-        else:
-            np.array([at.Position for at in self._atoms])
-
-    def irreducibleAtoms(self):
-        """
-        Get the irreducible atoms in the crystal structure.
-
-        This method uses symmetry operations to identify and return the unique (irreducible) atoms
-        in the crystal structure. It leverages the symmetry dataset obtained from spglib to find
-        equivalent atoms and filters out the redundant ones.
-
-        Returns:
-            list: A list of Atom objects representing the irreducible atoms.
-        """
-        sym = spglib.get_symmetry_dataset(self.crys._toSpg())
-        return [self._atoms[i] for i in list(set(sym["equivalent_atoms"]))]
-
     def atomInfo(self, max_atoms=-1):
         """
         Get a string representation of the atoms in the crystal structure.
@@ -168,3 +131,12 @@ class Atoms(object):
                 res += "..."
                 break
         return res
+
+    def getAtomicPositions(self):
+        """
+        Get the atomic positions in the crystal structure.
+
+        Returns:
+            numpy.ndarray: Array of atomic positions in the crystal structure.
+        """
+        return np.array([at.Position for at in self._atoms])
