@@ -10,10 +10,11 @@ Welcome to lys_mat's documentation!
    :maxdepth: 2
    :caption: Contents:
 
-   lys_mat
    sympy
    Atom
+   Atoms
    Lattice
+   Symmetry
 
 
 
