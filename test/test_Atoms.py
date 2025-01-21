@@ -23,7 +23,7 @@ class TestAtoms(unittest.TestCase):
             np.testing.assert_array_equal(at01.Position, at02.Position)
             np.testing.assert_array_equal(at01.occupancy, at02.occupancy)
 
-        for pos, at in zip(atoms.getAtomicPositions(external=False), atlist):
+        for pos, at in zip(atoms.getAtomicPositions(), atlist):
             np.testing.assert_array_equal(pos, at.Position)
 
         atlist = [at1, at2]
