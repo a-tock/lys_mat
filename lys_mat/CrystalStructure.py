@@ -1,21 +1,21 @@
-import spglib
-import seekpath
-import numpy as np
-import copy
-import scipy
-import sympy as sp
-import inspect
-import random
-import re
+import spglib  # BSD-3-Clause
+import seekpath  # MIT
+import numpy as np  # BSD
+import copy  # BSD
+import scipy  # BSD
+import sympy as sp  # BSD
+import inspect  # BSD
+import random  # BSD
+import re  # BSD
 
 from .Atom import Atom
 from .ScatteringFactors import ScatteringFactor
 from . import sympyFuncs as spf
 from .CrystalBase import CrystalBase
-from .freeEnergy import FreeEnergy
+from .freeEnergy import FreeEnergy  # MIT
 from .Pair_mesh import makePair
-from .MD_Analysis import MakePCF
-from CifFile import CifFile, ReadCif
+from .MD_Analysis import MakePCF  # GNU
+from CifFile import CifFile, ReadCif  # free
 from sympy.solvers.diophantine.diophantine import diop_linear
 
 NA = 6.0221409e+23
@@ -109,7 +109,7 @@ class _CifIO(CrystalBase):
         d["atoms"] = atoms
         return d
 
-    @ staticmethod
+    @staticmethod
     def _importFromDic(d):
         if len(d["free_symbols"]) > 0:
             symbols = sp.symbols(",".join(d["free_symbols"]))
@@ -178,7 +178,7 @@ class _CifIO(CrystalBase):
         cf.CreateLoop(['_atom_site_aniso_label', '_atom_site_aniso_U_11', '_atom_site_aniso_U_22', '_atom_site_aniso_U_33', '_atom_site_aniso_U_12', '_atom_site_aniso_U_13', '_atom_site_aniso_U_23'])
         return str(c)
 
-    @ staticmethod
+    @staticmethod
     def __symToStr(rotation, trans):
         def __xyz(v, axis):
             if v == 1:
@@ -224,7 +224,7 @@ class _CifIO(CrystalBase):
             res += ","
         return res[:-1]
 
-    @ staticmethod
+    @staticmethod
     def __strToSym(str):
         def __xyz(s, axis):
             s_axis = re.findall(r"[+-]?" + "\d*" + axis, s)
@@ -294,7 +294,7 @@ class _Lattice(CrystalBase):
         res.append(np.cross(a, b) / np.dot(c, np.cross(a, b)) * 2 * lib.pi)
         return np.array(res)
 
-    @ property
+    @property
     def unit(self):
         lib = sp if spf.isSympyObject(self._cell) else np
         unit = []
@@ -305,35 +305,35 @@ class _Lattice(CrystalBase):
         unit.append([c * lib.cos(be), c * (lib.cos(al) - lib.cos(be) * lib.cos(ga)) / lib.sin(ga), c * lib.sqrt(1 + 2 * lib.cos(al) * lib.cos(be) * lib.cos(ga) - lib.cos(al) * lib.cos(al) - lib.cos(be) * lib.cos(be) - lib.cos(ga) * lib.cos(ga)) / lib.sin(ga)])
         return np.array(unit)
 
-    @ property
+    @property
     def inv(self):
         return self.InverseLatticeVectors()
 
-    @ property
+    @property
     def a(self):
         return self._cell[0]
 
-    @ property
+    @property
     def b(self):
         return self._cell[1]
 
-    @ property
+    @property
     def c(self):
         return self._cell[2]
 
-    @ property
+    @property
     def alpha(self):
         return self._cell[3]
 
-    @ property
+    @property
     def beta(self):
         return self._cell[4]
 
-    @ property
+    @property
     def gamma(self):
         return self._cell[5]
 
-    @ property
+    @property
     def cell(self):
         return self._cell
 
@@ -491,8 +491,7 @@ class _Symmetry(CrystalBase):
             data = spglib.get_symmetry_dataset(self._toSpg())
             return "Symmetry: " + self.crystalSystem() + " " + data["international"] + " (No. " + str(data["number"]) + "), Point group: " + data["pointgroup"] + "\n"
         except Exception:
-            return "Failed to find symmetry\n" 
-
+            return "Failed to find symmetry\n"
 
     def getSymmetryOperations(self, pointGroup=False):
         ops = spglib.get_symmetry(self._toSpg())
@@ -619,7 +618,7 @@ class _SuperStructure(CrystalBase):
             at.Position = (np.array(at.Position) - np.array(origin)).tolist()
         return rf
 
-    def _unimodularBasisTransformation(self,hkl):
+    def _unimodularBasisTransformation(self, hkl):
         """
         Calculate transformation matrix P that satisfies
         (a',b',c') = (a,b,c)P = unit.dot(P)
@@ -633,18 +632,18 @@ class _SuperStructure(CrystalBase):
         zero_number = sum(hkl == 0)
 
         if zero_number == 2:
-            return np.roll(np.eye(3, dtype = int), 2 - np.argmax(hkl), axis=0)
+            return np.roll(np.eye(3, dtype=int), 2 - np.argmax(hkl), axis=0)
 
         elif zero_number == 1:
             if hkl[0] == 0:
                 y, z, _ = sp.gcdex(hkl[1], hkl[2])
-                return np.array([[1, 0, 0], [0, hkl[2], -hkl[1]], [0, int(y), int(z)]], dtype = int)
+                return np.array([[1, 0, 0], [0, hkl[2], -hkl[1]], [0, int(y), int(z)]], dtype=int)
             elif hkl[1] == 0:
                 x, z, _ = sp.gcdex(hkl[0], hkl[2])
-                return np.array([[0, 1, 0], [-hkl[2], 0, hkl[0]], [int(x), 0, int(z)]], dtype = int)
+                return np.array([[0, 1, 0], [-hkl[2], 0, hkl[0]], [int(x), 0, int(z)]], dtype=int)
             else:
                 x, y, _ = sp.gcdex(hkl[0], hkl[1])
-                return np.array([[0, 0, 1], [hkl[1], -hkl[0], 0], [int(x), int(y), 0]], dtype = int)
+                return np.array([[0, 0, 1], [hkl[1], -hkl[0], 0], [int(x), int(y), 0]], dtype=int)
 
         else:
             xyz = np.array(sp.symbols("x, y, z", integer=True))
@@ -660,7 +659,7 @@ class _SuperStructure(CrystalBase):
             ans_c = diop_linear(P.det() - 1)
             c = np.array([sp.Poly(a, *ans_c.free_symbols).TC() for a in ans_c], dtype=int)
             c = self.__3d_basic_vector_shorten(c, a, b, self.crys.unit)
-            return np.array([a, b, c], dtype = int)
+            return np.array([a, b, c], dtype=int)
 
     def __2d_basic_vector_shorten(self, a_vector, b_vector, unit):
         sort_index = np.array([0, 0])
@@ -685,13 +684,13 @@ class _SuperStructure(CrystalBase):
             b = b * -1
         return a, b
 
-    def transformedCrystal(self, hkl,returnP_T = False):
+    def transformedCrystal(self, hkl, returnP_T=False):
         """
         calculate new crystal structure whose normal vector is directed to hkl direction of original crystal. 
-        
+
         Args:
             hkl(length 3 sequence of integer): Miller indice for original crystal
-        
+
         Returns:
             CrystalStructure: the new crystal structure
         """
@@ -702,38 +701,38 @@ class _SuperStructure(CrystalBase):
         else:
             P_T = self.crys._unimodularBasisTransformation(hkl)
         new_unit = P_T.dot(self.crys.unit)
-        new_atoms = [self._transform_atom(atom,P_T,self.crys.unit,new_unit) for atom in self.crys.atoms]
+        new_atoms = [self._transform_atom(atom, P_T, self.crys.unit, new_unit) for atom in self.crys.atoms]
         if returnP_T:
             return CrystalStructure(new_unit, new_atoms), P_T
         else:
             return CrystalStructure(new_unit, new_atoms)
 
-    def _transform_atom(self,atom,P_T,unit,new_unit):
-            new_position = self.__new_Atom_position(atom.Position, P_T)
-            new_U = self.__new_U_maker(atom.Uani, P_T, unit, new_unit)
-            return Atom(atom.Element, new_position, new_U, Occupancy=atom.Occupancy)
+    def _transform_atom(self, atom, P_T, unit, new_unit):
+        new_position = self.__new_Atom_position(atom.Position, P_T)
+        new_U = self.__new_U_maker(atom.Uani, P_T, unit, new_unit)
+        return Atom(atom.Element, new_position, new_U, Occupancy=atom.Occupancy)
 
-    def __new_Atom_position(self,old_position, P_T):
+    def __new_Atom_position(self, old_position, P_T):
         new_position = old_position.dot(np.linalg.inv(P_T))
         if np.array([isinstance(p, (sp.Symbol, sp.Mul, sp.Add)) for p in old_position]).any():
             return new_position
         else:
-            new_position =np.where(np.modf(new_position)[0] >= 0, np.modf(new_position)[0], np.modf(new_position)[0] + 1) + 0
-            return np.where(np.isclose(new_position,1), 0, new_position)
+            new_position = np.where(np.modf(new_position)[0] >= 0, np.modf(new_position)[0], np.modf(new_position)[0] + 1) + 0
+            return np.where(np.isclose(new_position, 1), 0, new_position)
 
-    def __new_U_maker(self,U, P_T, old_unit,new_unit):
+    def __new_U_maker(self, U, P_T, old_unit, new_unit):
         if spf.isSympyObject(old_unit):
             old_inv = np.array([sp.Matrix(v).norm() for v in self.___make_inverse(old_unit)])
-            new_inv = np.array([sp.Matrix(v).norm() for v in self.___make_inverse(new_unit)])   
-            Q = np.diag(old_inv).dot(np.array(sp.Matrix(P_T).inv())).dot(np.diag(1/new_inv))
+            new_inv = np.array([sp.Matrix(v).norm() for v in self.___make_inverse(new_unit)])
+            Q = np.diag(old_inv).dot(np.array(sp.Matrix(P_T).inv())).dot(np.diag(1 / new_inv))
             return (Q.T).dot(U).dot(Q)
         else:
-            old_inv = np.linalg.norm(self.___make_inverse(old_unit),axis=1)
-            new_inv = np.linalg.norm(self.___make_inverse(new_unit),axis=1)
-            Q = np.diag(old_inv).dot(np.linalg.inv(P_T)).dot(np.diag(1/new_inv))
+            old_inv = np.linalg.norm(self.___make_inverse(old_unit), axis=1)
+            new_inv = np.linalg.norm(self.___make_inverse(new_unit), axis=1)
+            Q = np.diag(old_inv).dot(np.linalg.inv(P_T)).dot(np.diag(1 / new_inv))
             return Q.T.dot(U).dot(Q)
 
-    def ___make_inverse(self,unit):
+    def ___make_inverse(self, unit):
         lib = sp if spf.isSympyObject(unit) else np
         res = []
         a, b, c = unit
@@ -816,7 +815,7 @@ class _Sympy(CrystalBase):
     def isSympyObject(self):
         return spf.isSympyObject(self.crys.atoms) or spf.isSympyObject(self.crys.cell)
 
-    @ property
+    @property
     def free_symbols(self):
         res = [spf.free_symbols(self.crys.atoms), spf.free_symbols(self.crys.cell)]
         return set().union(*res)
@@ -976,7 +975,7 @@ class CrystalStructure(object):
             if hasattr(item, key):
                 return getattr(item, key)
 
-    @ staticmethod
+    @staticmethod
     def from_cif(*args, **kwargs):
         return _CifIO.from_cif(*args, **kwargs)
 
@@ -1040,7 +1039,7 @@ class CrystalStructure(object):
         res = Phonopy.generateSupercell(c.createPrimitiveCell(), mat)
         self.__setUnitVectors(res.unit)
 
-    @ property
+    @property
     def atoms(self):
         return self._atoms.getAtoms()
 
@@ -1048,8 +1047,9 @@ class CrystalStructure(object):
     def atoms(self, value):
         self.setAtoms(value)
 
-    def __reduce_ex__(self, proto): 
+    def __reduce_ex__(self, proto):
         return _produceCrystal, (self._exportAsDic(), )
+
 
 def _produceCrystal(d):
     return _CifIO._importFromDic(d)

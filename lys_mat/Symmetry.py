@@ -134,12 +134,11 @@ class Symmetry(object):
 
         Args:
             pointGroup (bool): If True, returns only symmetry operations
-                               corresponding to the point group.
+                            corresponding to the point group.
 
         Returns:
             list: A list of rotation matrices if `pointGroup` is True.
-            tuple: A tuple containing lists of rotation matrices and translation
-                   vectors if `pointGroup` is False.
+            tuple: A tuple containing lists of rotation matrices and translation vectors if `pointGroup` is False.
         """
         ops = spglib.get_symmetry(self._toSpg())
         if pointGroup:

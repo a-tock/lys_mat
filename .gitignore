@@ -3,6 +3,5 @@
 *dist
 *__pycache__
 *.egg-info
-docs_src2
 docs_src/build/
 .pytest_cache
