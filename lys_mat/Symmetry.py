@@ -2,10 +2,18 @@ import spglib
 import seekpath
 import numpy as np
 import random
-import sympyFuncs as spf
+from lys_mat import sympyFuncs as spf
 
 
 class Symmetry(object):
+    """
+    Symmetry class is used to calculate symmetry information of a crystal structure.
+
+    Args:
+        atoms (Atoms): The Atoms object to get the symmetry information from.
+        lattice (CartesianLattice) : The CartesianLattice object to get the symmetry information from.
+    """
+
     def __init__(self, atoms, lattice):
         super().__init__()
         self._atoms = atoms
@@ -54,14 +62,14 @@ class Symmetry(object):
         lattice = self._lattice.unit
         atoms = self._atoms
         if spf.isSympyObject(lattice):
-            lattice = lattice.subs({s: random.random() for s in lattice.free_symbols})
+            lattice = spf.subs(lattice, {s: random.random() for s in spf.free_symbols(lattice)})
         if spf.isSympyObject(atoms):
-            atoms = atoms.subs({s: random.random() for s in atoms.free_symbols})
+            atoms = spf.subs(atoms, {s: random.random() for s in spf.free_symbols(atoms)})
 
         pos = []
         num = []
         for i, e in enumerate(atoms.getElements()):
-            for at in atoms:
+            for at in atoms.getAtoms():
                 if at.Element == e:
                     pos.append(at.Position)
                     num.append(i + 1)
