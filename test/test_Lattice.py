@@ -72,6 +72,7 @@ class TestCartesianLattice(unittest.TestCase):
         inv.append(np.cross(va, vb) / np.dot(vc, np.cross(va, vb)) * 2 * np.pi)
         np.testing.assert_array_almost_equal(lat.InverseLatticeVectors(), inv)
         np.testing.assert_array_equal(lat.InverseLatticeVectors(), lat.inv)
+        np.testing.assert_array_almost_equal(lat.inv, [[1.2271846, -0.4273509, 0.0807516], [0, 0.9670442, -0.1728840], [0, 0, 0.8474120]])  # check whether the result matches that calculated using another software (http://calistry.org/viz/direct-and-reciprocal-lattice-visualizer).
 
         # sympy simbols without basis
         sa, sb, sc, sal, sbe, sga = sp.symbols("sa sb sc sal sbe sga")
