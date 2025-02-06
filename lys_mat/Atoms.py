@@ -7,11 +7,43 @@ from .Atom import Atom
 
 class Atoms(object):
     """
-    A class representing a list of atoms in a crystal structure.
+    Atoms class represents a list of atoms in a crystal structure.
 
     Args:
         atoms (list of Atom): The list of Atom objects to initialize the Atoms object with.
         sym (list of (3x3 rotation matrix, 3-length translation vector)): The symmetry operations to apply.
+
+    Example::
+
+        from lys_mat import Atom, Atoms
+        at1 = Atom("Na", (0, 0, 0))
+        at2 = Atom("Na", (0.5, 0.5, 0.5))
+        atoms = Atoms([at1, at2])
+        print(atoms.atomInfo())
+        #--- atoms (2) ---
+        #1: Na (Z = 11, Occupancy = 1) Pos = (0.00000, 0.00000, 0.00000)
+        #2: Na (Z = 11, Occupancy = 1) Pos = (0.50000, 0.00000, 0.50000)
+
+
+        at1 = Atom("Na", (0, 0, 0))
+        at2 = Atom("Cl", (0.5, 0, 0))
+        sym = []
+        sym.append(([[1, 0, 0],[0, 1, 0], [0, 0, 1]], [0, 0, 0]))
+        sym.append(([[1, 0, 0],[0, 1, 0], [0, 0, 1]], [0.5, 0.5, 0]))
+        sym.append(([[-1, 0, 0],[0, 1, 0], [0, 0, 1]], [0, 0.5, 0.5]))
+        sym.append(([[-1, 0, 0],[0, 1, 0], [0, 0, 1]], [0.5, 0, 0.5]))
+        atoms = Atoms([at1, at2], sym)
+        print(atoms.atomInfo())
+        #--- atoms (8) ---
+        #1: Cl (Z = 17, Occupancy = 1) Pos = (0.50000, 0.00000, 0.00000)
+        #2: Cl (Z = 17, Occupancy = 1) Pos = (0.00000, 0.50000, 0.00000)
+        #3: Cl (Z = 17, Occupancy = 1) Pos = (0.50000, 0.50000, 0.50000)
+        #4: Cl (Z = 17, Occupancy = 1) Pos = (0.00000, 0.00000, 0.50000)
+        #5: Na (Z = 11, Occupancy = 1) Pos = (0.00000, 0.00000, 0.00000)
+        #6: Na (Z = 11, Occupancy = 1) Pos = (0.50000, 0.50000, 0.00000)
+        #7: Na (Z = 11, Occupancy = 1) Pos = (0.00000, 0.50000, 0.50000)
+        #8: Na (Z = 11, Occupancy = 1) Pos = (0.50000, 0.00000, 0.50000)
+
     """
 
     def __init__(self, atoms, sym=None):
