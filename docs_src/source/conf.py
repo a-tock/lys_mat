@@ -7,7 +7,7 @@
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
 
 project = 'lys_mat'
-copyright = '2024, Hidenori Tsuji'
+copyright = '2025, Hidenori Tsuji'
 author = 'Hidenori Tsuji'
 
 # -- General configuration ---------------------------------------------------
@@ -17,7 +17,6 @@ extensions = ['sphinx.ext.autodoc', 'sphinx.ext.napoleon', 'sphinx.ext.viewcode'
 
 templates_path = ['_templates']
 exclude_patterns = []
-
 
 
 # -- Options for HTML output -------------------------------------------------

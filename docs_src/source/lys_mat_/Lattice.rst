@@ -1,7 +1,13 @@
 Lattice module
 --------------------
 
-.. automodule:: lys_mat.Lattice
+.. autoclass:: lys_mat.Lattice.CartesianLattice
+   :members:
+   :undoc-members:
+   :inherited-members:
+   :show-inheritance:
+
+.. autoclass:: lys_mat.Lattice.Lattice
    :members:
    :undoc-members:
    :show-inheritance:

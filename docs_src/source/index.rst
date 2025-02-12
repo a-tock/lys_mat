@@ -6,6 +6,11 @@
 lys_mat documentation
 ===================================
 
+*lys_mat* is a Python-based library for crystal structures.
+Sympy expressions can be used for atomic positions and lattice parameters.
+
+This library is under developement.
+
 .. toctree::
    :maxdepth: 1
    :caption: Contents:
