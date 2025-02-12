@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Symmetry module &mdash; lys_mat  documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=19f00094" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../_static/documentation_options.js?v=5929fcd5"></script>
+        <script src="../_static/doctools.js?v=9a2dae69"></script>
+        <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Contributing" href="../contributing.html" />
+    <link rel="prev" title="Lattice module" href="Lattice.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            lys_mat
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../api.html">Python API</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="sympy.html">SympyFuncs module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Atom.html">Atom module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Atoms.html">Atoms module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Lattice.html">Lattice module</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Symmetry module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#lys_mat.Symmetry.Symmetry"><code class="docutils literal notranslate"><span class="pre">Symmetry</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#lys_mat.Symmetry.Symmetry.crystalSystem"><code class="docutils literal notranslate"><span class="pre">Symmetry.crystalSystem()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#lys_mat.Symmetry.Symmetry.getSymmetryOperations"><code class="docutils literal notranslate"><span class="pre">Symmetry.getSymmetryOperations()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#lys_mat.Symmetry.Symmetry.standardPath"><code class="docutils literal notranslate"><span class="pre">Symmetry.standardPath()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#lys_mat.Symmetry.Symmetry.symmetryInfo"><code class="docutils literal notranslate"><span class="pre">Symmetry.symmetryInfo()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#lys_mat.Symmetry.Symmetry.symmetryPoints"><code class="docutils literal notranslate"><span class="pre">Symmetry.symmetryPoints()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../contributing.html">Contributing</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">lys_mat</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../api.html">Python API</a></li>
+      <li class="breadcrumb-item active">Symmetry module</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/lys_mat_/Symmetry.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-lys_mat.Symmetry">
+<span id="symmetry-module"></span><h1>Symmetry module<a class="headerlink" href="#module-lys_mat.Symmetry" title="Link to this heading"></a></h1>
+<dl class="py class">
+<dt class="sig sig-object py" id="lys_mat.Symmetry.Symmetry">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">lys_mat.Symmetry.</span></span><span class="sig-name descname"><span class="pre">Symmetry</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">atoms</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lattice</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lys_mat/Symmetry.html#Symmetry"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lys_mat.Symmetry.Symmetry" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Symmetry class is used to calculate symmetry information of a crystal structure.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>atoms</strong> (<a class="reference internal" href="Atoms.html#lys_mat.Atoms.Atoms" title="lys_mat.Atoms.Atoms"><em>Atoms</em></a>) – The Atoms object to get the symmetry information from.</p></li>
+<li><p><strong>lattice</strong> (<a class="reference internal" href="Lattice.html#lys_mat.Lattice.CartesianLattice" title="lys_mat.Lattice.CartesianLattice"><em>CartesianLattice</em></a>) – The CartesianLattice object to get the symmetry information from.</p></li>
+</ul>
+</dd>
+</dl>
+<p>Example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">lys_mat</span> <span class="kn">import</span> <span class="n">Atom</span><span class="p">,</span> <span class="n">Atoms</span><span class="p">,</span> <span class="n">CartesianLattice</span><span class="p">,</span> <span class="n">Symmetry</span>
+<span class="n">at1</span> <span class="o">=</span> <span class="n">Atom</span><span class="p">(</span><span class="s2">&quot;Na&quot;</span><span class="p">,</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
+<span class="n">at2</span> <span class="o">=</span> <span class="n">Atom</span><span class="p">(</span><span class="s2">&quot;Na&quot;</span><span class="p">,</span> <span class="p">(</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">))</span>
+<span class="n">atoms</span> <span class="o">=</span> <span class="n">Atoms</span><span class="p">([</span><span class="n">at1</span><span class="p">,</span> <span class="n">at2</span><span class="p">])</span>
+<span class="n">lat</span> <span class="o">=</span> <span class="n">CartesianLattice</span><span class="p">([</span><span class="mf">4.2214</span><span class="p">,</span> <span class="mf">4.2214</span><span class="p">,</span> <span class="mf">4.2214</span><span class="p">,</span> <span class="mi">90</span><span class="p">,</span> <span class="mi">90</span><span class="p">,</span> <span class="mi">90</span><span class="p">])</span>
+<span class="n">sym</span> <span class="o">=</span> <span class="n">Symmetry</span><span class="p">(</span><span class="n">atoms</span><span class="p">,</span> <span class="n">lat</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">sym</span><span class="o">.</span><span class="n">symmetryInfo</span><span class="p">())</span>   <span class="c1">#Symmetry: cubic Im-3m (No. 229), Point group: m-3m</span>
+</pre></div>
+</div>
+<dl class="py method">
+<dt class="sig sig-object py" id="lys_mat.Symmetry.Symmetry.crystalSystem">
+<span class="sig-name descname"><span class="pre">crystalSystem</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lys_mat/Symmetry.html#Symmetry.crystalSystem"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lys_mat.Symmetry.Symmetry.crystalSystem" title="Link to this definition"></a></dt>
+<dd><p>Return the crystal system of the crystal structure.</p>
+<p>This method uses the symmetry information computed by spglib to determine
+the crystal system of the crystal structure.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The crystal system of the crystal structure.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="lys_mat.Symmetry.Symmetry.getSymmetryOperations">
+<span class="sig-name descname"><span class="pre">getSymmetryOperations</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pointGroup</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lys_mat/Symmetry.html#Symmetry.getSymmetryOperations"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lys_mat.Symmetry.Symmetry.getSymmetryOperations" title="Link to this definition"></a></dt>
+<dd><p>Retrieve symmetry operations of the crystal structure.</p>
+<p>This method uses spglib to obtain the symmetry operations for the
+crystal structure. If the <cite>pointGroup</cite> argument is set to True, it
+returns only the rotations that correspond to the point group by
+filtering out any translations. Otherwise, it returns both the
+rotations and translations.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>pointGroup</strong> (<em>bool</em>) – If True, returns only symmetry operations
+corresponding to the point group.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A list of rotation matrices if <cite>pointGroup</cite> is True.
+tuple: A tuple containing lists of rotation matrices and translation vectors if <cite>pointGroup</cite> is False.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="lys_mat.Symmetry.Symmetry.standardPath">
+<span class="sig-name descname"><span class="pre">standardPath</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lys_mat/Symmetry.html#Symmetry.standardPath"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lys_mat.Symmetry.Symmetry.standardPath" title="Link to this definition"></a></dt>
+<dd><p>Get the standard path of Brillouin zone.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The standard path of Brillouin zone.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>list of str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="lys_mat.Symmetry.Symmetry.symmetryInfo">
+<span class="sig-name descname"><span class="pre">symmetryInfo</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lys_mat/Symmetry.html#Symmetry.symmetryInfo"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lys_mat.Symmetry.Symmetry.symmetryInfo" title="Link to this definition"></a></dt>
+<dd><p>Retrieve symmetry information of the crystal structure.</p>
+<p>This method uses spglib to obtain the symmetry dataset of the crystal
+structure and constructs a string containing the symmetry information.
+The string includes the crystal system, international symbol, space
+group number, and point group.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A string representation of the symmetry information.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>str</p>
+</dd>
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>Exception</strong> – If the symmetry information cannot be determined.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="lys_mat.Symmetry.Symmetry.symmetryPoints">
+<span class="sig-name descname"><span class="pre">symmetryPoints</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lys_mat/Symmetry.html#Symmetry.symmetryPoints"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lys_mat.Symmetry.Symmetry.symmetryPoints" title="Link to this definition"></a></dt>
+<dd><p>Retrieve the symmetry points of the Brillouin zone.</p>
+<p>This method computes and returns the coordinates of the symmetry points
+in the Brillouin zone for the crystal structure using the seekpath library.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A dictionary containing the coordinates of the symmetry points.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="Lattice.html" class="btn btn-neutral float-left" title="Lattice module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../contributing.html" class="btn btn-neutral float-right" title="Contributing" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Hidenori Tsuji.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
