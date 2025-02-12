@@ -1,6 +1,6 @@
+import unittest
 import numpy as np
 import sympy as sp
-import unittest
 
 from lys_mat import sympyFuncs as spf
 from lys_mat import Lattice, CartesianLattice
@@ -19,7 +19,7 @@ class TestLattice(unittest.TestCase):
         self.assertEqual(lat.gamma, 90)
         np.testing.assert_array_equal(lat.cell, cell)
         self.assertEqual(lat.latticeInfo(), "a = 5.12000, b = 6.88000, c = 7.53216, alpha = 70.11000, beta = 80.88888, gamma = 90.00000\n")
-        self.assertAlmostEqual(lat.Volume(), cell[0] * cell[1] * cell[2] * np.sqrt(1 + 2 * np.cos(cell[3] * np.pi / 180) * np.cos(cell[4] * np.pi / 180) * np.cos(cell[5] * np.pi / 180) - np.cos(cell[3] * np.pi / 180) ** 2 - np.cos(cell[4] * np.pi / 180) ** 2 - np.cos(cell[5] * np.pi / 180) ** 2))
+        self.assertAlmostEqual(lat.volume(), cell[0] * cell[1] * cell[2] * np.sqrt(1 + 2 * np.cos(cell[3] * np.pi / 180) * np.cos(cell[4] * np.pi / 180) * np.cos(cell[5] * np.pi / 180) - np.cos(cell[3] * np.pi / 180) ** 2 - np.cos(cell[4] * np.pi / 180) ** 2 - np.cos(cell[5] * np.pi / 180) ** 2))
 
         # sympy.Symbol
         sa, sb, sc = sp.symbols("sa sb sc")
@@ -34,14 +34,14 @@ class TestLattice(unittest.TestCase):
         self.assertEqual(lat.gamma, sgamma)
         np.testing.assert_array_equal(lat.cell, cell)
         self.assertEqual(lat.latticeInfo(), "a = sa, b = sb, c = sc, alpha = salpha, beta = sbeta, gamma = sgamma\n")
-        self.assertEqual(lat.Volume(), sa * sb * sc * sp.sqrt(1 + 2 * sp.cos(salpha * sp.pi / 180.0) * sp.cos(sbeta * sp.pi / 180.0) * sp.cos(sgamma * sp.pi / 180.0) - sp.cos(salpha * sp.pi / 180.0) ** 2 - sp.cos(sbeta * sp.pi / 180.0) ** 2 - sp.cos(sgamma * sp.pi / 180.0) ** 2))
+        self.assertEqual(lat.volume(), sa * sb * sc * sp.sqrt(1 + 2 * sp.cos(salpha * sp.pi / 180.0) * sp.cos(sbeta * sp.pi / 180.0) * sp.cos(sgamma * sp.pi / 180.0) - sp.cos(salpha * sp.pi / 180.0) ** 2 - sp.cos(sbeta * sp.pi / 180.0) ** 2 - sp.cos(sgamma * sp.pi / 180.0) ** 2))
 
         # sympy.Symbol and int
         cell = [sa, sb, sc, 90, 90, 60]
         lat = Lattice(cell)
         np.testing.assert_array_equal(lat.cell, cell)
         self.assertEqual(lat.latticeInfo(), "a = sa, b = sb, c = sc, alpha = 90.00000, beta = 90.00000, gamma = 60.00000\n")
-        self.assertEqual(lat.Volume(), sa * sb * sc * sp.sqrt(1 - sp.cos(60 * sp.pi / 180.0) ** 2))
+        self.assertEqual(lat.volume(), sa * sb * sc * sp.sqrt(1 - sp.cos(60 * sp.pi / 180.0) ** 2))
 
 
 class TestCartesianLattice(unittest.TestCase):

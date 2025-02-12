@@ -95,7 +95,7 @@ class Symmetry(object):
         Returns:
             str: The crystal system of the crystal structure.
         """
-        n = spglib.get_symmetry_dataset(self._toSpg())["number"]
+        n = spglib.get_symmetry_dataset(self._toSpg()).number
         if n < 3:
             return "triclinic"
         elif n < 16:
@@ -128,7 +128,7 @@ class Symmetry(object):
         """
         try:
             data = spglib.get_symmetry_dataset(self._toSpg())
-            return "Symmetry: " + self.crystalSystem() + " " + data["international"] + " (No. " + str(data["number"]) + "), Point group: " + data["pointgroup"] + "\n"
+            return "Symmetry: " + self.crystalSystem() + " " + data.international + " (No. " + str(data.number) + "), Point group: " + data.pointgroup + "\n"
         except Exception:
             return "Failed to find symmetry\n"
 

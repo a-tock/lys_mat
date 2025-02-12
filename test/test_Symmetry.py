@@ -1,8 +1,6 @@
-import numpy as np
-import sympy as sp
 import unittest
+import numpy as np
 
-from lys_mat import sympyFuncs as spf
 from lys_mat import Symmetry, Atom, Atoms, CartesianLattice
 
 

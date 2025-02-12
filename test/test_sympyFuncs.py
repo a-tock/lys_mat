@@ -1,7 +1,8 @@
-import numpy as np
-import sympy as sp
 import random
 import unittest
+
+import numpy as np
+import sympy as sp
 
 import lys_mat.sympyFuncs as spf
 

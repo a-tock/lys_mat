@@ -1,9 +1,8 @@
 import unittest
 import numpy as np
-import sympy as sp
+
 from lys_mat import Atom
 from lys_mat import Atoms
-from lys_mat import sympyFuncs as spf
 
 
 class TestAtoms(unittest.TestCase):

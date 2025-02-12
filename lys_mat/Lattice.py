@@ -113,7 +113,7 @@ class Lattice(object):
 
         return ", ".join([key + " = " + ("{:}" if spf.isSympyObject(value) else "{:.5f}").format(value) for key, value in zip(["a", "b", "c", "alpha", "beta", "gamma"], self._cell)]) + "\n"
 
-    def Volume(self):
+    def volume(self):
         """
         Returns the volume of the unit cell in A^3.
 
@@ -197,6 +197,7 @@ class CartesianLattice(Lattice):
 
     def InverseLatticeVectors(self):
         """
+        This is deprecated method. Use inv instead.
         Calculates the reciprocal lattice vectors from the real lattice vectors.
 
         Returns:
@@ -206,9 +207,7 @@ class CartesianLattice(Lattice):
             InverseLatticeVectors[0], InverseLatticeVectors[1], InverseLatticeVectors[2] are a*, b*, c* respectively.
             InverseLatticeVectors[index][0], InverseLatticeVectors[index][1], InverseLatticeVectors[index][2] are kx, ky, kz of the vector of the index.
         """
-
-        lib = sp if spf.isSympyObject(self.unit) else np
-        return np.array(2 * lib.pi * (sp.Matrix(self.unit.T).inv()))
+        return self.inv
 
     @property
     def unit(self):
@@ -236,7 +235,9 @@ class CartesianLattice(Lattice):
             inv[0], inv[1], inv[2] are a*, b*, c* respectively.
             inv[index][0], inv[index][1], inv[index][2] are kx, ky, kz of the vector of the index.
         """
-        return self.InverseLatticeVectors()
+        lib = sp if spf.isSympyObject(self.unit) else np
+        return np.array(2 * lib.pi * (sp.Matrix(self.unit.T).inv()))
+
 
     @property
     def basis(self):
