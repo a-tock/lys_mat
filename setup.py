@@ -17,5 +17,5 @@ setup(
     long_description_content_type="text/markdown",
     author="Hidenori Tsuji",
     author_email="h.tsuji.ni.mar91+git@gmail.com",
-    install_requires=[],
+    install_requires=open('requirements.txt').read().splitlines(),
 )
