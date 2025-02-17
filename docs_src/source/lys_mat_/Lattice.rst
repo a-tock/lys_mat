@@ -6,8 +6,3 @@ Lattice module
    :undoc-members:
    :inherited-members:
    :show-inheritance:
-
-.. autoclass:: lys_mat.Lattice.Lattice
-   :members:
-   :undoc-members:
-   :show-inheritance:
