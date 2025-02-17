@@ -6,13 +6,13 @@ def makePair(crys, Elem1, Elem2, max_dist, allow_same=False):
     for i1 in range(1, size[0] + 1):
         for j1 in range(1, size[1] + 1):
             for k1 in range(1, size[2] + 1):
-                atoms1 = [at for at in m[i1][j1][k1] if at.Element in Elem1]
+                atoms1 = [at for at in m[i1][j1][k1] if at.element in Elem1]
                 if len(atoms1) == 0:
                     continue
                 for i2 in [i1 - 1, i1, i1 + 1]:
                     for j2 in [j1 - 1, j1, j1 + 1]:
                         for k2 in [k1 - 1, k1, k1 + 1]:
-                            atoms2 = [at for at in m[i2][j2][k2] if at.Element in Elem2]
+                            atoms2 = [at for at in m[i2][j2][k2] if at.element in Elem2]
                             _connectAtoms(crys, atoms1, atoms2, max_dist, _calcShift(i2, j2, k2, size), allow_same)
 
 

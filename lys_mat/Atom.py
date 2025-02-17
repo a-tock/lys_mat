@@ -47,40 +47,6 @@ class Atom(object):
         for key, value in kwargs.items():
             setattr(self, key, value)
 
-    def __loadU(self, U):
-        if not hasattr(U, "__iter__"):
-            Uani = U * np.eye(3)
-        elif len(U) == 6:  # Uaniso->11,22,33,12,23,13
-            Uani = np.array([[U[0], U[3], U[5]], [U[3], U[1], U[4]], [U[5], U[4], U[2]]])
-        else:
-            Uani = np.array(U)
-        return Uani
-
-    def __getattribute__(self, key):
-        if key == "occupancy":
-            if "occupancy" not in self.__dict__:
-                return 1
-        if key == "Occupancy":
-            return self.occupancy
-        if key == "Position":
-            return self.position
-        if key == "Element":
-            return self.element
-        return super().__getattribute__(key)
-
-    def __str__(self):
-        res = self.element + " (Z = " + str(self.Z)
-        if hasattr(self, "occupancy"):
-            res += ", Occupancy = " + str(self.Occupancy)
-        res += ")"
-        if spf.isSympyObject(self.position):
-            res += " Pos = ({:}, {:}, {:})".format(*self.position)
-        else:
-            res += " Pos = ({:.5f}, {:.5f}, {:.5f})".format(*self.position)
-        if hasattr(self, "spin"):
-            res += " Spin = " + str(self.spin) + "mu_B"
-        return res
-
     def duplicate(self):
         """
         Returns a deep copy of the current object.
@@ -236,6 +202,19 @@ class Atom(object):
             kwargs[k] = cls._deparse(v)
         return Atom(e, pos, **kwargs)
 
+    def __str__(self):
+        res = self.element + " (Z = " + str(self.Z)
+        if hasattr(self, "occupancy"):
+            res += ", Occupancy = " + str(self.occupancy)
+        res += ")"
+        if spf.isSympyObject(self.position):
+            res += " Pos = ({:}, {:}, {:})".format(*self.position)
+        else:
+            res += " Pos = ({:.5f}, {:.5f}, {:.5f})".format(*self.position)
+        if hasattr(self, "spin"):
+            res += " Spin = " + str(self.spin) + "mu_B"
+        return res
+
     @classmethod
     def _parse(cls, x):
         if isinstance(x, str):
@@ -258,3 +237,24 @@ class Atom(object):
             return [cls._deparse(y) for y in x]
         else:
             return x
+
+    def __loadU(self, U):
+        if not hasattr(U, "__iter__"):
+            Uani = U * np.eye(3)
+        elif len(U) == 6:  # Uaniso->11,22,33,12,23,13
+            Uani = np.array([[U[0], U[3], U[5]], [U[3], U[1], U[4]], [U[5], U[4], U[2]]])
+        else:
+            Uani = np.array(U)
+        return Uani
+
+    def __getattribute__(self, key):
+        if key == "occupancy":
+            if "occupancy" not in self.__dict__:
+                return 1
+        if key == "Occupancy":
+            return self.occupancy
+        if key == "Position":
+            return self.position
+        if key == "Element":
+            return self.element
+        return super().__getattribute__(key)

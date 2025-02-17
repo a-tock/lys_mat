@@ -93,7 +93,7 @@ def _from_cif(file, index=0):
             U[3] = float(cf['_atom_site_aniso_U_12'][i])
             U[4] = float(cf['_atom_site_aniso_U_13'][i])
             U[5] = float(cf['_atom_site_aniso_U_23'][i])
-        list.append(Atom(name, [x, y, z], U=U, Occupancy=occu))
+        list.append(Atom(name, [x, y, z], U=U, occupancy=occu))
     if '_symmetry_equiv_pos_as_xyz' in cf:
         sym = [__strToSym(s) for s in cf['_symmetry_equiv_pos_as_xyz']]
     elif '_space_group_symop_operation_xyz' in cf:

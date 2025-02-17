@@ -1,4 +1,3 @@
-import spglib
 import numpy as np
 import copy
 
@@ -50,6 +49,79 @@ class Atoms(object):
         super().__init__()
         self.setAtoms(atoms, sym)
 
+    def setAtoms(self, atoms, sym=None):
+        """
+        Set the list of atoms in the CrystalStructure.
+
+        Args:
+            atoms (list of Atom): The list of Atom objects to set.
+            sym (list of (3x3 rotation matrix, 3-length translation vector), optional):
+            The symmetry operations to apply. If None, the list of atoms is set as is. Otherwise, the list of atoms is extracted by the symmetry operations.
+        """
+        if sym is None:
+            self._atoms = copy.deepcopy(atoms)
+        else:
+            self._atoms = self.__extractAtoms(atoms, sym)
+        self.__reorderAtoms()
+
+    def getAtoms(self):
+        """
+        Get the list of atoms in the CrystalStructure.
+
+        Return:
+            list of Atom: list of atoms in the CrystalStructure.
+        """
+        return self._atoms
+
+    def getElements(self):
+        """
+        Get the list of elements in the CrystalStructure.
+
+        Return:
+            list of str: list of elements in the CrystalStructure.
+        """
+        elements = []
+        for at in self._atoms:
+            if at.element not in elements:
+                elements.append(at.element)
+        return sorted(elements)
+
+    def getAtomicPositions(self):
+        """
+        Get the atomic positions in the crystal structure.
+
+        Returns:
+            numpy.ndarray: Array of atomic positions in the crystal structure.
+        """
+        return np.array([at.Position for at in self._atoms])
+
+    def atomInfo(self, max_atoms=-1):
+        """
+        Get a string representation of the atoms in the crystal structure.
+
+        Args:
+            max_atoms (int): The maximum number of atoms to include in the string representation.
+                            If -1, all atoms are included.
+
+        Returns:
+            str: A string representation of the atoms in the crystal structure.
+        """
+        res = "--- atoms (" + str(len(self._atoms)) + ") ---"
+        for i, at in enumerate(self._atoms):
+            res += "\n" + str(i + 1) + ": " + str(at)
+            if i == max_atoms:
+                res += "..."
+                break
+        return res
+
+    def __reorderAtoms(self):
+        result = []
+        for e in self.getElements():
+            for at in self._atoms:
+                if at.element == e:
+                    result.append(at)
+        self._atoms = result
+
     def __extractAtoms(self, atoms, sym):
         """
         Extract atoms by symmetry operations.
@@ -93,82 +165,9 @@ class Atoms(object):
             for p in plist:
                 flg = True
                 for at2 in result:
-                    if at.Element == at2.Element:
+                    if at.element == at2.element:
                         if is_same(p, at2.Position, 1e-3):
                             flg = False
                 if flg:
-                    result.append(Atom(at.Element, p, U=at.Uani))
+                    result.append(Atom(at.element, p, U=at.Uani))
         return result
-
-    def setAtoms(self, atoms, sym=None):
-        """
-        Set the list of atoms in the CrystalStructure.
-
-        Args:
-            atoms (list of Atom): The list of Atom objects to set.
-            sym (list of (3x3 rotation matrix, 3-length translation vector), optional):
-            The symmetry operations to apply. If None, the list of atoms is set as is. Otherwise, the list of atoms is extracted by the symmetry operations.
-        """
-        if sym is None:
-            self._atoms = copy.deepcopy(atoms)
-        else:
-            self._atoms = self.__extractAtoms(atoms, sym)
-        self.__reorderAtoms()
-
-    def getAtoms(self):
-        """
-        Get the list of atoms in the CrystalStructure.
-
-        Return:
-            list of Atom: list of atoms in the CrystalStructure.
-        """
-        return self._atoms
-
-    def __reorderAtoms(self):
-        result = []
-        for e in self.getElements():
-            for at in self._atoms:
-                if at.Element == e:
-                    result.append(at)
-        self._atoms = result
-
-    def getElements(self):
-        """
-        Get the list of elements in the CrystalStructure.
-
-        Return:
-            list of str: list of elements in the CrystalStructure.
-        """
-        elements = []
-        for at in self._atoms:
-            if at.Element not in elements:
-                elements.append(at.Element)
-        return sorted(elements)
-
-    def atomInfo(self, max_atoms=-1):
-        """
-        Get a string representation of the atoms in the crystal structure.
-
-        Args:
-            max_atoms (int): The maximum number of atoms to include in the string representation.
-                             If -1, all atoms are included.
-
-        Returns:
-            str: A string representation of the atoms in the crystal structure.
-        """
-        res = "--- atoms (" + str(len(self._atoms)) + ") ---"
-        for i, at in enumerate(self._atoms):
-            res += "\n" + str(i + 1) + ": " + str(at)
-            if i == max_atoms:
-                res += "..."
-                break
-        return res
-
-    def getAtomicPositions(self):
-        """
-        Get the atomic positions in the crystal structure.
-
-        Returns:
-            numpy.ndarray: Array of atomic positions in the crystal structure.
-        """
-        return np.array([at.Position for at in self._atoms])

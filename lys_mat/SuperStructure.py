@@ -119,9 +119,9 @@ class SuperStructure(object):
         return R2.dot(R1)
 
     def __modify(self, reference):
-        element0 = [at for at in self._crys.atoms if at.Position == [0, 0, 0]][0].Element
+        element0 = [at for at in self._crys.atoms if at.Position == [0, 0, 0]][0].element
         rf = reference.createSupercell([4, 4, 4])
-        rf.atoms = [at for at in rf.atoms if at.Element == element0]
+        rf.atoms = [at for at in rf.atoms if at.element == element0]
         dist = np.linalg.norm(rf.getAtomicPositions() - reference.unit.T.dot([2, 2, 2]), axis=1)
         origin = rf.atoms[np.argmin(dist)].Position
         for at in rf.atoms:
@@ -220,7 +220,7 @@ class SuperStructure(object):
     def _transform_atom(self, atom, P_T, unit, new_unit):
         new_position = self.__new_Atom_position(atom.Position, P_T)
         new_U = self.__new_U_maker(atom.Uani, P_T, unit, new_unit)
-        return Atom(atom.Element, new_position, new_U, Occupancy=atom.Occupancy)
+        return Atom(atom.element, new_position, new_U, occupancy=atom.occupancy)
 
     def __new_Atom_position(self, old_position, P_T):
         new_position = old_position.dot(np.linalg.inv(P_T))

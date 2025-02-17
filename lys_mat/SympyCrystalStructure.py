@@ -11,9 +11,6 @@ class SympyCS(object):
     def __init__(self, crys):
         self._crys = crys
 
-    def subs(self, *args, **kwargs):
-        return CrystalStructure(spf.subs(self._crys.cell, *args, **kwargs), spf.subs(self._crys.atoms, *args, **kwargs))
-
     def isSympyObject(self):
         return spf.isSympyObject(self._crys.atoms) or spf.isSympyObject(self._crys.cell)
 
@@ -28,6 +25,9 @@ class SympyCS(object):
         cell = [c for c in cellName if c in [s.name for s in self.free_symbols]]
         return cell + res
 
+    def subs(self, *args, **kwargs):
+        return CrystalStructure(spf.subs(self._crys.cell, *args, **kwargs), spf.subs(self._crys.atoms, *args, **kwargs))
+
     def createParametrizedCrystal(self, cell=True, atoms=True, U=False):
         conv = self._crys.createConventionalCell()
         if cell:
@@ -35,7 +35,7 @@ class SympyCS(object):
         else:
             cell = self._crys.cell
         if atoms:
-            atm = [Atom(at.Element, self.__createPParam(i, at), U=self.__createUParam(i, U)) for i, at in enumerate(self._crys.atoms)]
+            atm = [Atom(at.element, self.__createPParam(i, at), U=self.__createUParam(i, U)) for i, at in enumerate(self._crys.atoms)]
         else:
             atm = copy.deepcopy(self._crys.atoms)
         c = CrystalStructure(cell, atm)
@@ -49,7 +49,7 @@ class SympyCS(object):
         return self._crys.subs(self._crys.defaultParameters)
 
     def __createPParam(self, i, at):
-        return sp.symbols("x_" + at.Element + str(i + 1) + "," + "y_" + at.Element + str(i + 1) + "," + "z_" + at.Element + str(i + 1))
+        return sp.symbols("x_" + at.element + str(i + 1) + "," + "y_" + at.element + str(i + 1) + "," + "z_" + at.element + str(i + 1))
 
     def __createUParam(self, i, enabled):
         if not enabled:

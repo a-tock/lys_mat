@@ -99,6 +99,20 @@ class Lattice(object):
         """
         return self._cell
 
+    def volume(self):
+        """
+        Returns the volume of the unit cell in A^3.
+
+        Returns:
+            float or sympy expression: The volume of the unit cell in A^3.
+        """
+        angle = self.cell[3:].copy()
+        lib = sp if spf.isSympyObject(self.cell) else np
+        for i in range(3):
+            angle[i] = angle[i] * lib.pi / 180.0
+
+        return self.cell[0] * self.cell[1] * self.cell[2] * lib.sqrt(1 + 2 * lib.cos(angle[0]) * lib.cos(angle[1]) * lib.cos(angle[2]) - lib.cos(angle[0]) ** 2 - lib.cos(angle[1]) ** 2 - lib.cos(angle[2]) ** 2)
+
     def latticeInfo(self):
         """
         Returns a string containing the lattice parameters and angles.
@@ -112,20 +126,6 @@ class Lattice(object):
         """
 
         return ", ".join([key + " = " + ("{:}" if spf.isSympyObject(value) else "{:.5f}").format(value) for key, value in zip(["a", "b", "c", "alpha", "beta", "gamma"], self._cell)]) + "\n"
-
-    def Volume(self):
-        """
-        Returns the volume of the unit cell in A^3.
-
-        Returns:
-            float or sympy expression: The volume of the unit cell in A^3.
-        """
-        angle = self.cell[3:].copy()
-        lib = sp if spf.isSympyObject(self.cell) else np
-        for i in range(3):
-            angle[i] = angle[i] * lib.pi / 180.0
-
-        return self.cell[0] * self.cell[1] * self.cell[2] * lib.sqrt(1 + 2 * lib.cos(angle[0]) * lib.cos(angle[1]) * lib.cos(angle[2]) - lib.cos(angle[0]) ** 2 - lib.cos(angle[1]) ** 2 - lib.cos(angle[2]) ** 2)
 
 
 class CartesianLattice(Lattice):
@@ -171,45 +171,6 @@ class CartesianLattice(Lattice):
             super().__init__(self.__unitToCell(cell))
         self.basis = basis
 
-    def __unitToCell(self, unit):
-        """
-        Private method to convert unit cell vectors to cell parameters.
-
-        Parameters:
-            unit (array-like, shape (3,3)): Unit cell vectors.
-
-        Returns:
-            numpy.ndarray (shape (6, )): Cell parameters (a, b, c, alpha, beta, gamma).
-        """
-        if spf.isSympyObject(unit):
-            unit = np.array(unit)
-            unit_pow = unit.dot(unit.T)
-            a, b, c = sp.sqrt(unit_pow[0, 0]), sp.sqrt(unit_pow[1, 1]), sp.sqrt(unit_pow[2, 2])
-            gamma = sp.deg(sp.re(sp.acos(unit_pow[0, 1] / (a * b))))
-            alpha = sp.deg(sp.re(sp.acos(unit_pow[1, 2] / (b * c))))
-            beta = sp.deg(sp.re(sp.acos(unit_pow[2, 0] / (c * a))))
-            return np.array([a, b, c, alpha, beta, gamma])  # a,b,c type is sympy.Add, alpha,beta,gamma type is sympy.Mul
-        else:
-            def angle(v1, v2): return np.rad2deg(np.arccos(np.clip(np.dot(v1, v2) / (np.linalg.norm(v1) * np.linalg.norm(v2)), -1.0, 1.0)))
-            a, b, c = np.linalg.norm(unit, axis=1)
-            gamma, alpha, beta = angle(unit[0], unit[1]), angle(unit[1], unit[2]), angle(unit[2], unit[0])
-            return np.array([a, b, c, alpha, beta, gamma])
-
-    def InverseLatticeVectors(self):
-        """
-        Calculates the reciprocal lattice vectors from the real lattice vectors.
-
-        Returns:
-            numpy.ndarray (shape (3,3)): The reciprocal lattice vectors.
-
-        Note:
-            InverseLatticeVectors[0], InverseLatticeVectors[1], InverseLatticeVectors[2] are a*, b*, c* respectively.
-            InverseLatticeVectors[index][0], InverseLatticeVectors[index][1], InverseLatticeVectors[index][2] are kx, ky, kz of the vector of the index.
-        """
-
-        lib = sp if spf.isSympyObject(self.unit) else np
-        return np.array(2 * lib.pi * (sp.Matrix(self.unit.T).inv()))
-
     @property
     def unit(self):
         """
@@ -236,7 +197,8 @@ class CartesianLattice(Lattice):
             inv[0], inv[1], inv[2] are a*, b*, c* respectively.
             inv[index][0], inv[index][1], inv[index][2] are kx, ky, kz of the vector of the index.
         """
-        return self.InverseLatticeVectors()
+        lib = sp if spf.isSympyObject(self.unit) else np
+        return np.array(2 * lib.pi * (sp.Matrix(self.unit.T).inv()))
 
     @property
     def basis(self):
@@ -288,3 +250,42 @@ class CartesianLattice(Lattice):
                         raise ValueError("Angles of basis must be alpha, beta, gamma.")
 
         self._basis = np.array(basis)
+
+    def InverseLatticeVectors(self):
+        """
+        This method is deprecated.
+        Calculates the reciprocal lattice vectors from the real lattice vectors.
+
+        Returns:
+            numpy.ndarray (shape (3,3)): The reciprocal lattice vectors.
+
+        Note:
+            InverseLatticeVectors[0], InverseLatticeVectors[1], InverseLatticeVectors[2] are a*, b*, c* respectively.
+            InverseLatticeVectors[index][0], InverseLatticeVectors[index][1], InverseLatticeVectors[index][2] are kx, ky, kz of the vector of the index.
+        """
+
+        return self.inv
+
+    def __unitToCell(self, unit):
+        """
+        Private method to convert unit cell vectors to cell parameters.
+
+        Parameters:
+            unit (array-like, shape (3,3)): Unit cell vectors.
+
+        Returns:
+            numpy.ndarray (shape (6, )): Cell parameters (a, b, c, alpha, beta, gamma).
+        """
+        if spf.isSympyObject(unit):
+            unit = np.array(unit)
+            unit_pow = unit.dot(unit.T)
+            a, b, c = sp.sqrt(unit_pow[0, 0]), sp.sqrt(unit_pow[1, 1]), sp.sqrt(unit_pow[2, 2])
+            gamma = sp.deg(sp.re(sp.acos(unit_pow[0, 1] / (a * b))))
+            alpha = sp.deg(sp.re(sp.acos(unit_pow[1, 2] / (b * c))))
+            beta = sp.deg(sp.re(sp.acos(unit_pow[2, 0] / (c * a))))
+            return np.array([a, b, c, alpha, beta, gamma])  # a,b,c type is sympy.Add, alpha,beta,gamma type is sympy.Mul
+        else:
+            def angle(v1, v2): return np.rad2deg(np.arccos(np.clip(np.dot(v1, v2) / (np.linalg.norm(v1) * np.linalg.norm(v2)), -1.0, 1.0)))
+            a, b, c = np.linalg.norm(unit, axis=1)
+            gamma, alpha, beta = angle(unit[0], unit[1]), angle(unit[1], unit[2]), angle(unit[2], unit[0])
+            return np.array([a, b, c, alpha, beta, gamma])

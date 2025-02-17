@@ -12,34 +12,31 @@ from .MD_Analysis import MakePCF
 NA = 6.0221409e+23
 
 
-def __importStrain(crys):
+def _importStrain(crys):
     from .Strain import Strain
     return Strain(crys)
 
 
-def __importSympy(crys):
+def _importSympy(crys):
     from .SympyCrystalStructure import SympyCS
     return SympyCS(crys)
 
 
-def __importSuperStructure(crys):
+def _importSuperStructure(crys):
     from .SuperStructure import SuperStructure
     return SuperStructure(crys)
 
 
-def __importIO():
+def _importIO():
     from .CrystalStrucutureIO import CrystalStructureIO
     return CrystalStructureIO()
 
 
 class CrystalStructure(object):
     def __init__(self, cell, atoms, basis=None, sym=None, stress=(0, 0, 0, 0, 0, 0), energy=0):
-        self._list = []
         atoms = Atoms(atoms, sym)
         lattice = CartesianLattice(cell, basis=basis)
-        self._register(atoms)
-        self._register(lattice)
-        self._register(Symmetry(atoms, lattice))
+        self._list = [atoms, lattice, Symmetry(atoms, lattice)]
         self.stress = stress
         self.energy = energy
 
@@ -50,11 +47,10 @@ class CrystalStructure(object):
         Returns:
             float: The density of the crystal structure in g/cm^3.
         """
-        V = self.Volume()
         mass = 0
         for at in self.atoms:
-            mass += Atom.getAtomicMass(at.Element)
-        return mass / V / NA * 1e27
+            mass += Atom.getAtomicMass(at.element)
+        return mass / self.volume() / NA * 1e24
 
     def setPair(self, Elem1, Elem2, max_dist, allow_same=False):
         """
@@ -144,7 +140,7 @@ class CrystalStructure(object):
         Returns:
             CrystalStructure: The strained crystal structure.
         """
-        return __importStrain(self).createStrainedCrystal(eps)
+        return _importStrain(self).createStrainedCrystal(eps)
 
     def calculateStrain(self, ref):
         """
@@ -156,9 +152,37 @@ class CrystalStructure(object):
         Returns:
             tuple: The strain components in Voigt notation (xx,yy,zz,xy,yz,zx).
         """
-        return __importStrain(self).calculateStrain(ref)
+        return _importStrain(self).calculateStrain(ref)
 
     # SympyCrystalStructure
+    def isSympyObject(self):
+        """
+        Check if the crystal structure contains any sympy objects.
+
+        Returns:
+            bool: True if either the atoms or cell of the crystal structure are sympy objects, else False.
+        """
+        return _importSympy(self).isSympyObject()
+
+    @property
+    def free_symbols(self):
+        """
+        Returns the set of free symbols in the crystal structure.
+
+        Returns:
+            set: A set containing all free symbols in the crystal structure.
+        """
+        return _importSympy(self).free_symbols
+
+    def symbolNames(self):
+        """
+        Returns a list of symbol names used in the crystal structure, prioritizing cell parameter names.
+
+        Returns:
+            list: A list of symbol names, with cell parameter names appearing first if present.
+        """
+        return _importSympy(self).symbolNames()
+
     def subs(self, *args, **kwargs):
         """
         Substitute the given arguments and keyword arguments in the sympy objects of the current object.
@@ -178,35 +202,7 @@ class CrystalStructure(object):
             x,y,z = sp.symbols("x,y,z")
             at = Atom("H", (x, y, z))
         """
-        return __importSympy(self).subs(*args, **kwargs)
-
-    def isSympyObject(self):
-        """
-        Check if the crystal structure contains any sympy objects.
-
-        Returns:
-            bool: True if either the atoms or cell of the crystal structure are sympy objects, else False.
-        """
-        return __importSympy(self).isSympyObject()
-
-    @property
-    def free_symbols(self):
-        """
-        Returns the set of free symbols in the crystal structure.
-
-        Returns:
-            set: A set containing all free symbols in the crystal structure.
-        """
-        return __importSympy(self).free_symbols
-
-    def symbolNames(self):
-        """
-        Returns a list of symbol names used in the crystal structure, prioritizing cell parameter names.
-
-        Returns:
-            list: A list of symbol names, with cell parameter names appearing first if present.
-        """
-        return __importSympy(self).symbolNames()
+        return _importSympy(self).subs(*args, **kwargs)
 
     def createParametrizedCrystal(self, cell=True, atoms=True, U=False):
         """
@@ -223,7 +219,7 @@ class CrystalStructure(object):
         Note:
             The resulting crystal structure can be used with the defaultCrystal method to restore the original crystal structure.
         """
-        return __importSympy(self).createParametrizedCrystal(cell=cell, atoms=atoms, U=U)
+        return _importSympy(self).createParametrizedCrystal(cell=cell, atoms=atoms, U=U)
 
     def defaultCrystal(self):
         """
@@ -233,17 +229,14 @@ class CrystalStructure(object):
         Returns:
             CrystalStructure: A new CrystalStructure with all free symbols replaced by their default values.
         """
-        return __importSympy(self).defaultCrystal()
+        return _importSympy(self).defaultCrystal()
 
     # CrystalStructureIO
     def saveAs(self, file, ext=".cif"):
-        return __importIO().saveAs(self, file, ext=ext)
+        return _importIO().saveAs(self, file, ext=ext)
 
     def __str__(self):
         return self.symmetryInfo() + self.latticeInfo() + self.atomInfo()
-
-    def _register(self, item):
-        self._list.append(item)
 
     def __getattr__(self, key):
         for item in self._list:
@@ -255,7 +248,3 @@ class CrystalStructure(object):
 
     def __getstate__(self):
         return self.__dict__
-
-
-def _produceCrystal(d):
-    return __importIO()._importFromDic(d)

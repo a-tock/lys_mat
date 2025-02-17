@@ -28,7 +28,7 @@ def _MakeRlist(crys, element1, element2, supercell=(3, 3, 3)):
 
 
 def _MakePoslist(crys, atype, supercell=(0, 0, 0)):
-    atoms = [a for a in crys.atoms if a.Element in atype]
+    atoms = [a for a in crys.atoms if a.element in atype]
     poslist = []
     for i in range(-supercell[0], supercell[0] + 1):
         for j in range(-supercell[1], supercell[1] + 1):
