@@ -67,18 +67,6 @@
 <li class="toctree-l4"><a class="reference internal" href="#lys_mat.Lattice.CartesianLattice.volume"><code class="docutils literal notranslate"><span class="pre">CartesianLattice.volume()</span></code></a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="#lys_mat.Lattice.Lattice"><code class="docutils literal notranslate"><span class="pre">Lattice</span></code></a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#lys_mat.Lattice.Lattice.a"><code class="docutils literal notranslate"><span class="pre">Lattice.a</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#lys_mat.Lattice.Lattice.alpha"><code class="docutils literal notranslate"><span class="pre">Lattice.alpha</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#lys_mat.Lattice.Lattice.b"><code class="docutils literal notranslate"><span class="pre">Lattice.b</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#lys_mat.Lattice.Lattice.beta"><code class="docutils literal notranslate"><span class="pre">Lattice.beta</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#lys_mat.Lattice.Lattice.c"><code class="docutils literal notranslate"><span class="pre">Lattice.c</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#lys_mat.Lattice.Lattice.cell"><code class="docutils literal notranslate"><span class="pre">Lattice.cell</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#lys_mat.Lattice.Lattice.gamma"><code class="docutils literal notranslate"><span class="pre">Lattice.gamma</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#lys_mat.Lattice.Lattice.latticeInfo"><code class="docutils literal notranslate"><span class="pre">Lattice.latticeInfo()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#lys_mat.Lattice.Lattice.volume"><code class="docutils literal notranslate"><span class="pre">Lattice.volume()</span></code></a></li>
-</ul>
-</li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="Symmetry.html">Symmetry module</a></li>
@@ -117,7 +105,7 @@
 <dl class="py class">
 <dt class="sig sig-object py" id="lys_mat.Lattice.CartesianLattice">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">lys_mat.Lattice.</span></span><span class="sig-name descname"><span class="pre">CartesianLattice</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cell</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">basis</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lys_mat/Lattice.html#CartesianLattice"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lys_mat.Lattice.CartesianLattice" title="Link to this definition"></a></dt>
-<dd><p>Bases: <a class="reference internal" href="#lys_mat.Lattice.Lattice" title="lys_mat.Lattice.Lattice"><code class="xref py py-class docutils literal notranslate"><span class="pre">Lattice</span></code></a></p>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Lattice</span></code></p>
 <p>CartesianLattice class is a basic lattice class with Cartesian coordinates used for crystal structures.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -349,160 +337,6 @@ unit[index][0], unit[index][1], unit[index][2] are x, y, z of the vector of the 
 <dl class="py method">
 <dt class="sig sig-object py" id="lys_mat.Lattice.CartesianLattice.volume">
 <span class="sig-name descname"><span class="pre">volume</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#lys_mat.Lattice.CartesianLattice.volume" title="Link to this definition"></a></dt>
-<dd><p>Returns the volume of the unit cell in A^3.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>The volume of the unit cell in A^3.</p>
-</dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p>float or sympy expression</p>
-</dd>
-</dl>
-</dd></dl>
-
-</dd></dl>
-
-<dl class="py class">
-<dt class="sig sig-object py" id="lys_mat.Lattice.Lattice">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">lys_mat.Lattice.</span></span><span class="sig-name descname"><span class="pre">Lattice</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cell</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lys_mat/Lattice.html#Lattice"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lys_mat.Lattice.Lattice" title="Link to this definition"></a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
-<p>Lattice class is a basic lattice class used for crystal structures.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>cell</strong> (<em>array-like</em>) – An array of length 6 representing the cell parameters (a, b, c, alpha, beta, gamma) in Angstrom and degrees.</p>
-</dd>
-</dl>
-<p>Example:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">lys_mat</span> <span class="kn">import</span> <span class="n">Lattice</span>
-<span class="n">cell</span> <span class="o">=</span> <span class="p">[</span><span class="mf">4.0</span><span class="p">,</span> <span class="mf">5.0</span><span class="p">,</span> <span class="mf">10.0</span><span class="p">,</span> <span class="mf">90.0</span><span class="p">,</span> <span class="mf">90.5</span><span class="p">,</span> <span class="mf">60.0</span><span class="p">]</span>
-<span class="n">lattice</span> <span class="o">=</span> <span class="n">Lattice</span><span class="p">(</span><span class="n">cell</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">lattice</span><span class="o">.</span><span class="n">latticeInfo</span><span class="p">())</span>    <span class="c1">#a = 4.00000, b = 5.00000, c = 10.00000, alpha = 90.00000, beta = 90.50000, gamma = 60.00000</span>
-</pre></div>
-</div>
-<dl class="py property">
-<dt class="sig sig-object py" id="lys_mat.Lattice.Lattice.a">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">a</span></span><a class="headerlink" href="#lys_mat.Lattice.Lattice.a" title="Link to this definition"></a></dt>
-<dd><p>The lattice parameter a in Angstrom.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>The lattice parameter a in Angstrom.</p>
-</dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p>float or sympy expression</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py property">
-<dt class="sig sig-object py" id="lys_mat.Lattice.Lattice.alpha">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">alpha</span></span><a class="headerlink" href="#lys_mat.Lattice.Lattice.alpha" title="Link to this definition"></a></dt>
-<dd><p>The lattice angle alpha in degree.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>The lattice angle alpha in degree.</p>
-</dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p>float or sympy expression</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py property">
-<dt class="sig sig-object py" id="lys_mat.Lattice.Lattice.b">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">b</span></span><a class="headerlink" href="#lys_mat.Lattice.Lattice.b" title="Link to this definition"></a></dt>
-<dd><p>The lattice parameter b in Angstrom.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>The lattice parameter b in Angstrom.</p>
-</dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p>float or sympy expression</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py property">
-<dt class="sig sig-object py" id="lys_mat.Lattice.Lattice.beta">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">beta</span></span><a class="headerlink" href="#lys_mat.Lattice.Lattice.beta" title="Link to this definition"></a></dt>
-<dd><p>The lattice angle beta in degree.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>The lattice angle beta in degree.</p>
-</dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p>float or sympy expression</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py property">
-<dt class="sig sig-object py" id="lys_mat.Lattice.Lattice.c">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">c</span></span><a class="headerlink" href="#lys_mat.Lattice.Lattice.c" title="Link to this definition"></a></dt>
-<dd><p>The lattice parameter c in Angstrom.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>The lattice parameter c in Angstrom.</p>
-</dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p>float or sympy expression</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py property">
-<dt class="sig sig-object py" id="lys_mat.Lattice.Lattice.cell">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">cell</span></span><a class="headerlink" href="#lys_mat.Lattice.Lattice.cell" title="Link to this definition"></a></dt>
-<dd><p>Returns the complete cell array consisting of lattice parameters and angles.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p><dl class="simple">
-<dt>The complete cell array consisting of lattice parameters and angles, i.e. numpy.array([a, b, c, alpha, beta, gamma]).</dt><dd><p>Each element is a float or sympy expression.</p>
-</dd>
-</dl>
-</p>
-</dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p>numpy.ndarray (shape (6, ))</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py property">
-<dt class="sig sig-object py" id="lys_mat.Lattice.Lattice.gamma">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">gamma</span></span><a class="headerlink" href="#lys_mat.Lattice.Lattice.gamma" title="Link to this definition"></a></dt>
-<dd><p>The lattice angle gamma in degree.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>The lattice angle gamma in degree.</p>
-</dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p>float or sympy expression</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="lys_mat.Lattice.Lattice.latticeInfo">
-<span class="sig-name descname"><span class="pre">latticeInfo</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lys_mat/Lattice.html#Lattice.latticeInfo"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lys_mat.Lattice.Lattice.latticeInfo" title="Link to this definition"></a></dt>
-<dd><p>Returns a string containing the lattice parameters and angles.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>a string containing the lattice parameters and angles.</p>
-</dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p>str</p>
-</dd>
-</dl>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>The format is “a = x, b = y, c = z, alpha = u, beta = v, gamma = wn” where x, y, z, u, v, and w are the actual values.
-If the values contain sympy expressions, they are converted to strings using str(). If the values are numbers, they are formatted as “{:.5f}”.</p>
-</div>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="lys_mat.Lattice.Lattice.volume">
-<span class="sig-name descname"><span class="pre">volume</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lys_mat/Lattice.html#Lattice.volume"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lys_mat.Lattice.Lattice.volume" title="Link to this definition"></a></dt>
 <dd><p>Returns the volume of the unit cell in A^3.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
