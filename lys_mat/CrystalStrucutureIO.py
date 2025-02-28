@@ -60,47 +60,67 @@ def _from_cif(file, index=0):
     """
     cf = ReadCif(file)
     cf = cf[cf.keys()[index]]
-    cell = []
-    cell.append(float(cf['_cell_length_a']))
-    cell.append(float(cf['_cell_length_b']))
-    cell.append(float(cf['_cell_length_c']))
-    cell.append(float(cf['_cell_angle_alpha']))
-    cell.append(float(cf['_cell_angle_beta']))
-    cell.append(float(cf['_cell_angle_gamma']))
-    list = []
-    if '_atom_site_type_symbol' in cf:
-        type = '_atom_site_type_symbol'
-    else:
-        type = '_atom_site_label'
+    cell = [
+        float(cf['_cell_length_a']),
+        float(cf['_cell_length_b']),
+        float(cf['_cell_length_c']),
+        float(cf['_cell_angle_alpha']),
+        float(cf['_cell_angle_beta']),
+        float(cf['_cell_angle_gamma'])
+    ]
+    atom_list = _parse_atoms_from_cif(cf)
+    sym = _parse_symmetry_from_cif(cf)
+    return CrystalStructure(cell, atom_list, sym)
+
+
+def _parse_atoms_from_cif(cf):
+    """
+    Parse atoms from cif file content.
+
+    Args:
+        cf (CifFile): The cif file content.
+
+    Returns:
+        list: List of Atom objects.
+    """
+    atom_list = []
+    type = '_atom_site_type_symbol' if '_atom_site_type_symbol' in cf else '_atom_site_label'
     for i in range(len(cf[type])):
         name = cf[type][i]
         x = float(cf['_atom_site_fract_x'][i])
         y = float(cf['_atom_site_fract_y'][i])
         z = float(cf['_atom_site_fract_z'][i])
-        if '_atom_site_occupancy' in cf:
-            occu = float(cf['_atom_site_occupancy'][i])
-        else:
-            occu = 1
-        if '_atom_site_U_iso_or_equiv' in cf:
-            U = float(cf['_atom_site_U_iso_or_equiv'][i])
-        else:
-            U = 0
+        occu = float(cf['_atom_site_occupancy'][i]) if '_atom_site_occupancy' in cf else 1
+        U = float(cf['_atom_site_U_iso_or_equiv'][i]) if '_atom_site_U_iso_or_equiv' in cf else 0
         if '_atom_site_aniso_U_11' in cf:
-            U = [0, 0, 0, 0, 0, 0]
-            U[0] = float(cf['_atom_site_aniso_U_11'][i])
-            U[1] = float(cf['_atom_site_aniso_U_22'][i])
-            U[2] = float(cf['_atom_site_aniso_U_33'][i])
-            U[3] = float(cf['_atom_site_aniso_U_12'][i])
-            U[4] = float(cf['_atom_site_aniso_U_13'][i])
-            U[5] = float(cf['_atom_site_aniso_U_23'][i])
-        list.append(Atom(name, [x, y, z], U=U, occupancy=occu))
+            U = [
+                float(cf['_atom_site_aniso_U_11'][i]),
+                float(cf['_atom_site_aniso_U_22'][i]),
+                float(cf['_atom_site_aniso_U_33'][i]),
+                float(cf['_atom_site_aniso_U_12'][i]),
+                float(cf['_atom_site_aniso_U_13'][i]),
+                float(cf['_atom_site_aniso_U_23'][i])
+            ]
+        atom_list.append(Atom(name, [x, y, z], U=U, occupancy=occu))
+    return atom_list
+
+
+def _parse_symmetry_from_cif(cf):
+    """
+    Parse symmetry operations from cif file content.
+
+    Args:
+        cf (CifFile): The cif file content.
+
+    Returns:
+        list: List of symmetry operations.
+    """
     if '_symmetry_equiv_pos_as_xyz' in cf:
-        sym = [__strToSym(s) for s in cf['_symmetry_equiv_pos_as_xyz']]
+        return [__strToSym(s) for s in cf['_symmetry_equiv_pos_as_xyz']]
     elif '_space_group_symop_operation_xyz' in cf:
-        sym = [__strToSym(s) for s in cf['_space_group_symop_operation_xyz']]
+        return [__strToSym(s) for s in cf['_space_group_symop_operation_xyz']]
     else:
-        sym = None
-    return CrystalStructure(cell, list, sym)
+        return None
 
 
 def _exportAsDic(crys):
@@ -161,7 +181,6 @@ def _exportAsCif(crys, exportAll=True):
     Returns:
         str: A string representation of the crystal structure in CIF format.
     """
-
     c = CifFile()
     c.NewBlock("crystal1")
     cf = c[c.keys()[0]]
@@ -171,15 +190,27 @@ def _exportAsCif(crys, exportAll=True):
     cf['_cell_angle_alpha'] = crys.alpha
     cf['_cell_angle_beta'] = crys.beta
     cf['_cell_angle_gamma'] = crys.gamma
-    if exportAll:
-        atoms = crys.atoms
-    else:
+    if not exportAll:
         atoms = crys.irreducibleAtoms()
         data = spglib.get_symmetry_dataset(crys._toSpg())
         ops = spglib.get_symmetry(crys._toSpg())
         cf['_symmetry_Int_Tables_number'] = data["number"]
         cf['_symmetry_equiv_pos_as_xyz'] = [__symToStr(r, t) for r, t in zip(ops['rotations'], ops['translations'])]
         cf.CreateLoop(['_symmetry_equiv_pos_as_xyz'])
+    else:
+        atoms = crys.atoms
+    _add_atoms_to_cif(cf, atoms)
+    return str(c)
+
+
+def _add_atoms_to_cif(cf, atoms):
+    """
+    Add atoms to CIF file content.
+
+    Args:
+        cf (CifFile): The cif file content.
+        atoms (list): List of Atom objects.
+    """
     newlabel = []
     elem = None
     i = 0
@@ -215,7 +246,6 @@ def _exportAsCif(crys, exportAll=True):
     cf['_atom_site_aniso_U_13'] = [at.Uani[0, 2] for at in atoms]
     cf['_atom_site_aniso_U_23'] = [at.Uani[1, 2] for at in atoms]
     cf.CreateLoop(['_atom_site_aniso_label', '_atom_site_aniso_U_11', '_atom_site_aniso_U_22', '_atom_site_aniso_U_33', '_atom_site_aniso_U_12', '_atom_site_aniso_U_13', '_atom_site_aniso_U_23'])
-    return str(c)
 
 
 def __symToStr(rotation, trans):

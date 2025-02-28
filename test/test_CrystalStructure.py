@@ -74,8 +74,36 @@ class TestCrystalStructure(unittest.TestCase):
         crys_subs2 = crys.subs([(a, 6), (b, 7), (c, 8)])
         np.testing.assert_array_almost_equal(crys_subs2.cell, [6, 7, 8, 90, 90, 90])
 
-        # sympy method to not sympy object
+        # sympy method for not sympy object
         crys_subs = crys.subs({a: 3.0, b: 4.0, c: 5.0, r: 0.5})
         self.assertEqual(crys_subs.isSympyObject(), False)
         self.assertEqual(crys_subs.free_symbols, set())
         np.testing.assert_array_equal(crys_subs.symbolNames(), [])
+
+
+class TestStrain(unittest.TestCase):
+    def test_strain(self):
+        cell = [4.0, 5.0, 6.0, 90.0, 90.0, 90.0]
+        atoms = []
+        crys = CrystalStructure(cell, atoms)
+        eps = [0.01, 0.02, 0.03, 0.04, 0.05, 0.06]
+        strained_crys = crys.createStrainedCrystal(eps)
+        expected_unit = np.array([
+            [4.04, 0.16, 0.24],
+            [0.2, 5.1, 0.25],
+            [0.36, 0.3, 6.18]
+        ])
+        expected_crys = CrystalStructure(expected_unit, atoms)
+        np.testing.assert_array_almost_equal(strained_crys.unit, expected_crys.unit)
+        np.testing.assert_array_almost_equal(strained_crys.calculateStrain(crys), eps)
+
+        cell = [4.0, 5.0, 6.0, 70, 80, 90.5]
+        atoms = []
+        crys = CrystalStructure(cell, atoms)
+        eps = [0.01, 0.02, 0.03, 0.04, 0.05, 0.06]
+        strained_crys = crys.createStrainedCrystal(eps)
+        R = [[1 + eps[0], eps[3], eps[5]], [eps[3], 1 + eps[1], eps[4]], [eps[5], eps[4], 1 + eps[2]]]
+        expected_unit = np.array(R).dot(crys.unit.T).T
+        expected_crys = CrystalStructure(expected_unit, atoms)
+        np.testing.assert_array_almost_equal(strained_crys.unit, expected_crys.unit)
+        np.testing.assert_array_almost_equal(strained_crys.calculateStrain(crys), eps)
