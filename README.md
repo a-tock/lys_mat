@@ -1,10 +1,10 @@
 # lys_mat: python code for generation of crystal structures
 
-Check out for the [documentation] for more information.
+Check out for the [documentation](https://a-tock.github.io/lys_mat/index.html) for more information.
 
 ## Installation
 
-See the [install documentation]. System requirements are also found in this page.
+See the [install documentation](https://a-tock.github.io/lys_mat/install.html). System requirements are also found in this page.
 
 ## Contributing
 
