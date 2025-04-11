@@ -31,12 +31,42 @@ class CrystalStructure(object):
     A class representing a crystal structure.
 
     Args:
-        cell (list): The cell parameters of the crystal structure.
-        atoms (list): The list of atoms in the crystal structure.
+        cell (list): The cell parameters of the crystal structure in the form [a, b, c, alpha, beta, gamma].
+        atoms (list): A list of Atom objects representing the atoms in the crystal structure.
         basis (list, optional): The basis vectors of the crystal structure.
         sym (list, optional): The symmetry operations of the crystal structure.
         stress (tuple, optional): The stress tensor of the crystal structure. Default to (0, 0, 0, 0, 0, 0).
         energy (float, optional): The energy of the crystal structure. Default to 0.
+
+    Note:
+        The methods and properties of the Atoms, CartesianLattice, and Symmetry classes
+        are also available as methods and properties of this class.
+
+    Example::
+
+        from lys_mat import Atom, CrystalStructure
+        at1 = Atom("Au", (0, 0, 0))
+        at2 = Atom("Au", (0.5, 0.5, 0))
+        at3 = Atom("Au", (0, 0.5, 0.5))
+        at4 = Atom("Au", (0.5, 0, 0.5))
+        cell = [4.0773, 4.0773, 4.0773, 90, 90, 90]
+        crys = CrystalStructure(cell, [at1, at2, at3, at4])
+
+        print(crys)
+        # Symmetry: cubic Fm-3m (No. 225), Point group: m-3m
+        # a = 4.07730, b = 4.07730, c = 4.07730, alpha = 90.00000, beta = 90.00000, gamma = 90.00000
+        # --- atoms (4) ---
+        # 1: Au (Z = 79, Occupancy = 1) Pos = (0.00000, 0.00000, 0.00000)
+        # 2: Au (Z = 79, Occupancy = 1) Pos = (0.50000, 0.50000, 0.00000)
+        # 3: Au (Z = 79, Occupancy = 1) Pos = (0.00000, 0.50000, 0.50000)
+        # 4: Au (Z = 79, Occupancy = 1) Pos = (0.50000, 0.00000, 0.50000)
+
+        print(crys.getElements())   # ['Au']
+        print(crys.cell)    # [4.0773, 4.0773, 4.0773, 90, 90, 90]
+        print(crys.volume())    # 67.782565369917
+        print(crys.crystalSystem())   # cubic
+        print(crys.density())    # 19.301168279078535
+
     """
 
     def __init__(self, cell, atoms, basis=None, sym=None, stress=(0, 0, 0, 0, 0, 0), energy=0):
