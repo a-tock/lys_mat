@@ -2,7 +2,6 @@ import numpy as np
 import sympy as sp
 import warnings
 import unittest
-import numpy as np
 
 from lys_mat import Symmetry, Atom, Atoms, CartesianLattice
 
