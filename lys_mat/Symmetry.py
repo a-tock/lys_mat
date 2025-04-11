@@ -106,6 +106,19 @@ class Symmetry(object):
         else:
             return ops['rotations'], ops['translations']
 
+    def irreducibleAtoms(self):
+        """
+        Retrieve the irreducible atoms of the crystal structure.
+
+        The list contains the atoms in the crystal structure whose positions are not
+        equivalent to any other atoms.
+
+        Returns:
+            list: A list of the irreducible atoms in the crystal structure.
+        """
+        sym = spglib.get_symmetry_dataset(self._toSpg())
+        return [self._atoms.getAtoms()[i] for i in list(set(sym.equivalent_atoms))]
+
     def symmetryInfo(self):
         """
         Retrieve symmetry information of the crystal structure.
