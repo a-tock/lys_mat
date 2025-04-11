@@ -224,6 +224,16 @@ class CrystalStructure(object):
 
     # CrystalStructureIO
     def saveAs(self, file, ext=".cif"):
+        """
+        Save the current CrystalStructure to a file.
+
+        Args:
+            file (str): The file path where the crystal structure will be saved.
+            ext (str, optional): The file extension indicating the format to save the structure in.
+                                Supported extensions are ".cif" and ".pcs". Defaults to ".cif".
+
+        """
+
         return _importIO().saveAs(self, file, ext=ext)
 
     def __str__(self):
