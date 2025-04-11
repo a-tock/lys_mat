@@ -8,6 +8,10 @@ from CifFile import CifFile, ReadCif
 
 
 class CrystalStructureIO(object):
+    """
+    CrystalStructureIO class is used to read and write crystal structures from and to files.
+    """
+
     @staticmethod
     def saveAs(crys, file, ext=".cif"):
         """
