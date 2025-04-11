@@ -24,6 +24,7 @@ class TestSymmetry(unittest.TestCase):
             warnings.simplefilter('ignore', DeprecationWarning)
             np.testing.assert_array_equal(sym.standardPath(), ['GAMMA', 'X', 'U', 'K', 'GAMMA', 'L', 'W', 'X'])
             self.assert_dictionary_of_array_almost_equal(sym.symmetryPoints(), {'GAMMA': [0., 0., 0.], 'X': [0.5, 0., 0.5], 'L': [0.5, 0.5, 0.5], 'W': [0.5, 0.25, 0.75], 'W_2': [0.75, 0.25, 0.5], 'K': [0.375, 0.375, 0.75], 'U': [0.625, 0.25, 0.625]})
+        self.assertEqual(len(sym.irreducibleAtoms()), 1)
         for v in ["Fm-3m", "225"]:
             self.assertIn(v, sym.symmetryInfo())
         symop = sym.getSymmetryOperations()
@@ -62,6 +63,7 @@ class TestSymmetry(unittest.TestCase):
             warnings.simplefilter('ignore', DeprecationWarning)
             np.testing.assert_array_equal(sym.standardPath(), ['GAMMA', 'M', 'K', 'GAMMA', 'A', 'L', 'H', 'A', 'L', 'M', 'H', 'K'])
             self.assert_dictionary_of_array_almost_equal(sym.symmetryPoints(), {'GAMMA': [0., 0., 0.], 'A': [0., 0., 0.5], 'K': [1 / 3, 1 / 3, 0], 'H': [1 / 3, 1 / 3, 0.5], 'H_2': [1 / 3, 1 / 3, -0.5], 'M': [0.5, 0., 0.], 'L': [0.5, 0., 0.5]})
+        self.assertEqual(len(sym.irreducibleAtoms()), 2)
         for v in ["P6_3mc", "186"]:
             self.assertIn(v, sym.symmetryInfo())
         symop = sym.getSymmetryOperations()
@@ -94,6 +96,7 @@ class TestSymmetry(unittest.TestCase):
             warnings.simplefilter('ignore', DeprecationWarning)
             np.testing.assert_array_equal(sym.standardPath(), ['GAMMA', 'X', 'M', 'GAMMA', 'Z', 'R', 'A', 'Z', 'X', 'R', 'M', 'A'])
             self.assert_dictionary_of_array_almost_equal(sym.symmetryPoints(), {'GAMMA': [0, 0, 0], 'Z': [0, 0, 0.5], 'M': [0.5, 0.5, 0], 'A': [0.5, 0.5, 0.5], 'R': [0, 0.5, 0.5], 'X': [0, 0.5, 0]})
+        self.assertEqual(len(sym.irreducibleAtoms()), 2)
         for v in ["P4_12_12", "92"]:
             self.assertIn(v, sym.symmetryInfo())
         symop = sym.getSymmetryOperations()
@@ -127,6 +130,7 @@ class TestSymmetry(unittest.TestCase):
         for v in ["P2_1/c", "14"]:
             self.assertIn(v, sym.symmetryInfo())
         symop = sym.getSymmetryOperations()
+        self.assertEqual(len(sym.irreducibleAtoms()), 3)
         self.assertEqual(len(symop), 2)
         self.assertEqual(np.shape(symop[0]), (4, 3, 3))
         self.assertEqual(np.shape(symop[1]), (4, 3))
@@ -155,6 +159,7 @@ class TestSymmetry(unittest.TestCase):
             warnings.simplefilter('ignore', DeprecationWarning)
             np.testing.assert_array_equal(sym.standardPath(), ['GAMMA', 'X', 'U', 'K', 'GAMMA', 'L', 'W', 'X'])
             self.assert_dictionary_of_array_almost_equal(sym.symmetryPoints(), {'GAMMA': [0., 0., 0.], 'X': [0.5, 0., 0.5], 'L': [0.5, 0.5, 0.5], 'W': [0.5, 0.25, 0.75], 'W_2': [0.75, 0.25, 0.5], 'K': [0.375, 0.375, 0.75], 'U': [0.625, 0.25, 0.625]})
+        self.assertEqual(len(sym.irreducibleAtoms()), 1)    # same as primitive cubic cell
         for v in ["Fm-3m", "225"]:  # same as primitive cubic cell
             self.assertIn(v, sym.symmetryInfo())
         symop = sym.getSymmetryOperations()
@@ -183,6 +188,7 @@ class TestSymmetry(unittest.TestCase):
             np.testing.assert_array_equal(sym.standardPath(), ['GAMMA', 'Y', 'C_0', 'SIGMA_0', 'GAMMA', 'Z', 'A_0', 'E_0', 'T', 'Y', 'GAMMA', 'S', 'R', 'Z', 'T'])
             X = 0.33334063594111507
             self.assert_dictionary_of_array_almost_equal(sym.symmetryPoints(), {'GAMMA': [0., 0., 0.], 'Y': [-0.5, 0.5, 0.], 'T': [-0.5, 0.5, 0.5], 'Z': [0., 0., 0.5], 'S': [0., 0.5, 0.], 'R': [0., 0.5, 0.5], 'SIGMA_0': [X, X, 0.], 'C_0': [-X, 1 - X, 0.], 'A_0': [X, X, 0.5], 'E_0': [-X, 1 - X, 0.5]})
+        self.assertEqual(len(sym.irreducibleAtoms()), 2)    # same as primitive hexagonal cell
         for v in ["Cmc2_1", "36"]:  # differ from primitive hexagonal cell
             self.assertIn(v, sym.symmetryInfo())
         symop = sym.getSymmetryOperations()

@@ -5,3 +5,4 @@
 *.egg-info
 docs_src/build/
 .pytest_cache
+test/IOtestFiles/
