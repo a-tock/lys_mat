@@ -72,8 +72,7 @@
            <div itemprop="articleBody">
              
   <h1>Source code for lys_mat.Atoms</h1><div class="highlight"><pre>
-<span></span><span class="kn">import</span> <span class="nn">spglib</span>
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">copy</span>
 
 <span class="kn">from</span> <span class="nn">.Atom</span> <span class="kn">import</span> <span class="n">Atom</span>
@@ -126,6 +125,94 @@
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">setAtoms</span><span class="p">(</span><span class="n">atoms</span><span class="p">,</span> <span class="n">sym</span><span class="p">)</span>
 
+<div class="viewcode-block" id="Atoms.setAtoms">
+<a class="viewcode-back" href="../../lys_mat_/Atoms.html#lys_mat.Atoms.Atoms.setAtoms">[docs]</a>
+    <span class="k">def</span> <span class="nf">setAtoms</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">atoms</span><span class="p">,</span> <span class="n">sym</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Set the list of atoms in the CrystalStructure.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            atoms (list of Atom): The list of Atom objects to set.</span>
+<span class="sd">            sym (list of (3x3 rotation matrix, 3-length translation vector), optional):</span>
+<span class="sd">            The symmetry operations to apply. If None, the list of atoms is set as is. Otherwise, the list of atoms is extracted by the symmetry operations.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">sym</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_atoms</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="n">atoms</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_atoms</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__extractAtoms</span><span class="p">(</span><span class="n">atoms</span><span class="p">,</span> <span class="n">sym</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__reorderAtoms</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="Atoms.getAtoms">
+<a class="viewcode-back" href="../../lys_mat_/Atoms.html#lys_mat.Atoms.Atoms.getAtoms">[docs]</a>
+    <span class="k">def</span> <span class="nf">getAtoms</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get the list of atoms in the CrystalStructure.</span>
+
+<span class="sd">        Return:</span>
+<span class="sd">            list of Atom: list of atoms in the CrystalStructure.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_atoms</span></div>
+
+
+<div class="viewcode-block" id="Atoms.getElements">
+<a class="viewcode-back" href="../../lys_mat_/Atoms.html#lys_mat.Atoms.Atoms.getElements">[docs]</a>
+    <span class="k">def</span> <span class="nf">getElements</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get the list of elements in the CrystalStructure.</span>
+
+<span class="sd">        Return:</span>
+<span class="sd">            list of str: list of elements in the CrystalStructure.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">elements</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">at</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_atoms</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">at</span><span class="o">.</span><span class="n">element</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">elements</span><span class="p">:</span>
+                <span class="n">elements</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">at</span><span class="o">.</span><span class="n">element</span><span class="p">)</span>
+        <span class="k">return</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">elements</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Atoms.getAtomicPositions">
+<a class="viewcode-back" href="../../lys_mat_/Atoms.html#lys_mat.Atoms.Atoms.getAtomicPositions">[docs]</a>
+    <span class="k">def</span> <span class="nf">getAtomicPositions</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get the atomic positions in the crystal structure.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            numpy.ndarray: Array of atomic positions in the crystal structure.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">at</span><span class="o">.</span><span class="n">Position</span> <span class="k">for</span> <span class="n">at</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_atoms</span><span class="p">])</span></div>
+
+
+<div class="viewcode-block" id="Atoms.atomInfo">
+<a class="viewcode-back" href="../../lys_mat_/Atoms.html#lys_mat.Atoms.Atoms.atomInfo">[docs]</a>
+    <span class="k">def</span> <span class="nf">atomInfo</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">max_atoms</span><span class="o">=-</span><span class="mi">1</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get a string representation of the atoms in the crystal structure.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            max_atoms (int): The maximum number of atoms to include in the string representation.</span>
+<span class="sd">                            If -1, all atoms are included.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            str: A string representation of the atoms in the crystal structure.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">res</span> <span class="o">=</span> <span class="s2">&quot;--- atoms (&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_atoms</span><span class="p">))</span> <span class="o">+</span> <span class="s2">&quot;) ---&quot;</span>
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">at</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_atoms</span><span class="p">):</span>
+            <span class="n">res</span> <span class="o">+=</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;: &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">at</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="n">max_atoms</span><span class="p">:</span>
+                <span class="n">res</span> <span class="o">+=</span> <span class="s2">&quot;...&quot;</span>
+                <span class="k">break</span>
+        <span class="k">return</span> <span class="n">res</span></div>
+
+
+    <span class="k">def</span> <span class="nf">__reorderAtoms</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">getElements</span><span class="p">():</span>
+            <span class="k">for</span> <span class="n">at</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_atoms</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">at</span><span class="o">.</span><span class="n">element</span> <span class="o">==</span> <span class="n">e</span><span class="p">:</span>
+                    <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">at</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_atoms</span> <span class="o">=</span> <span class="n">result</span>
+
     <span class="k">def</span> <span class="nf">__extractAtoms</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">atoms</span><span class="p">,</span> <span class="n">sym</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Extract atoms by symmetry operations.</span>
@@ -169,100 +256,12 @@
             <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">plist</span><span class="p">:</span>
                 <span class="n">flg</span> <span class="o">=</span> <span class="kc">True</span>
                 <span class="k">for</span> <span class="n">at2</span> <span class="ow">in</span> <span class="n">result</span><span class="p">:</span>
-                    <span class="k">if</span> <span class="n">at</span><span class="o">.</span><span class="n">Element</span> <span class="o">==</span> <span class="n">at2</span><span class="o">.</span><span class="n">Element</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">at</span><span class="o">.</span><span class="n">element</span> <span class="o">==</span> <span class="n">at2</span><span class="o">.</span><span class="n">element</span><span class="p">:</span>
                         <span class="k">if</span> <span class="n">is_same</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">at2</span><span class="o">.</span><span class="n">Position</span><span class="p">,</span> <span class="mf">1e-3</span><span class="p">):</span>
                             <span class="n">flg</span> <span class="o">=</span> <span class="kc">False</span>
                 <span class="k">if</span> <span class="n">flg</span><span class="p">:</span>
-                    <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Atom</span><span class="p">(</span><span class="n">at</span><span class="o">.</span><span class="n">Element</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="n">U</span><span class="o">=</span><span class="n">at</span><span class="o">.</span><span class="n">Uani</span><span class="p">))</span>
-        <span class="k">return</span> <span class="n">result</span>
-
-<div class="viewcode-block" id="Atoms.setAtoms">
-<a class="viewcode-back" href="../../lys_mat_/Atoms.html#lys_mat.Atoms.Atoms.setAtoms">[docs]</a>
-    <span class="k">def</span> <span class="nf">setAtoms</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">atoms</span><span class="p">,</span> <span class="n">sym</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Set the list of atoms in the CrystalStructure.</span>
-
-<span class="sd">        Args:</span>
-<span class="sd">            atoms (list of Atom): The list of Atom objects to set.</span>
-<span class="sd">            sym (list of (3x3 rotation matrix, 3-length translation vector), optional):</span>
-<span class="sd">            The symmetry operations to apply. If None, the list of atoms is set as is. Otherwise, the list of atoms is extracted by the symmetry operations.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="n">sym</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_atoms</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="n">atoms</span><span class="p">)</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_atoms</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__extractAtoms</span><span class="p">(</span><span class="n">atoms</span><span class="p">,</span> <span class="n">sym</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">__reorderAtoms</span><span class="p">()</span></div>
-
-
-<div class="viewcode-block" id="Atoms.getAtoms">
-<a class="viewcode-back" href="../../lys_mat_/Atoms.html#lys_mat.Atoms.Atoms.getAtoms">[docs]</a>
-    <span class="k">def</span> <span class="nf">getAtoms</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Get the list of atoms in the CrystalStructure.</span>
-
-<span class="sd">        Return:</span>
-<span class="sd">            list of Atom: list of atoms in the CrystalStructure.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_atoms</span></div>
-
-
-    <span class="k">def</span> <span class="nf">__reorderAtoms</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="n">result</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">getElements</span><span class="p">():</span>
-            <span class="k">for</span> <span class="n">at</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_atoms</span><span class="p">:</span>
-                <span class="k">if</span> <span class="n">at</span><span class="o">.</span><span class="n">Element</span> <span class="o">==</span> <span class="n">e</span><span class="p">:</span>
-                    <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">at</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_atoms</span> <span class="o">=</span> <span class="n">result</span>
-
-<div class="viewcode-block" id="Atoms.getElements">
-<a class="viewcode-back" href="../../lys_mat_/Atoms.html#lys_mat.Atoms.Atoms.getElements">[docs]</a>
-    <span class="k">def</span> <span class="nf">getElements</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Get the list of elements in the CrystalStructure.</span>
-
-<span class="sd">        Return:</span>
-<span class="sd">            list of str: list of elements in the CrystalStructure.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">elements</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="k">for</span> <span class="n">at</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_atoms</span><span class="p">:</span>
-            <span class="k">if</span> <span class="n">at</span><span class="o">.</span><span class="n">Element</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">elements</span><span class="p">:</span>
-                <span class="n">elements</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">at</span><span class="o">.</span><span class="n">Element</span><span class="p">)</span>
-        <span class="k">return</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">elements</span><span class="p">)</span></div>
-
-
-<div class="viewcode-block" id="Atoms.atomInfo">
-<a class="viewcode-back" href="../../lys_mat_/Atoms.html#lys_mat.Atoms.Atoms.atomInfo">[docs]</a>
-    <span class="k">def</span> <span class="nf">atomInfo</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">max_atoms</span><span class="o">=-</span><span class="mi">1</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Get a string representation of the atoms in the crystal structure.</span>
-
-<span class="sd">        Args:</span>
-<span class="sd">            max_atoms (int): The maximum number of atoms to include in the string representation.</span>
-<span class="sd">                             If -1, all atoms are included.</span>
-
-<span class="sd">        Returns:</span>
-<span class="sd">            str: A string representation of the atoms in the crystal structure.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">res</span> <span class="o">=</span> <span class="s2">&quot;--- atoms (&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_atoms</span><span class="p">))</span> <span class="o">+</span> <span class="s2">&quot;) ---&quot;</span>
-        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">at</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_atoms</span><span class="p">):</span>
-            <span class="n">res</span> <span class="o">+=</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;: &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">at</span><span class="p">)</span>
-            <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="n">max_atoms</span><span class="p">:</span>
-                <span class="n">res</span> <span class="o">+=</span> <span class="s2">&quot;...&quot;</span>
-                <span class="k">break</span>
-        <span class="k">return</span> <span class="n">res</span></div>
-
-
-<div class="viewcode-block" id="Atoms.getAtomicPositions">
-<a class="viewcode-back" href="../../lys_mat_/Atoms.html#lys_mat.Atoms.Atoms.getAtomicPositions">[docs]</a>
-    <span class="k">def</span> <span class="nf">getAtomicPositions</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Get the atomic positions in the crystal structure.</span>
-
-<span class="sd">        Returns:</span>
-<span class="sd">            numpy.ndarray: Array of atomic positions in the crystal structure.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">at</span><span class="o">.</span><span class="n">Position</span> <span class="k">for</span> <span class="n">at</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_atoms</span><span class="p">])</span></div>
-</div>
+                    <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Atom</span><span class="p">(</span><span class="n">at</span><span class="o">.</span><span class="n">element</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="n">U</span><span class="o">=</span><span class="n">at</span><span class="o">.</span><span class="n">Uani</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">result</span></div>
 
 </pre></div>
 

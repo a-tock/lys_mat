@@ -8,7 +8,7 @@ System requirements
 Before installation
 --------------------------
 
-Install `lys`(https://lys-devel.github.io/lys/index.html)
+Install *lys* (https://lys-devel.github.io/lys/index.html)
 
 Installation from source
 --------------------------------------------------------
