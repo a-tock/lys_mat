@@ -39,6 +39,8 @@ class CrystalStructureIO(object):
         Returns:
             CrystalStructure: The structure loaded from the file.
         """
+        if not file.endswith(ext):
+            file = file + ext
         if ext == ".cif":
             return _from_cif(file)
         if ext == ".pcs":
@@ -70,7 +72,7 @@ def _from_cif(file, index=0):
     ]
     atom_list = _parse_atoms_from_cif(cf)
     sym = _parse_symmetry_from_cif(cf)
-    return CrystalStructure(cell, atom_list, sym)
+    return CrystalStructure(cell, atom_list, sym=sym)
 
 
 def _parse_atoms_from_cif(cf):
@@ -194,7 +196,7 @@ def _exportAsCif(crys, exportAll=True):
         atoms = crys.irreducibleAtoms()
         data = spglib.get_symmetry_dataset(crys._toSpg())
         ops = spglib.get_symmetry(crys._toSpg())
-        cf['_symmetry_Int_Tables_number'] = data["number"]
+        cf['_symmetry_Int_Tables_number'] = data.number
         cf['_symmetry_equiv_pos_as_xyz'] = [__symToStr(r, t) for r, t in zip(ops['rotations'], ops['translations'])]
         cf.CreateLoop(['_symmetry_equiv_pos_as_xyz'])
     else:
@@ -322,7 +324,7 @@ def __strToSym(str):
         tuple: A tuple containing a list of rotation matrices and a list of translation vectors
     """
     def __xyz(s, axis):
-        s_axis = re.findall(r"[+-]?" + "\d*" + axis, s)
+        s_axis = re.findall(r"[+-]?\d*" + axis, s)
         if len(s_axis) == 0:
             return 0
         else:

@@ -1,6 +1,5 @@
-import inspect
-import os
-from importlib import import_module
+import numpy as np
+import spglib
 
 from .Atom import Atom
 from .Atoms import Atoms
@@ -22,13 +21,8 @@ def _importSympy(crys):
     return SympyCS(crys)
 
 
-def _importSuperStructure(crys):
-    from .SuperStructure import SuperStructure
-    return SuperStructure(crys)
-
-
 def _importIO():
-    from .CrystalStrucutureIO import CrystalStructureIO
+    from .CrystalStructureIO import CrystalStructureIO
     return CrystalStructureIO()
 
 
@@ -91,42 +85,6 @@ class CrystalStructure(object):
         """
         return MakePCF(self, element1, element2, sig=sig, dim=dim)
 
-    def getFreeLatticeParameters(self):
-        sym = self.crystalSystem()
-        c = self.createConventionalCell()
-        if "cubic" in sym:
-            return [c.a]
-        if "tetragonal" in sym:
-            return [c.a, c.c]
-        if "ortho" in sym:
-            return [c.a, c.b, c.c]
-        if "monoclinic" in sym:
-            return [c.a, c.b, c.c, c.beta]
-        if "triclinic" in sym:
-            return [c.a, c.b, c.c, c.alpha, c.beta, c.gamma]
-        if "hexagonal" in sym:
-            return [self.a, self.c]
-
-    def setFreeLatticeParameters(self, value):
-        from DiffSim.Phonopy import Phonopy
-        sym = self.crystalSystem()
-        c = self.createConventionalCell()
-        if "cubic" in sym:
-            c.__setUnitVectors([value[0], value[0], value[0], 90, 90, 90])
-        if "tetragonal" in sym:
-            c.__setUnitVectors([value[0], value[0], value[1], 90, 90, 90])
-        if "ortho" in sym:
-            c.__setUnitVectors([value[0], value[1], value[2], 90, 90, 90])
-        if "monoclinic" in sym:
-            c.__setUnitVectors([value[0], value[1], value[2], 90, value[3], 90])
-        if "triclinic" in sym:
-            c.__setUnitVectors(*value)
-        if "hexagonal" in sym:
-            c.__setUnitVectors([value[0], value[0], value[1], 120, 90, 90])
-        mat = Phonopy.generateTransformationMatrix(self)
-        res = Phonopy.generateSupercell(c.createPrimitiveCell(), mat)
-        self.__setUnitVectors(res.unit)
-
     @property
     def atoms(self):
         """
@@ -140,6 +98,25 @@ class CrystalStructure(object):
     @atoms.setter
     def atoms(self, value):
         self.setAtoms(value)
+
+    def getAtomicPositions(self, external=True):
+        """
+        Get the atomic positions in the crystal structure.
+
+        Args:
+            external (bool, optional): Whether to return the positions in the
+                external coordinate system. Defaults to True.
+
+        Returns:
+            numpy.ndarray: Array of atomic positions in the crystal structure.
+        """
+
+        pos = self.__getattr__("getAtomicPositions")()
+        if external:
+            u = np.array(self.unit.T)
+            return np.array([u.dot(p) for p in pos])
+        else:
+            return pos
 
     # Strain
     def createStrainedCrystal(self, eps):
@@ -216,7 +193,8 @@ class CrystalStructure(object):
         """
         return _importSympy(self).subs(*args, **kwargs)
 
-    def createParametrizedCrystal(self, cell=True, atoms=True, U=False):
+# To be implemented in the future
+#    def createParametrizedCrystal(self, cell=True, atoms=True, U=False):
         """
         Create a parametrized crystal structure with lattice parameters, atomic positions and atomic displacement parameters (if enabled) replaced by sympy symbols.
 
@@ -231,9 +209,10 @@ class CrystalStructure(object):
         Note:
             The resulting crystal structure can be used with the defaultCrystal method to restore the original crystal structure.
         """
-        return _importSympy(self).createParametrizedCrystal(cell=cell, atoms=atoms, U=U)
+#        return _importSympy(self).createParametrizedCrystal(cell=cell, atoms=atoms, U=U)
 
-    def defaultCrystal(self):
+# To be implemented in the future
+#    def defaultCrystal(self):
         """
         Returns a CrystalStructure with all free symbols replaced by their default values.
         This method can be executed on a CrystalStructure created by createParametrizedCrystal.
@@ -241,7 +220,7 @@ class CrystalStructure(object):
         Returns:
             CrystalStructure: A new CrystalStructure with all free symbols replaced by their default values.
         """
-        return _importSympy(self).defaultCrystal()
+#        return _importSympy(self).defaultCrystal()
 
     # CrystalStructureIO
     def saveAs(self, file, ext=".cif"):
