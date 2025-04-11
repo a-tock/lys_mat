@@ -33,8 +33,8 @@ class CrystalStructure(object):
     Args:
         cell (list): The cell parameters of the crystal structure in the form [a, b, c, alpha, beta, gamma].
         atoms (list): A list of Atom objects representing the atoms in the crystal structure.
-        basis (list, optional): The basis vectors of the crystal structure.
         sym (list, optional): The symmetry operations of the crystal structure.
+        basis (list, optional): The basis vectors of the crystal structure.
         stress (tuple, optional): The stress tensor of the crystal structure. Default to (0, 0, 0, 0, 0, 0).
         energy (float, optional): The energy of the crystal structure. Default to 0.
 
@@ -69,7 +69,7 @@ class CrystalStructure(object):
 
     """
 
-    def __init__(self, cell, atoms, basis=None, sym=None, stress=(0, 0, 0, 0, 0, 0), energy=0):
+    def __init__(self, cell, atoms, sym=None, basis=None, stress=(0, 0, 0, 0, 0, 0), energy=0):
         atoms = Atoms(atoms, sym)
         lattice = CartesianLattice(cell, basis=basis)
         self._list = [atoms, lattice, Symmetry(atoms, lattice)]

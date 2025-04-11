@@ -2,3 +2,6 @@ numpy >= 1.26.4
 sympy >= 1.12.1
 spglib >= 2.5.0
 seekpath >= 2.1.0
+joblib >= 1.4.2
+lys-python >= 0.3.3
+PyCifRW >= 4.4.6

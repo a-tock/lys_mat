@@ -1,4 +1,4 @@
 Contributing
 ======================================
 
-This library is under development.
+This library is still under development.
