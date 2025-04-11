@@ -127,20 +127,6 @@ class Lattice(object):
 
         return ", ".join([key + " = " + ("{:}" if spf.isSympyObject(value) else "{:.5f}").format(value) for key, value in zip(["a", "b", "c", "alpha", "beta", "gamma"], self._cell)]) + "\n"
 
-    def volume(self):
-        """
-        Returns the volume of the unit cell in A^3.
-
-        Returns:
-            float or sympy expression: The volume of the unit cell in A^3.
-        """
-        angle = self.cell[3:].copy()
-        lib = sp if spf.isSympyObject(self.cell) else np
-        for i in range(3):
-            angle[i] = angle[i] * lib.pi / 180.0
-
-        return self.cell[0] * self.cell[1] * self.cell[2] * lib.sqrt(1 + 2 * lib.cos(angle[0]) * lib.cos(angle[1]) * lib.cos(angle[2]) - lib.cos(angle[0]) ** 2 - lib.cos(angle[1]) ** 2 - lib.cos(angle[2]) ** 2)
-
 
 class CartesianLattice(Lattice):
     """
