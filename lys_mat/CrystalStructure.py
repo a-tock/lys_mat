@@ -23,7 +23,7 @@ def _importSympy(crys):
 
 def _importIO():
     from .CrystalStructureIO import CrystalStructureIO
-    return CrystalStructureIO()
+    return CrystalStructureIO
 
 
 class CrystalStructure(object):
@@ -265,6 +265,20 @@ class CrystalStructure(object):
         """
 
         return _importIO().saveAs(self, file, ext=ext)
+
+    @staticmethod
+    def loadFrom(file, ext=".cif"):
+        """
+        Load a CrystalStructure from a file.
+
+        Args:
+            file (str): The file path to load the structure from.
+            ext (str, optional): The file extension. Supported extensions are ".cif" and ".pcs". Defaults to ".cif".
+
+        Returns:
+            CrystalStructure: The structure loaded from the file.
+        """
+        return _importIO().loadFrom(file, ext=ext)
 
     def __str__(self):
         return self.symmetryInfo() + self.latticeInfo() + self.atomInfo()
