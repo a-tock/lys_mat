@@ -236,7 +236,7 @@ class CartesianLattice(Lattice):
             inv[index][0], inv[index][1], inv[index][2] are kx, ky, kz of the vector of the index.
         """
         lib = sp if spf.isSympyObject(self.unit) else np
-        return np.array(2 * lib.pi * (sp.Matrix(self.unit.T).inv()))
+        return np.array(2 * lib.pi * (sp.Matrix(self.unit.T).inv()), dtype=float if lib is np else object)
 
     @property
     def basis(self):
