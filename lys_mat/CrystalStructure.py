@@ -5,6 +5,7 @@ from .Atom import Atom
 from .Atoms import Atoms
 from .Lattice import CartesianLattice
 from .Symmetry import Symmetry
+from .Supercell import createSupercell
 from .Pair_mesh import makePair
 from .MD_Analysis import MakePCF
 
@@ -87,6 +88,47 @@ class CrystalStructure(object):
         for at in self.atoms:
             mass += Atom.getAtomicMass(at.element)
         return mass / self.volume() / NA * 1e24
+
+    def createSupercell(self, P):
+        """
+        create Superstructure of original CrystalStructure determined by matrix P.
+        {a',b',c'} = {a,b,c}P
+
+        If P is array of length 3, it is used as a diagonal matrix.
+
+        Args:
+            P(3*3 array):Deformation matrix.
+
+        Returns:
+            CrystalStructure:Supercell CrystalStructure that is determined by P.
+        """
+        return createSupercell(self, P)
+
+    def createPrimitiveCell(self):
+        """
+        Calculate primitive unitcell.
+
+        Returns:
+            CrystalStructure: The primitive unitcell.
+        """
+        cell = self._toSpg()
+        lattice, pos, numbers = spglib.find_primitive(cell)
+        elems = self.getElements()
+        atoms = [Atom(elems[n - 1], p) for n, p in zip(numbers, pos)]
+        return CrystalStructure(lattice, atoms)
+
+    def createConventionalCell(self, idealize=False, symprec=1e-5):
+        """
+        Calculate conventional unitcell.
+
+        Returns:
+            CrystalStructure: The conventional unitcell.
+        """
+        cell = self._toSpg()
+        lattice, pos, numbers = spglib.standardize_cell(cell, to_primitive=False, no_idealize=not idealize, symprec=symprec)
+        elems = self.getElements()
+        atoms = [Atom(elems[n - 1], p) for n, p in zip(numbers, pos)]
+        return CrystalStructure(lattice, atoms)
 
     def setPair(self, Elem1, Elem2, max_dist, allow_same=False):
         """
