@@ -5,7 +5,6 @@ from .Atom import Atom
 from .Atoms import Atoms
 from .Lattice import CartesianLattice
 from .Symmetry import Symmetry
-from .Supercell import createSupercell
 from .Pair_mesh import makePair
 from .MD_Analysis import MakePCF
 
@@ -20,6 +19,11 @@ def _importStrain(crys):
 def _importSympy(crys):
     from .SympyCrystalStructure import SympyCS
     return SympyCS(crys)
+
+
+def _importSupercell():
+    from .Supercell import createSupercell
+    return createSupercell
 
 
 def _importIO():
@@ -102,6 +106,7 @@ class CrystalStructure(object):
         Returns:
             CrystalStructure:Supercell CrystalStructure that is determined by P.
         """
+        createSupercell = _importSupercell()
         return createSupercell(self, P)
 
     def createPrimitiveCell(self):

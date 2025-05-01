@@ -3,7 +3,7 @@ import spglib
 import re
 from .Atom import Atom
 from . import sympyFuncs as spf
-from .CrystalStructure import CrystalStructure
+from .Crystal import CrystalStructure
 from CifFile import CifFile, ReadCif
 
 

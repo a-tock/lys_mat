@@ -4,7 +4,7 @@ import spglib
 import copy
 from . import sympyFuncs as spf
 from .Atom import Atom
-from .CrystalStructure import CrystalStructure
+from .Crystal import CrystalStructure
 
 
 class SympyCS(object):
