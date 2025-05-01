@@ -21,7 +21,17 @@ class TestSupercell(unittest.TestCase):
         
         P3 = np.array([[6,3,0],[0,1,0],[-2,-1,1]]).T
         self.__compare(crys, createSupercell(crys,P3))
-
+        
+        P4 =  [2,1,1]
+        self.__compare(crys, createSupercell(crys,P4))
+        
+        P5 =  [[2,0,0],[0,3,0],[0,0,4]]
+        self.__compare(crys, createSupercell(crys,P5))
+        
+        TaTe2 = CrystalStructure.loadFrom("test/DataFiles/TaTe2.cif")
+        sl = TaTe2.createSupercell(np.array([[1, 0, 0], [0, 1, 0], [1, 0, 3]]).T)
+        self.assertAlmostEqual(TaTe2.density(), sl.density())
+        
     def __compare(self, c1, c2):
         c1 = c1.createConventionalCell()
         c2 = c2.createConventionalCell()
