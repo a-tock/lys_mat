@@ -16,12 +16,18 @@ def createSupercell(crys,P):
 
     Args:
         crys(CrystalStructure):Original CrystalStructure.
-        P(numpy.ndarray of shape (3,3)):Deformation matrix.
-
+        P(array of shape (3,) or (3,3)):Deformation matrix.
+        
     Returns:
         CrystalStructure:Supercell CrystalStructure that is deformed by P.
 
     """
+    P = np.array(P)
+    if P.shape == (3,):
+        p = np.zeros((3,3))
+        for i in range(3):
+            p[i,i] = P[i]
+        P = p  
     new_unit = P.T.dot(crys.unit)
     new_atoms = _makeNewAtoms(crys,P)
     return CrystalStructure(new_unit, new_atoms)
