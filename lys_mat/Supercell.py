@@ -35,9 +35,9 @@ def createSupercell(crys,P):
 
 def _makeNewAtoms(crys,P):
     smith,L,R = smithNormalTransform(P) # P = L.dot(smith).dot(R)
-    primitive_atoms = [_transform_atom(atom, L.T, crys.unit, L.T.dot(crys.unit)) for atom in crys.atoms]
+    primitive_atoms = _transform_atom(crys.atoms, L.T, crys.unit, L.T.dot(crys.unit))
     smith_atoms = _expandAtoms(primitive_atoms, smith)
-    return [_transform_atom(atom, R.T, smith.dot(L.T).dot(crys.unit), P.T.dot(crys.unit)) for atom in smith_atoms]
+    return _transform_atom(smith_atoms, R.T, smith.dot(L.T).dot(crys.unit), P.T.dot(crys.unit))
 
 
 def _expandAtoms(primitive_atoms,smith):
@@ -59,39 +59,42 @@ def _makeTranslations(a,b,c):
     return np.concatenate(np.concatenate(np.transpose(mesh,(1,2,3,0))))
 
 
-def _transform_atom(atom, P_T, unit, new_unit):
-        new_position = _new_Atom_position(atom.Position, P_T)
-        new_U = _new_U_maker(atom.Uani, P_T, unit, new_unit)
-        return Atom(atom.Element, new_position, new_U, Occupancy=atom.Occupancy)
+def _transform_atom(atoms, P_T, unit, new_unit):
+    res = []
+    Q = _calc_Q(P_T, unit, new_unit)
+    P_Ti = np.linalg.inv(P_T)
+
+    for at in atoms:
+        new_position = _limit_range(at.Position.dot(P_Ti))
+        new_U = (Q.T).dot(at.Uani).dot(Q)
+        new_at = at.duplicate()
+        new_at.Position = new_position
+        new_at.Uani = new_U
+        res.append(new_at)
+    return res
 
 
-def _new_Atom_position(old_position, P_T):
-    new_position = old_position.dot(np.linalg.inv(P_T))
-    if np.array([isinstance(p, (sp.Symbol, sp.Mul, sp.Add)) for p in old_position]).any():
+def _limit_range(new_position):
+    if spf.isSympyObject(new_position):
         return new_position
     else:
-        new_position =np.where(np.modf(new_position)[0] >= 0, np.modf(new_position)[0], np.modf(new_position)[0] + 1) + 0
-        return np.where(np.isclose(new_position,1), 0, new_position)
+        mod = np.modf(new_position)[0]
+        new_position = np.where(mod >= 0, mod, mod + 1) + 0
+        new_position[abs(new_position-1)<1e-8]=0
+        return new_position
 
 
-def _new_U_maker(U, P_T, old_unit,new_unit):
+def _calc_Q(P_T, old_unit, new_unit):
     if spf.isSympyObject(old_unit):
         old_inv = np.array([sp.Matrix(v).norm() for v in _make_inverse(old_unit)])
         new_inv = np.array([sp.Matrix(v).norm() for v in _make_inverse(new_unit)])   
-        Q = np.diag(old_inv).dot(np.array(sp.Matrix(P_T).inv())).dot(np.diag(1/new_inv))
-        return (Q.T).dot(U).dot(Q)
+        return np.diag(old_inv).dot(np.array(sp.Matrix(P_T).inv())).dot(np.diag(1/new_inv))
     else:
         old_inv = np.linalg.norm(_make_inverse(old_unit),axis=1)
         new_inv = np.linalg.norm(_make_inverse(new_unit),axis=1)
-        Q = np.diag(old_inv).dot(np.linalg.inv(P_T)).dot(np.diag(1/new_inv))
-        return Q.T.dot(U).dot(Q)
+        return np.diag(old_inv).dot(np.linalg.inv(P_T)).dot(np.diag(1/new_inv))
 
 
 def _make_inverse(unit):
     lib = sp if spf.isSympyObject(unit) else np
-    res = []
-    a, b, c = unit
-    res.append(np.cross(b, c) / np.dot(a, np.cross(b, c)) * 2 * lib.pi)
-    res.append(np.cross(c, a) / np.dot(b, np.cross(c, a)) * 2 * lib.pi)
-    res.append(np.cross(a, b) / np.dot(c, np.cross(a, b)) * 2 * lib.pi)
-    return np.array(res)
+    return 2 * lib.pi * np.linalg.inv(unit) 
