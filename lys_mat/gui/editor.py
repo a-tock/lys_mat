@@ -1,44 +1,25 @@
 from lys.Qt import QtCore, QtWidgets
-from lys.widgets import LysSubWindow
 
 #from .Tabs import ViewTab, AtomsTab
 
 
-class MoleculeEditor(LysSubWindow):
-    def __init__(self, parent):
-        super().__init__(floating=parent.isFloating())
-        self.__parent = parent
-        self.__initlayout()
-        self.attach(parent)
-        self.attachTo()
-
-    def __initlayout(self):
-        self.setWindowTitle("Modify molecule/crystal")
-        self._tab = QtWidgets.QTabWidget()
-        #self._tab.addTab(GeneralTab(self.__parent), "General")
-        #self._tab.addTab(ViewTab(self.__parent), "View")
-        #self._tab.addTab(QtWidgets.QWidget(), "Data")
-        #self._tab.addTab(AtomsTab(self.__parent), "Atoms")
-        #self._tab.addTab(QtWidgets.QWidget(), "Bonds")
-        #self._tab.addTab(ExportTab(self.__parent), "Export")
-        self.setWidget(self._tab)
-        self.adjustSize()
-        self.updateGeometry()
+class MoleculeEditor(QtWidgets.QTabWidget):
+    def __init__(self, viewer):
+        super().__init__()
+        self.addTab(GeneralTab(viewer), "General")
 
 
 class GeneralTab(QtWidgets.QWidget):
     def __init__(self, viewer):
         super().__init__()
-        self.__viewer = viewer
-        self.__initlayout()
+        self.__initlayout(viewer)
 
-    def __initlayout(self):
-
-        self.frame = FrameWidget(self.__viewer.getNumberOfFrames())
-        self.frame.valueChanged.connect(self.__viewer.setFrame)
+    def __initlayout(self, viewer):
+        self._frame = FrameWidget(viewer.numberOfFrames)
+        self._frame.valueChanged.connect(viewer.setFrame)
 
         layout = QtWidgets.QVBoxLayout()
-        layout.addWidget(self.frame)
+        layout.addWidget(self._frame)
         layout.addStretch()
         self.setLayout(layout)
 
@@ -52,15 +33,17 @@ class FrameWidget(QtWidgets.QGroupBox):
 
     def __initlayout(self, frames):
         self.value = QtWidgets.QSpinBox()
-        self.value.setRange(0, frames - 1)
         self.value.valueChanged.connect(self.valueChanged.emit)
         self.value.valueChanged.connect(self.__onValueChange)
+        self.value.setRange(0, frames - 1)
         self.slider = QtWidgets.QSlider(QtCore.Qt.Horizontal, self)
-        self.slider.setRange(0, frames - 1)
         self.slider.valueChanged.connect(self.value.setValue)
+        self.slider.setRange(0, frames - 1)
+
         h1 = QtWidgets.QHBoxLayout()
         h1.addWidget(QtWidgets.QLabel("Frame Number"))
         h1.addWidget(self.value)
+
         layout = QtWidgets.QVBoxLayout()
         layout.addLayout(h1)
         layout.addWidget(self.slider)
@@ -74,8 +57,8 @@ class FrameWidget(QtWidgets.QGroupBox):
     def getFrame(self):
         return self.value.value()
 
-    def setFrame(self, ranges):
-        self.value.setValue()
+    def setFrame(self, value):
+        self.value.setValue(value)
 
 
 class ExportTab(QtWidgets.QWidget):
@@ -117,3 +100,4 @@ class ExportTab(QtWidgets.QWidget):
     def __anim(self):
         self._viewer.exportAnimation(self._anim_name.text(), self._width.value(), self._height.value())
         QtWidgets.QMessageBox.information(self, "Information", "Animation is exported to " + self._anim_name.text() + ".mp4")
+
