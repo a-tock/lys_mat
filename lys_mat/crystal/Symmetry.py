@@ -2,7 +2,7 @@ import spglib
 import seekpath
 import numpy as np
 import random
-from lys_mat import sympyFuncs as spf
+from . import sympyFuncs as spf
 
 
 class Symmetry(object):

@@ -3,7 +3,7 @@ import numpy as np
 import sympy as sp
 
 from lys_mat import Atom
-from lys_mat import sympyFuncs as spf
+from lys_mat.crystal import sympyFuncs as spf
 
 
 class TestAtom(unittest.TestCase):

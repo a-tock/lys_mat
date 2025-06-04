@@ -2,8 +2,8 @@ import unittest
 import numpy as np
 import sympy as sp
 
-from lys_mat import sympyFuncs as spf
-from lys_mat import Lattice, CartesianLattice
+from lys_mat.crystal import sympyFuncs as spf
+from lys_mat.crystal import Lattice, CartesianLattice
 
 
 class TestLattice(unittest.TestCase):

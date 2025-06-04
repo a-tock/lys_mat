@@ -6,8 +6,8 @@ from numpy.testing import assert_array_equal, assert_array_almost_equal
 from sympy.matrices.normalforms import smith_normal_form 
 
 from lys_mat import CrystalStructure
-from lys_mat.Supercell import createSupercell, _makeTranslations, _expandAtoms
-from lys_mat.smith import _switchingMatrix, _multiplyingMatrix, _addMatrix, _searchMinElement, _minElementMove, _replaceByRemainder, _processForUndivisible, _smithProcess, smithNormalTransform
+from lys_mat.crystal.Supercell import createSupercell, _makeTranslations, _expandAtoms
+from lys_mat.crystal.smith import _switchingMatrix, _multiplyingMatrix, _addMatrix, _searchMinElement, _minElementMove, _replaceByRemainder, _processForUndivisible, _smithProcess, smithNormalTransform
 
 class TestSupercell(unittest.TestCase):
     def test_createSupercell_cubic(self):

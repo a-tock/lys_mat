@@ -3,8 +3,8 @@ import os
 import numpy as np
 import sympy as sp
 import pickle
-from lys_mat import Atom, Atoms, CartesianLattice, Symmetry, CrystalStructure, CrystalStructureIO
-from lys_mat import sympyFuncs as spf
+from lys_mat.crystal import Atom, Atoms, CartesianLattice, Symmetry, CrystalStructure, CrystalStructureIO
+from lys_mat.crystal import sympyFuncs as spf
 
 
 class TestCrystalStructure(unittest.TestCase):

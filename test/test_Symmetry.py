@@ -3,7 +3,7 @@ import sympy as sp
 import warnings
 import unittest
 
-from lys_mat import Symmetry, Atom, Atoms, CartesianLattice
+from lys_mat.crystal import Symmetry, Atom, Atoms, CartesianLattice
 
 
 class TestSymmetry(unittest.TestCase):

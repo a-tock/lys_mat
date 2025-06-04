@@ -1,8 +1,7 @@
 import unittest
 import numpy as np
 
-from lys_mat import Atom
-from lys_mat import Atoms
+from lys_mat.crystal import Atom, Atoms
 
 
 class TestAtoms(unittest.TestCase):

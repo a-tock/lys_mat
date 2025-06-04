@@ -4,7 +4,7 @@ import unittest
 import numpy as np
 import sympy as sp
 
-import lys_mat.sympyFuncs as spf
+import lys_mat.crystal.sympyFuncs as spf
 
 
 class TestSympyFuncs(unittest.TestCase):
