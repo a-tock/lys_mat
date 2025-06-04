@@ -38,7 +38,7 @@ class TestCrystalStructure(unittest.TestCase):
 
         # Lattice class property and method
         np.testing.assert_array_almost_equal(crys.cell, [4.0773, 4.0773, 4.0773, 90, 90, 90])
-        self.assertAlmostEqual(crys.volume(), 4.0773 ** 3)
+        self.assertAlmostEqual(crys.volume, 4.0773 ** 3)
 
         # Symmetry class method
         self.assertEqual(crys.crystalSystem(), "cubic")

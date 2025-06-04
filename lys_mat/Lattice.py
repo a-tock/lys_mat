@@ -21,7 +21,6 @@ class Lattice(object):
     """
 
     def __init__(self, cell):
-
         super().__init__()
         self._cell = np.array(cell)
 
@@ -99,6 +98,7 @@ class Lattice(object):
         """
         return self._cell
 
+    @property
     def volume(self):
         """
         Returns the volume of the unit cell in A^3.
@@ -195,20 +195,6 @@ class CartesianLattice(Lattice):
             gamma, alpha, beta = angle(unit[0], unit[1]), angle(unit[1], unit[2]), angle(unit[2], unit[0])
             return np.array([a, b, c, alpha, beta, gamma])
 
-    def InverseLatticeVectors(self):
-        """
-        This is deprecated method. Use inv instead.
-        Calculates the reciprocal lattice vectors from the real lattice vectors.
-
-        Returns:
-            numpy.ndarray (shape (3,3)): The reciprocal lattice vectors.
-
-        Note:
-            InverseLatticeVectors[0], InverseLatticeVectors[1], InverseLatticeVectors[2] are a*, b*, c* respectively.
-            InverseLatticeVectors[index][0], InverseLatticeVectors[index][1], InverseLatticeVectors[index][2] are kx, ky, kz of the vector of the index.
-        """
-        return self.inv
-
     @property
     def unit(self):
         """
@@ -291,7 +277,7 @@ class CartesianLattice(Lattice):
 
     def InverseLatticeVectors(self):
         """
-        This method is deprecated.
+        This method is deprecated. Use inv method instead.
         Calculates the reciprocal lattice vectors from the real lattice vectors.
 
         Returns:

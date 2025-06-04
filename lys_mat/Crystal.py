@@ -91,7 +91,7 @@ class CrystalStructure(object):
         mass = 0
         for at in self.atoms:
             mass += Atom.getAtomicMass(at.element)
-        return mass / self.volume() / NA * 1e24
+        return mass / self.volume / NA * 1e24
 
     def createSupercell(self, P):
         """
