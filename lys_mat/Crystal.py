@@ -270,8 +270,7 @@ class CrystalStructure(object):
         """
         return _importSympy(self).subs(*args, **kwargs)
 
-# To be implemented in the future
-#    def createParametrizedCrystal(self, cell=True, atoms=True, U=False):
+    def createParametrizedCrystal(self, cell=True, atoms=True, U=False):
         """
         Create a parametrized crystal structure with lattice parameters, atomic positions and atomic displacement parameters (if enabled) replaced by sympy symbols.
 
@@ -286,10 +285,9 @@ class CrystalStructure(object):
         Note:
             The resulting crystal structure can be used with the defaultCrystal method to restore the original crystal structure.
         """
-#        return _importSympy(self).createParametrizedCrystal(cell=cell, atoms=atoms, U=U)
+        return _importSympy(self).createParametrizedCrystal(cell=cell, atoms=atoms, U=U)
 
-# To be implemented in the future
-#    def defaultCrystal(self):
+    def defaultCrystal(self):
         """
         Returns a CrystalStructure with all free symbols replaced by their default values.
         This method can be executed on a CrystalStructure created by createParametrizedCrystal.

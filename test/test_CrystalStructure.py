@@ -149,3 +149,14 @@ class TestCrystalStructureIO(unittest.TestCase):
         crys5 = CrystalStructureIO.loadFrom(self.iopath + "test_io4_VO2_monoclinic")
         self.assertEqual(crys5.getElements(), ["O", "V"])
         self.assertEqual(len(crys5.getAtoms()), 12)
+
+
+class TestParam(unittest.TestCase):
+    def test_param(self):
+        Au = CrystalStructure.loadFrom("test/DataFiles/Au.cif")
+        pAu = Au.createParametrizedCrystal()
+        self.assertEqual(len(pAu.free_symbols), 1)
+
+        VO2 = CrystalStructure.loadFrom("test/DataFiles/VO2_monoclinic.cif")
+        pVO2 = VO2.createParametrizedCrystal()
+        self.assertEqual(len(pVO2.free_symbols), 13)

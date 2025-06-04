@@ -28,27 +28,25 @@ class SympyCS(object):
     def subs(self, *args, **kwargs):
         return CrystalStructure(spf.subs(self._crys.cell, *args, **kwargs), spf.subs(self._crys.atoms, *args, **kwargs))
 
+    def createParametrizedCrystal(self, cell=True, atoms=True, U=False):
+        conv = self._crys.createConventionalCell()
+        if cell:
+            cell = self.__reduceCellBySymmetry(self._crys.cell)
+        else:
+            cell = self._crys.cell
+        if atoms:
+            atm = [Atom(at.element, self.__createPParam(i, at), U=self.__createUParam(i, U)) for i, at in enumerate(self._crys.atoms)]
+        else:
+            atm = copy.deepcopy(self._crys.atoms)
+        c = CrystalStructure(cell, atm)
+        if atoms:
+            c = self.__reduceAtomsBySymmetry(conv, c, U)
+        default = self.__findDefaults(c, conv)
+        c.defaultParameters = default
+        return c
 
-# To be implemented in the future
-    # def createParametrizedCrystal(self, cell=True, atoms=True, U=False):
-    #     conv = self._crys.createConventionalCell()
-    #     if cell:
-    #         cell = self.__reduceCellBySymmetry(self._crys.cell)
-    #     else:
-    #         cell = self._crys.cell
-    #     if atoms:
-    #         atm = [Atom(at.element, self.__createPParam(i, at), U=self.__createUParam(i, U)) for i, at in enumerate(self._crys.atoms)]
-    #     else:
-    #         atm = copy.deepcopy(self._crys.atoms)
-    #     c = CrystalStructure(cell, atm)
-    #     if atoms:
-    #         c = self.__reduceAtomsBySymmetry(conv, c, U)
-    #     default = self.__findDefaults(c, conv)
-    #     c.defaultParameters = default
-    #     return c
-
-    # def defaultCrystal(self):
-    #     return self._crys.subs(self._crys.defaultParameters)
+    def defaultCrystal(self):
+        return self._crys.subs(self._crys.defaultParameters)
 
     def __createPParam(self, i, at):
         return sp.symbols("x_" + at.element + str(i + 1) + "," + "y_" + at.element + str(i + 1) + "," + "z_" + at.element + str(i + 1))
