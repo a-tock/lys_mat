@@ -33,7 +33,7 @@ def _importIO():
 
 class CrystalStructure(object):
     """
-    A class representing a crystal structure.
+    A class representing a crystal structure. You can access all methods implemented in :class:`CartesianLattice <lys_mat.crystal.Lattice.CartesianLattice>`, :class:`Atoms <lys_mat.crystal.Atoms.Atoms>`, :class:`Symmetry <lys_mat.crystal.Symmetry.Symmetry>`
 
     Args:
         cell (list): The cell parameters of the crystal structure in the form [a, b, c, alpha, beta, gamma].
@@ -48,6 +48,8 @@ class CrystalStructure(object):
     Example::
 
         from lys_mat import Atom, CrystalStructure
+
+        # Create gold crystal
         at1 = Atom("Au", (0, 0, 0))
         at2 = Atom("Au", (0.5, 0.5, 0))
         at3 = Atom("Au", (0, 0.5, 0.5))
@@ -64,11 +66,14 @@ class CrystalStructure(object):
         # 3: Au (Z = 79, Occupancy = 1) Pos = (0.00000, 0.50000, 0.50000)
         # 4: Au (Z = 79, Occupancy = 1) Pos = (0.50000, 0.00000, 0.50000)
 
-        print(crys.getElements())   # ['Au']
-        print(crys.cell)    # [4.0773, 4.0773, 4.0773, 90, 90, 90]
-        print(crys.volume())    # 67.782565369917
-        print(crys.crystalSystem())   # cubic
+        # Basic informations
+        print(crys.volume))    # 67.782565369917
         print(crys.density())    # 19.301168279078535
+
+        # You can access methods of CartesianLattice, Atoms, Symmetry as if they are the methods in CrystalStructure.
+        print(crys.getElements())   # ['Au']: Functionarity in Atoms
+        print(crys.cell)    # [4.0773, 4.0773, 4.0773, 90, 90, 90]: CatesianLattice
+        print(crys.crystalSystem())   # cubic: Symmetry
 
     """
 

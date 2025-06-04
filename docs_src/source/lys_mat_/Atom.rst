@@ -1,7 +1,7 @@
-Atom module
+Atom
 --------------------
 
-.. automodule:: lys_mat.Atom
+.. automodule:: lys_mat.crystal.Atom
    :members:
    :undoc-members:
    :show-inheritance:

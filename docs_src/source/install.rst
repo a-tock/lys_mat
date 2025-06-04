@@ -5,10 +5,6 @@ System requirements
 -------------------------
 - Python (version >= 3.11).
 
-Before installation
---------------------------
-
-Install *lys* (https://lys-devel.github.io/lys/index.html)
 
 Installation from source
 --------------------------------------------------------
@@ -19,7 +15,7 @@ If you want to install `lys_mat` from source, follow the instructions below.
 
     pip install --upgrade pip
 
-2. Clone lys_mat. If you do not have git, you can download the source code from GitHub (https://github.com/a-tock/lys_mat)::
+2. Clone lys_mat from GitHub (https://github.com/a-tock/lys_mat)::
 
     git clone git@github.com:a-tock/lys_mat.git
 
@@ -28,6 +24,10 @@ If you want to install `lys_mat` from source, follow the instructions below.
     cd lys_mat
     pip install .
 
-4. Start lys with lys_mat by the command below. Note that the current directory of the system is used as the working directory of lys::
 
-    python -m lys -p lys_mat
+.. Enabling graphical user interface (GUI)
+.. --------------------------------------------------------
+.. Install *lys* (https://lys-devel.github.io/lys/index.html)
+.. Start lys with lys_mat by the command below. Note that the current directory of the system is used as the working directory of lys::
+..    python -m lys -p lys_mat
+

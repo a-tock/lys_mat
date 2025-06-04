@@ -7,6 +7,7 @@ from .Atom import Atom
 class Atoms(object):
     """
     Atoms class represents a list of atoms in a crystal structure.
+    All methods in this class can be accessed from :class:`CrystalStructure <lys_mat.crystal.Crystal.CrystalStructure>`, and therefore users do not need to instantiate this class.
 
     Args:
         atoms (list of Atom): The list of Atom objects to initialize the Atoms object with.
@@ -14,25 +15,32 @@ class Atoms(object):
 
     Example::
 
-        from lys_mat import Atom, Atoms
+        from lys_mat import Atom, CrystalStructure
+
+        # Initialize crystal structure
         at1 = Atom("Na", (0, 0, 0))
         at2 = Atom("Na", (0.5, 0.5, 0.5))
-        atoms = Atoms([at1, at2])
-        print(atoms.atomInfo())
+        c1 = CrystalStructure([1,1,1,90,90,90], [at1, at2])
+
+        # You can access atomInfo method in Atoms class.
+        print(c1.atomInfo())
         #--- atoms (2) ---
         #1: Na (Z = 11, Occupancy = 1) Pos = (0.00000, 0.00000, 0.00000)
         #2: Na (Z = 11, Occupancy = 1) Pos = (0.50000, 0.00000, 0.50000)
 
-
+        # Initialize based on symmetry
         at1 = Atom("Na", (0, 0, 0))
         at2 = Atom("Cl", (0.5, 0, 0))
+
+        # Symmetry operations
         sym = []
         sym.append(([[1, 0, 0],[0, 1, 0], [0, 0, 1]], [0, 0, 0]))
         sym.append(([[1, 0, 0],[0, 1, 0], [0, 0, 1]], [0.5, 0.5, 0]))
         sym.append(([[-1, 0, 0],[0, 1, 0], [0, 0, 1]], [0, 0.5, 0.5]))
         sym.append(([[-1, 0, 0],[0, 1, 0], [0, 0, 1]], [0.5, 0, 0.5]))
-        atoms = Atoms([at1, at2], sym)
-        print(atoms.atomInfo())
+
+        c2 = CrystalStructure([1,1,1,90,90,90], [at1, at2], sym=sym)
+        print(c2.atomInfo())
         #--- atoms (8) ---
         #1: Cl (Z = 17, Occupancy = 1) Pos = (0.50000, 0.00000, 0.00000)
         #2: Cl (Z = 17, Occupancy = 1) Pos = (0.00000, 0.50000, 0.00000)

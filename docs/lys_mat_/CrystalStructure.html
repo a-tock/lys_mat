@@ -1,28 +1,26 @@
+
+
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" data-content_root="../">
 <head>
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>CrystalStructure module &mdash; lys_mat  documentation</title>
-      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=fa44fd50" />
-      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=19f00094" />
+  <title>CrystalStructure &mdash; lys_mat  documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
 
   
-  <!--[if lt IE 9]>
-    <script src="../_static/js/html5shiv.min.js"></script>
-  <![endif]-->
-  
-        <script src="../_static/jquery.js?v=5d32c60e"></script>
-        <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-        <script src="../_static/documentation_options.js?v=5929fcd5"></script>
-        <script src="../_static/doctools.js?v=9a2dae69"></script>
-        <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=5929fcd5"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="CrystalStructureIO module" href="CrystalStructureIO.html" />
-    <link rel="prev" title="Symmetry module" href="Symmetry.html" /> 
+    <link rel="next" title="Atom" href="Atom.html" />
+    <link rel="prev" title="Python API" href="../api.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -46,31 +44,38 @@
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../install.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tutorial.html">Getting Started</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="../api.html">Python API</a><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="sympyFuncs.html">SympyFuncs module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="Atom.html">Atom module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="Atoms.html">Atoms module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="Lattice.html">Lattice module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="Symmetry.html">Symmetry module</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">CrystalStructure module</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#lys_mat.CrystalStructure.CrystalStructure"><code class="docutils literal notranslate"><span class="pre">CrystalStructure</span></code></a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#lys_mat.CrystalStructure.CrystalStructure.atoms"><code class="docutils literal notranslate"><span class="pre">CrystalStructure.atoms</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#lys_mat.CrystalStructure.CrystalStructure.calculateStrain"><code class="docutils literal notranslate"><span class="pre">CrystalStructure.calculateStrain()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#lys_mat.CrystalStructure.CrystalStructure.createPCF"><code class="docutils literal notranslate"><span class="pre">CrystalStructure.createPCF()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#lys_mat.CrystalStructure.CrystalStructure.createStrainedCrystal"><code class="docutils literal notranslate"><span class="pre">CrystalStructure.createStrainedCrystal()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#lys_mat.CrystalStructure.CrystalStructure.density"><code class="docutils literal notranslate"><span class="pre">CrystalStructure.density()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#lys_mat.CrystalStructure.CrystalStructure.free_symbols"><code class="docutils literal notranslate"><span class="pre">CrystalStructure.free_symbols</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#lys_mat.CrystalStructure.CrystalStructure.getAtomicPositions"><code class="docutils literal notranslate"><span class="pre">CrystalStructure.getAtomicPositions()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#lys_mat.CrystalStructure.CrystalStructure.isSympyObject"><code class="docutils literal notranslate"><span class="pre">CrystalStructure.isSympyObject()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#lys_mat.CrystalStructure.CrystalStructure.saveAs"><code class="docutils literal notranslate"><span class="pre">CrystalStructure.saveAs()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#lys_mat.CrystalStructure.CrystalStructure.setPair"><code class="docutils literal notranslate"><span class="pre">CrystalStructure.setPair()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#lys_mat.CrystalStructure.CrystalStructure.subs"><code class="docutils literal notranslate"><span class="pre">CrystalStructure.subs()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#lys_mat.CrystalStructure.CrystalStructure.symbolNames"><code class="docutils literal notranslate"><span class="pre">CrystalStructure.symbolNames()</span></code></a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">CrystalStructure</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#lys_mat.crystal.Crystal.CrystalStructure"><code class="docutils literal notranslate"><span class="pre">CrystalStructure</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#lys_mat.crystal.Crystal.CrystalStructure.atoms"><code class="docutils literal notranslate"><span class="pre">CrystalStructure.atoms</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#lys_mat.crystal.Crystal.CrystalStructure.calculateStrain"><code class="docutils literal notranslate"><span class="pre">CrystalStructure.calculateStrain()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#lys_mat.crystal.Crystal.CrystalStructure.createConventionalCell"><code class="docutils literal notranslate"><span class="pre">CrystalStructure.createConventionalCell()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#lys_mat.crystal.Crystal.CrystalStructure.createPCF"><code class="docutils literal notranslate"><span class="pre">CrystalStructure.createPCF()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#lys_mat.crystal.Crystal.CrystalStructure.createParametrizedCrystal"><code class="docutils literal notranslate"><span class="pre">CrystalStructure.createParametrizedCrystal()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#lys_mat.crystal.Crystal.CrystalStructure.createPrimitiveCell"><code class="docutils literal notranslate"><span class="pre">CrystalStructure.createPrimitiveCell()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#lys_mat.crystal.Crystal.CrystalStructure.createStrainedCrystal"><code class="docutils literal notranslate"><span class="pre">CrystalStructure.createStrainedCrystal()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#lys_mat.crystal.Crystal.CrystalStructure.createSupercell"><code class="docutils literal notranslate"><span class="pre">CrystalStructure.createSupercell()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#lys_mat.crystal.Crystal.CrystalStructure.defaultCrystal"><code class="docutils literal notranslate"><span class="pre">CrystalStructure.defaultCrystal()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#lys_mat.crystal.Crystal.CrystalStructure.density"><code class="docutils literal notranslate"><span class="pre">CrystalStructure.density()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#lys_mat.crystal.Crystal.CrystalStructure.free_symbols"><code class="docutils literal notranslate"><span class="pre">CrystalStructure.free_symbols</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#lys_mat.crystal.Crystal.CrystalStructure.getAtomicPositions"><code class="docutils literal notranslate"><span class="pre">CrystalStructure.getAtomicPositions()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#lys_mat.crystal.Crystal.CrystalStructure.isSympyObject"><code class="docutils literal notranslate"><span class="pre">CrystalStructure.isSympyObject()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#lys_mat.crystal.Crystal.CrystalStructure.loadFrom"><code class="docutils literal notranslate"><span class="pre">CrystalStructure.loadFrom()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#lys_mat.crystal.Crystal.CrystalStructure.saveAs"><code class="docutils literal notranslate"><span class="pre">CrystalStructure.saveAs()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#lys_mat.crystal.Crystal.CrystalStructure.setPair"><code class="docutils literal notranslate"><span class="pre">CrystalStructure.setPair()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#lys_mat.crystal.Crystal.CrystalStructure.subs"><code class="docutils literal notranslate"><span class="pre">CrystalStructure.subs()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#lys_mat.crystal.Crystal.CrystalStructure.symbolNames"><code class="docutils literal notranslate"><span class="pre">CrystalStructure.symbolNames()</span></code></a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="CrystalStructureIO.html">CrystalStructureIO module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Atom.html">Atom</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Atoms.html">Atoms</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Lattice.html">Lattice</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Symmetry.html">Symmetry</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sympyFuncs.html">SympyFuncs</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../contributing.html">Contributing</a></li>
@@ -91,7 +96,7 @@
   <ul class="wy-breadcrumbs">
       <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
           <li class="breadcrumb-item"><a href="../api.html">Python API</a></li>
-      <li class="breadcrumb-item active">CrystalStructure module</li>
+      <li class="breadcrumb-item active">CrystalStructure</li>
       <li class="wy-breadcrumbs-aside">
             <a href="../_sources/lys_mat_/CrystalStructure.rst.txt" rel="nofollow"> View page source</a>
       </li>
@@ -101,13 +106,13 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="module-lys_mat.CrystalStructure">
-<span id="crystalstructure-module"></span><h1>CrystalStructure module<a class="headerlink" href="#module-lys_mat.CrystalStructure" title="Link to this heading"></a></h1>
+  <section id="module-lys_mat.crystal.Crystal">
+<span id="crystalstructure"></span><h1>CrystalStructure<a class="headerlink" href="#module-lys_mat.crystal.Crystal" title="Link to this heading"></a></h1>
 <dl class="py class">
-<dt class="sig sig-object py" id="lys_mat.CrystalStructure.CrystalStructure">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">lys_mat.CrystalStructure.</span></span><span class="sig-name descname"><span class="pre">CrystalStructure</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cell</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">atoms</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sym</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">basis</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stress</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">(0,</span> <span class="pre">0,</span> <span class="pre">0,</span> <span class="pre">0,</span> <span class="pre">0,</span> <span class="pre">0)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">energy</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lys_mat/CrystalStructure.html#CrystalStructure"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lys_mat.CrystalStructure.CrystalStructure" title="Link to this definition"></a></dt>
+<dt class="sig sig-object py" id="lys_mat.crystal.Crystal.CrystalStructure">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">lys_mat.crystal.Crystal.</span></span><span class="sig-name descname"><span class="pre">CrystalStructure</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cell</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">atoms</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sym</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">basis</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lys_mat/crystal/Crystal.html#CrystalStructure"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lys_mat.crystal.Crystal.CrystalStructure" title="Link to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
-<p>A class representing a crystal structure.</p>
+<p>A class representing a crystal structure. You can access all methods implemented in <a class="reference internal" href="Lattice.html#lys_mat.crystal.Lattice.CartesianLattice" title="lys_mat.crystal.Lattice.CartesianLattice"><code class="xref py py-class docutils literal notranslate"><span class="pre">CartesianLattice</span></code></a>, <a class="reference internal" href="Atoms.html#lys_mat.crystal.Atoms.Atoms" title="lys_mat.crystal.Atoms.Atoms"><code class="xref py py-class docutils literal notranslate"><span class="pre">Atoms</span></code></a>, <a class="reference internal" href="Symmetry.html#lys_mat.crystal.Symmetry.Symmetry" title="lys_mat.crystal.Symmetry.Symmetry"><code class="xref py py-class docutils literal notranslate"><span class="pre">Symmetry</span></code></a></p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -115,8 +120,6 @@
 <li><p><strong>atoms</strong> (<em>list</em>) – A list of Atom objects representing the atoms in the crystal structure.</p></li>
 <li><p><strong>sym</strong> (<em>list</em><em>, </em><em>optional</em>) – The symmetry operations of the crystal structure.</p></li>
 <li><p><strong>basis</strong> (<em>list</em><em>, </em><em>optional</em>) – The basis vectors of the crystal structure.</p></li>
-<li><p><strong>stress</strong> (<em>tuple</em><em>, </em><em>optional</em>) – The stress tensor of the crystal structure. Default to (0, 0, 0, 0, 0, 0).</p></li>
-<li><p><strong>energy</strong> (<em>float</em><em>, </em><em>optional</em>) – The energy of the crystal structure. Default to 0.</p></li>
 </ul>
 </dd>
 </dl>
@@ -126,7 +129,9 @@
 are also available as methods and properties of this class.</p>
 </div>
 <p>Example:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">lys_mat</span> <span class="kn">import</span> <span class="n">Atom</span><span class="p">,</span> <span class="n">CrystalStructure</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">lys_mat</span><span class="w"> </span><span class="kn">import</span> <span class="n">Atom</span><span class="p">,</span> <span class="n">CrystalStructure</span>
+
+<span class="c1"># Create gold crystal</span>
 <span class="n">at1</span> <span class="o">=</span> <span class="n">Atom</span><span class="p">(</span><span class="s2">&quot;Au&quot;</span><span class="p">,</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
 <span class="n">at2</span> <span class="o">=</span> <span class="n">Atom</span><span class="p">(</span><span class="s2">&quot;Au&quot;</span><span class="p">,</span> <span class="p">(</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
 <span class="n">at3</span> <span class="o">=</span> <span class="n">Atom</span><span class="p">(</span><span class="s2">&quot;Au&quot;</span><span class="p">,</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">))</span>
@@ -143,34 +148,37 @@ are also available as methods and properties of this class.</p>
 <span class="c1"># 3: Au (Z = 79, Occupancy = 1) Pos = (0.00000, 0.50000, 0.50000)</span>
 <span class="c1"># 4: Au (Z = 79, Occupancy = 1) Pos = (0.50000, 0.00000, 0.50000)</span>
 
-<span class="nb">print</span><span class="p">(</span><span class="n">crys</span><span class="o">.</span><span class="n">getElements</span><span class="p">())</span>   <span class="c1"># [&#39;Au&#39;]</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">crys</span><span class="o">.</span><span class="n">cell</span><span class="p">)</span>    <span class="c1"># [4.0773, 4.0773, 4.0773, 90, 90, 90]</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">crys</span><span class="o">.</span><span class="n">volume</span><span class="p">())</span>    <span class="c1"># 67.782565369917</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">crys</span><span class="o">.</span><span class="n">crystalSystem</span><span class="p">())</span>   <span class="c1"># cubic</span>
+<span class="c1"># Basic informations</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">crys</span><span class="o">.</span><span class="n">volume</span><span class="p">))</span>    <span class="c1"># 67.782565369917</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">crys</span><span class="o">.</span><span class="n">density</span><span class="p">())</span>    <span class="c1"># 19.301168279078535</span>
+
+<span class="c1"># You can access methods of CartesianLattice, Atoms, Symmetry as if they are the methods in CrystalStructure.</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">crys</span><span class="o">.</span><span class="n">getElements</span><span class="p">())</span>   <span class="c1"># [&#39;Au&#39;]: Functionarity in Atoms</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">crys</span><span class="o">.</span><span class="n">cell</span><span class="p">)</span>    <span class="c1"># [4.0773, 4.0773, 4.0773, 90, 90, 90]: CatesianLattice</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">crys</span><span class="o">.</span><span class="n">crystalSystem</span><span class="p">())</span>   <span class="c1"># cubic: Symmetry</span>
 </pre></div>
 </div>
 <dl class="py property">
-<dt class="sig sig-object py" id="lys_mat.CrystalStructure.CrystalStructure.atoms">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">atoms</span></span><a class="headerlink" href="#lys_mat.CrystalStructure.CrystalStructure.atoms" title="Link to this definition"></a></dt>
+<dt class="sig sig-object py" id="lys_mat.crystal.Crystal.CrystalStructure.atoms">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">atoms</span></span><a class="headerlink" href="#lys_mat.crystal.Crystal.CrystalStructure.atoms" title="Link to this definition"></a></dt>
 <dd><p>Get the list of atoms in the crystal structure.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
 <dd class="field-odd"><p>List of Atom objects in the crystal structure.</p>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p>list of <a class="reference internal" href="Atom.html#lys_mat.Atom.Atom" title="lys_mat.Atom.Atom">Atom</a></p>
+<dd class="field-even"><p>list of <a class="reference internal" href="Atom.html#lys_mat.crystal.Atom.Atom" title="lys_mat.crystal.Atom.Atom">Atom</a></p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="lys_mat.CrystalStructure.CrystalStructure.calculateStrain">
-<span class="sig-name descname"><span class="pre">calculateStrain</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ref</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lys_mat/CrystalStructure.html#CrystalStructure.calculateStrain"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lys_mat.CrystalStructure.CrystalStructure.calculateStrain" title="Link to this definition"></a></dt>
+<dt class="sig sig-object py" id="lys_mat.crystal.Crystal.CrystalStructure.calculateStrain">
+<span class="sig-name descname"><span class="pre">calculateStrain</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ref</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lys_mat/crystal/Crystal.html#CrystalStructure.calculateStrain"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lys_mat.crystal.Crystal.CrystalStructure.calculateStrain" title="Link to this definition"></a></dt>
 <dd><p>Calculate the strain components in Voigt notation (xx,yy,zz,xy,yz,zx) of a crystal structure relative to a reference structure.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>ref</strong> (<a class="reference internal" href="#lys_mat.CrystalStructure.CrystalStructure" title="lys_mat.CrystalStructure.CrystalStructure"><em>CrystalStructure</em></a>) – The reference crystal structure.</p>
+<dd class="field-odd"><p><strong>ref</strong> (<a class="reference internal" href="#lys_mat.crystal.Crystal.CrystalStructure" title="lys_mat.crystal.Crystal.CrystalStructure"><em>CrystalStructure</em></a>) – The reference crystal structure.</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>The strain components in Voigt notation (xx,yy,zz,xy,yz,zx).</p>
@@ -182,8 +190,22 @@ are also available as methods and properties of this class.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="lys_mat.CrystalStructure.CrystalStructure.createPCF">
-<span class="sig-name descname"><span class="pre">createPCF</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">element1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">element2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sig</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dim</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">3</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lys_mat/CrystalStructure.html#CrystalStructure.createPCF"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lys_mat.CrystalStructure.CrystalStructure.createPCF" title="Link to this definition"></a></dt>
+<dt class="sig sig-object py" id="lys_mat.crystal.Crystal.CrystalStructure.createConventionalCell">
+<span class="sig-name descname"><span class="pre">createConventionalCell</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">idealize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">symprec</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1e-05</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lys_mat/crystal/Crystal.html#CrystalStructure.createConventionalCell"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lys_mat.crystal.Crystal.CrystalStructure.createConventionalCell" title="Link to this definition"></a></dt>
+<dd><p>Calculate conventional unitcell.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The conventional unitcell.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="#lys_mat.crystal.Crystal.CrystalStructure" title="lys_mat.crystal.Crystal.CrystalStructure">CrystalStructure</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="lys_mat.crystal.Crystal.CrystalStructure.createPCF">
+<span class="sig-name descname"><span class="pre">createPCF</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">element1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">element2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sig</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dim</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">3</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lys_mat/crystal/Crystal.html#CrystalStructure.createPCF"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lys_mat.crystal.Crystal.CrystalStructure.createPCF" title="Link to this definition"></a></dt>
 <dd><p>Calculate the pair correlation function (PCF) for the crystal structure.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -201,8 +223,47 @@ are also available as methods and properties of this class.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="lys_mat.CrystalStructure.CrystalStructure.createStrainedCrystal">
-<span class="sig-name descname"><span class="pre">createStrainedCrystal</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">eps</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lys_mat/CrystalStructure.html#CrystalStructure.createStrainedCrystal"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lys_mat.CrystalStructure.CrystalStructure.createStrainedCrystal" title="Link to this definition"></a></dt>
+<dt class="sig sig-object py" id="lys_mat.crystal.Crystal.CrystalStructure.createParametrizedCrystal">
+<span class="sig-name descname"><span class="pre">createParametrizedCrystal</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cell</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">atoms</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">U</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lys_mat/crystal/Crystal.html#CrystalStructure.createParametrizedCrystal"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lys_mat.crystal.Crystal.CrystalStructure.createParametrizedCrystal" title="Link to this definition"></a></dt>
+<dd><p>Create a parametrized crystal structure with lattice parameters, atomic positions and atomic displacement parameters (if enabled) replaced by sympy symbols.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>cell</strong> (<em>bool</em>) – If True, lattice parameters are replaced by sympy symbols. Default to True.</p></li>
+<li><p><strong>atoms</strong> (<em>bool</em>) – If True, atomic positions are replaced by sympy symbols. Default to True.</p></li>
+<li><p><strong>U</strong> (<em>bool</em>) – If True, atomic displacement parameters are replaced by sympy symbols. Default to False.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A new CrystalStructure with lattice parameters, atomic positions and atomic displacement parameters replaced by sympy symbols.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#lys_mat.crystal.Crystal.CrystalStructure" title="lys_mat.crystal.Crystal.CrystalStructure">CrystalStructure</a></p>
+</dd>
+</dl>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The resulting crystal structure can be used with the defaultCrystal method to restore the original crystal structure.</p>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="lys_mat.crystal.Crystal.CrystalStructure.createPrimitiveCell">
+<span class="sig-name descname"><span class="pre">createPrimitiveCell</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lys_mat/crystal/Crystal.html#CrystalStructure.createPrimitiveCell"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lys_mat.crystal.Crystal.CrystalStructure.createPrimitiveCell" title="Link to this definition"></a></dt>
+<dd><p>Calculate primitive unitcell.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The primitive unitcell.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="#lys_mat.crystal.Crystal.CrystalStructure" title="lys_mat.crystal.Crystal.CrystalStructure">CrystalStructure</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="lys_mat.crystal.Crystal.CrystalStructure.createStrainedCrystal">
+<span class="sig-name descname"><span class="pre">createStrainedCrystal</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">eps</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lys_mat/crystal/Crystal.html#CrystalStructure.createStrainedCrystal"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lys_mat.crystal.Crystal.CrystalStructure.createStrainedCrystal" title="Link to this definition"></a></dt>
 <dd><p>Create a strained crystal structure.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -212,14 +273,48 @@ are also available as methods and properties of this class.</p>
 <dd class="field-even"><p>The strained crystal structure.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference internal" href="#lys_mat.CrystalStructure.CrystalStructure" title="lys_mat.CrystalStructure.CrystalStructure">CrystalStructure</a></p>
+<dd class="field-odd"><p><a class="reference internal" href="#lys_mat.crystal.Crystal.CrystalStructure" title="lys_mat.crystal.Crystal.CrystalStructure">CrystalStructure</a></p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="lys_mat.CrystalStructure.CrystalStructure.density">
-<span class="sig-name descname"><span class="pre">density</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lys_mat/CrystalStructure.html#CrystalStructure.density"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lys_mat.CrystalStructure.CrystalStructure.density" title="Link to this definition"></a></dt>
+<dt class="sig sig-object py" id="lys_mat.crystal.Crystal.CrystalStructure.createSupercell">
+<span class="sig-name descname"><span class="pre">createSupercell</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">P</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lys_mat/crystal/Crystal.html#CrystalStructure.createSupercell"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lys_mat.crystal.Crystal.CrystalStructure.createSupercell" title="Link to this definition"></a></dt>
+<dd><p>create Superstructure of original CrystalStructure determined by matrix P.
+{a’,b’,c’} = {a,b,c}P</p>
+<p>If P is array of length 3, it is used as a diagonal matrix.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>P</strong> (<em>3*3 array</em>) – Deformation matrix.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Supercell CrystalStructure that is determined by P.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#lys_mat.crystal.Crystal.CrystalStructure" title="lys_mat.crystal.Crystal.CrystalStructure">CrystalStructure</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="lys_mat.crystal.Crystal.CrystalStructure.defaultCrystal">
+<span class="sig-name descname"><span class="pre">defaultCrystal</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lys_mat/crystal/Crystal.html#CrystalStructure.defaultCrystal"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lys_mat.crystal.Crystal.CrystalStructure.defaultCrystal" title="Link to this definition"></a></dt>
+<dd><p>Returns a CrystalStructure with all free symbols replaced by their default values.
+This method can be executed on a CrystalStructure created by createParametrizedCrystal.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A new CrystalStructure with all free symbols replaced by their default values.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="#lys_mat.crystal.Crystal.CrystalStructure" title="lys_mat.crystal.Crystal.CrystalStructure">CrystalStructure</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="lys_mat.crystal.Crystal.CrystalStructure.density">
+<span class="sig-name descname"><span class="pre">density</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lys_mat/crystal/Crystal.html#CrystalStructure.density"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lys_mat.crystal.Crystal.CrystalStructure.density" title="Link to this definition"></a></dt>
 <dd><p>Calculate the density of the crystal structure in g/cm^3.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
@@ -232,8 +327,8 @@ are also available as methods and properties of this class.</p>
 </dd></dl>
 
 <dl class="py property">
-<dt class="sig sig-object py" id="lys_mat.CrystalStructure.CrystalStructure.free_symbols">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">free_symbols</span></span><a class="headerlink" href="#lys_mat.CrystalStructure.CrystalStructure.free_symbols" title="Link to this definition"></a></dt>
+<dt class="sig sig-object py" id="lys_mat.crystal.Crystal.CrystalStructure.free_symbols">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">free_symbols</span></span><a class="headerlink" href="#lys_mat.crystal.Crystal.CrystalStructure.free_symbols" title="Link to this definition"></a></dt>
 <dd><p>Returns the set of free symbols in the crystal structure.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
@@ -246,8 +341,8 @@ are also available as methods and properties of this class.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="lys_mat.CrystalStructure.CrystalStructure.getAtomicPositions">
-<span class="sig-name descname"><span class="pre">getAtomicPositions</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">external</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lys_mat/CrystalStructure.html#CrystalStructure.getAtomicPositions"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lys_mat.CrystalStructure.CrystalStructure.getAtomicPositions" title="Link to this definition"></a></dt>
+<dt class="sig sig-object py" id="lys_mat.crystal.Crystal.CrystalStructure.getAtomicPositions">
+<span class="sig-name descname"><span class="pre">getAtomicPositions</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">external</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lys_mat/crystal/Crystal.html#CrystalStructure.getAtomicPositions"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lys_mat.crystal.Crystal.CrystalStructure.getAtomicPositions" title="Link to this definition"></a></dt>
 <dd><p>Get the atomic positions in the crystal structure.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -264,8 +359,8 @@ external coordinate system. Defaults to True.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="lys_mat.CrystalStructure.CrystalStructure.isSympyObject">
-<span class="sig-name descname"><span class="pre">isSympyObject</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lys_mat/CrystalStructure.html#CrystalStructure.isSympyObject"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lys_mat.CrystalStructure.CrystalStructure.isSympyObject" title="Link to this definition"></a></dt>
+<dt class="sig sig-object py" id="lys_mat.crystal.Crystal.CrystalStructure.isSympyObject">
+<span class="sig-name descname"><span class="pre">isSympyObject</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lys_mat/crystal/Crystal.html#CrystalStructure.isSympyObject"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lys_mat.crystal.Crystal.CrystalStructure.isSympyObject" title="Link to this definition"></a></dt>
 <dd><p>Check if the crystal structure contains any sympy objects.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
@@ -278,8 +373,28 @@ external coordinate system. Defaults to True.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="lys_mat.CrystalStructure.CrystalStructure.saveAs">
-<span class="sig-name descname"><span class="pre">saveAs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ext</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'.cif'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lys_mat/CrystalStructure.html#CrystalStructure.saveAs"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lys_mat.CrystalStructure.CrystalStructure.saveAs" title="Link to this definition"></a></dt>
+<dt class="sig sig-object py" id="lys_mat.crystal.Crystal.CrystalStructure.loadFrom">
+<em class="property"><span class="k"><span class="pre">static</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">loadFrom</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ext</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'.cif'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lys_mat/crystal/Crystal.html#CrystalStructure.loadFrom"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lys_mat.crystal.Crystal.CrystalStructure.loadFrom" title="Link to this definition"></a></dt>
+<dd><p>Load a CrystalStructure from a file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>file</strong> (<em>str</em>) – The file path to load the structure from.</p></li>
+<li><p><strong>ext</strong> (<em>str</em><em>, </em><em>optional</em>) – The file extension. Supported extensions are “.cif” and “.pcs”. Defaults to “.cif”.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The structure loaded from the file.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#lys_mat.crystal.Crystal.CrystalStructure" title="lys_mat.crystal.Crystal.CrystalStructure">CrystalStructure</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="lys_mat.crystal.Crystal.CrystalStructure.saveAs">
+<span class="sig-name descname"><span class="pre">saveAs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ext</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'.cif'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lys_mat/crystal/Crystal.html#CrystalStructure.saveAs"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lys_mat.crystal.Crystal.CrystalStructure.saveAs" title="Link to this definition"></a></dt>
 <dd><p>Save the current CrystalStructure to a file.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -293,8 +408,8 @@ Supported extensions are “.cif” and “.pcs”. Defaults to “.cif”.</p><
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="lys_mat.CrystalStructure.CrystalStructure.setPair">
-<span class="sig-name descname"><span class="pre">setPair</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">Elem1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Elem2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_dist</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">allow_same</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lys_mat/CrystalStructure.html#CrystalStructure.setPair"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lys_mat.CrystalStructure.CrystalStructure.setPair" title="Link to this definition"></a></dt>
+<dt class="sig sig-object py" id="lys_mat.crystal.Crystal.CrystalStructure.setPair">
+<span class="sig-name descname"><span class="pre">setPair</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">Elem1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Elem2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_dist</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">allow_same</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lys_mat/crystal/Crystal.html#CrystalStructure.setPair"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lys_mat.crystal.Crystal.CrystalStructure.setPair" title="Link to this definition"></a></dt>
 <dd><p>Create pairs of atoms between two elements within a specified distance for a given crystal structure.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -309,8 +424,8 @@ Supported extensions are “.cif” and “.pcs”. Defaults to “.cif”.</p><
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="lys_mat.CrystalStructure.CrystalStructure.subs">
-<span class="sig-name descname"><span class="pre">subs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lys_mat/CrystalStructure.html#CrystalStructure.subs"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lys_mat.CrystalStructure.CrystalStructure.subs" title="Link to this definition"></a></dt>
+<dt class="sig sig-object py" id="lys_mat.crystal.Crystal.CrystalStructure.subs">
+<span class="sig-name descname"><span class="pre">subs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lys_mat/crystal/Crystal.html#CrystalStructure.subs"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lys_mat.crystal.Crystal.CrystalStructure.subs" title="Link to this definition"></a></dt>
 <dd><p>Substitute the given arguments and keyword arguments in the sympy objects of the current object.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -323,12 +438,12 @@ Supported extensions are “.cif” and “.pcs”. Defaults to “.cif”.</p><
 <dd class="field-even"><p>A new CrystalStructure object with the substituted sympy objects.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference internal" href="#lys_mat.CrystalStructure.CrystalStructure" title="lys_mat.CrystalStructure.CrystalStructure">CrystalStructure</a></p>
+<dd class="field-odd"><p><a class="reference internal" href="#lys_mat.crystal.Crystal.CrystalStructure" title="lys_mat.crystal.Crystal.CrystalStructure">CrystalStructure</a></p>
 </dd>
 </dl>
 <p>Examples:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">sympy</span> <span class="k">as</span> <span class="nn">sp</span>
-<span class="kn">from</span> <span class="nn">lys_mat</span> <span class="kn">import</span> <span class="n">SympyCrystalStructure</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">sympy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">sp</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">lys_mat</span><span class="w"> </span><span class="kn">import</span> <span class="n">SympyCrystalStructure</span>
 
 <span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">,</span><span class="n">z</span> <span class="o">=</span> <span class="n">sp</span><span class="o">.</span><span class="n">symbols</span><span class="p">(</span><span class="s2">&quot;x,y,z&quot;</span><span class="p">)</span>
 <span class="n">at</span> <span class="o">=</span> <span class="n">Atom</span><span class="p">(</span><span class="s2">&quot;H&quot;</span><span class="p">,</span> <span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">))</span>
@@ -337,8 +452,8 @@ Supported extensions are “.cif” and “.pcs”. Defaults to “.cif”.</p><
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="lys_mat.CrystalStructure.CrystalStructure.symbolNames">
-<span class="sig-name descname"><span class="pre">symbolNames</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lys_mat/CrystalStructure.html#CrystalStructure.symbolNames"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lys_mat.CrystalStructure.CrystalStructure.symbolNames" title="Link to this definition"></a></dt>
+<dt class="sig sig-object py" id="lys_mat.crystal.Crystal.CrystalStructure.symbolNames">
+<span class="sig-name descname"><span class="pre">symbolNames</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lys_mat/crystal/Crystal.html#CrystalStructure.symbolNames"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lys_mat.crystal.Crystal.CrystalStructure.symbolNames" title="Link to this definition"></a></dt>
 <dd><p>Returns a list of symbol names used in the crystal structure, prioritizing cell parameter names.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
@@ -358,8 +473,8 @@ Supported extensions are “.cif” and “.pcs”. Defaults to “.cif”.</p><
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="Symmetry.html" class="btn btn-neutral float-left" title="Symmetry module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="CrystalStructureIO.html" class="btn btn-neutral float-right" title="CrystalStructureIO module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="../api.html" class="btn btn-neutral float-left" title="Python API" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="Atom.html" class="btn btn-neutral float-right" title="Atom" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

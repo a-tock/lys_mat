@@ -7,16 +7,22 @@ from . import sympyFuncs as spf
 class Lattice(object):
     """
     Lattice class is a basic lattice class used for crystal structures.
+    All methods in this class can be accessed from :class:`CrystalStructure <lys_mat.crystal.Crystal.CrystalStructure>`, and therefore users do not need to instantiate this class.
 
     Args:
         cell (array-like): An array of length 6 representing the cell parameters (a, b, c, alpha, beta, gamma) in Angstrom and degrees.
 
     Example::
 
-        from lys_mat import Lattice
+        from lys_mat import CrystalStructure
+
+        # create dummy crystal for test
         cell = [4.0, 5.0, 10.0, 90.0, 90.5, 60.0]
-        lattice = Lattice(cell)
-        print(lattice.latticeInfo())    #a = 4.00000, b = 5.00000, c = 10.00000, alpha = 90.00000, beta = 90.50000, gamma = 60.00000
+        c = CrystalStructure(cell, [])
+
+        # You can access latticeInfo method in this class from CrystalStructure
+        print(c.latticeInfo())    
+        #a = 4.00000, b = 5.00000, c = 10.00000, alpha = 90.00000, beta = 90.50000, gamma = 60.00000
 
     """
 
@@ -131,6 +137,7 @@ class Lattice(object):
 class CartesianLattice(Lattice):
     """
     CartesianLattice class is a basic lattice class with Cartesian coordinates used for crystal structures.
+    All methods in this class can be accessed from :class:`CrystalStructure <lys_mat.crystal.Crystal.CrystalStructure>`, and therefore users do not need to instantiate this class.
 
     Parameters:
         cell (array-like): An array of length 6 representing the cell parameters (a, b, c, alpha, beta, gamma) in Angstrom and degrees.
@@ -147,19 +154,28 @@ class CartesianLattice(Lattice):
     Example::
 
         import numpy as np
-        from lys_mat import CartesianLattice
+        from lys_mat import CrystalStructure
 
+        # Create dummy crystal
         cell = [4.0, 5.0, 10.0, 90.0, 90.0, 60.0]
-        lattice = CartesianLattice(cell)
-        print(lattice.unit)     #[[4. 0. 0.], [2.5 4.33012702 0.], [0. 0. 10.]]
+        c1 = CrystalStructure(cell, [])
 
-        lattice = CartesianLattice(cell, basis = [[0, 1, 0], [0, 1/2, np.sqrt(3)/2], [1, 0, 0]])
-        print(lattice.unit)     #[[0. 4. 0.], [0. 2.5 4.33012702], [10. 0. 0.]]
+        # You can access unit property in CartesianLattice class from CrystalStructure object.
+        print(c1.unit)     
+        # [[4. 0. 0.], [2.5 4.33012702 0.], [0. 0. 10.]]
 
+        # Create crystal with custom basis
+        c2 = CrystalStructure(cell, [], basis = [[0, 1, 0], [0, 1/2, np.sqrt(3)/2], [1, 0, 0]])
+        print(c2.unit)     
+        # [[0. 4. 0.], [0. 2.5 4.33012702], [10. 0. 0.]]
+
+        # You can use vector representation of lattice vectors
         cell = [[0.0, 4.0, 0.0], [0.0, 2.5, 5*np.sqrt(3)/2], [10.0, 0.0, 0.0]]
-        lattice = CartesianLattice(cell)
-        print(lattice.latticeInfo())    #a = 4.00000, b = 5.00000, c = 10.00000, alpha = 90.00000, beta = 90.00000, gamma = 60.00000
-        print(lattice.unit)     #[[4. 0. 0.], [2.5 4.33012702 0.], [0. 0. 10.]]
+        c3 = CrystalStructure(cell, [])
+        print(c3.latticeInfo())    
+        # a = 4.00000, b = 5.00000, c = 10.00000, alpha = 90.00000, beta = 90.00000, gamma = 60.00000
+        print(c3.unit)     
+        # [[4. 0. 0.], [2.5 4.33012702 0.], [0. 0. 10.]]
 
     """
 

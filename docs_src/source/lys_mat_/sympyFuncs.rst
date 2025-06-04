@@ -1,8 +1,8 @@
 
-SympyFuncs module
+SympyFuncs 
 --------------------------
 
-.. automodule:: lys_mat.sympyFuncs
+.. automodule:: lys_mat.crystal.sympyFuncs
    :members:
    :undoc-members:
    :show-inheritance:

@@ -1,7 +1,7 @@
-Symmetry module
+Symmetry
 --------------------
 
-.. automodule:: lys_mat.Symmetry
+.. automodule:: lys_mat.crystal.Symmetry
    :members:
    :undoc-members:
    :show-inheritance:

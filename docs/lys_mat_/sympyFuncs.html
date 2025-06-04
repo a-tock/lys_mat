@@ -1,28 +1,26 @@
+
+
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" data-content_root="../">
 <head>
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>SympyFuncs module &mdash; lys_mat  documentation</title>
-      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=fa44fd50" />
-      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=19f00094" />
+  <title>SympyFuncs &mdash; lys_mat  documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
 
   
-  <!--[if lt IE 9]>
-    <script src="../_static/js/html5shiv.min.js"></script>
-  <![endif]-->
-  
-        <script src="../_static/jquery.js?v=5d32c60e"></script>
-        <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-        <script src="../_static/documentation_options.js?v=5929fcd5"></script>
-        <script src="../_static/doctools.js?v=9a2dae69"></script>
-        <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=5929fcd5"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Atom module" href="Atom.html" />
-    <link rel="prev" title="Python API" href="../api.html" /> 
+    <link rel="next" title="Contributing" href="../contributing.html" />
+    <link rel="prev" title="Symmetry" href="Symmetry.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -46,20 +44,21 @@
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../install.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tutorial.html">Getting Started</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="../api.html">Python API</a><ul class="current">
-<li class="toctree-l2 current"><a class="current reference internal" href="#">SympyFuncs module</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#lys_mat.sympyFuncs.einsum"><code class="docutils literal notranslate"><span class="pre">einsum()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#lys_mat.sympyFuncs.free_symbols"><code class="docutils literal notranslate"><span class="pre">free_symbols()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#lys_mat.sympyFuncs.isSympyObject"><code class="docutils literal notranslate"><span class="pre">isSympyObject()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#lys_mat.sympyFuncs.subs"><code class="docutils literal notranslate"><span class="pre">subs()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="CrystalStructure.html">CrystalStructure</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Atom.html">Atom</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Atoms.html">Atoms</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Lattice.html">Lattice</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Symmetry.html">Symmetry</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">SympyFuncs</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#lys_mat.crystal.sympyFuncs.einsum"><code class="docutils literal notranslate"><span class="pre">einsum()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#lys_mat.crystal.sympyFuncs.free_symbols"><code class="docutils literal notranslate"><span class="pre">free_symbols()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#lys_mat.crystal.sympyFuncs.isSympyObject"><code class="docutils literal notranslate"><span class="pre">isSympyObject()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#lys_mat.crystal.sympyFuncs.subs"><code class="docutils literal notranslate"><span class="pre">subs()</span></code></a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="Atom.html">Atom module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="Atoms.html">Atoms module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="Lattice.html">Lattice module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="Symmetry.html">Symmetry module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="CrystalStructure.html">Symmetry module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="CrystalStructureIO.html">Symmetry module</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../contributing.html">Contributing</a></li>
@@ -80,7 +79,7 @@
   <ul class="wy-breadcrumbs">
       <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
           <li class="breadcrumb-item"><a href="../api.html">Python API</a></li>
-      <li class="breadcrumb-item active">SympyFuncs module</li>
+      <li class="breadcrumb-item active">SympyFuncs</li>
       <li class="wy-breadcrumbs-aside">
             <a href="../_sources/lys_mat_/sympyFuncs.rst.txt" rel="nofollow"> View page source</a>
       </li>
@@ -90,13 +89,13 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="module-lys_mat.sympyFuncs">
-<span id="sympyfuncs-module"></span><h1>SympyFuncs module<a class="headerlink" href="#module-lys_mat.sympyFuncs" title="Link to this heading"></a></h1>
+  <section id="module-lys_mat.crystal.sympyFuncs">
+<span id="sympyfuncs"></span><h1>SympyFuncs<a class="headerlink" href="#module-lys_mat.crystal.sympyFuncs" title="Link to this heading"></a></h1>
 <p><em>sympyFuncs</em> module gives functions for working with sympy objects and iterables of sympy objects.</p>
 <p>Sympy objects must have “free_symbols” and “subs” attributes.</p>
 <dl class="py function">
-<dt class="sig sig-object py" id="lys_mat.sympyFuncs.einsum">
-<span class="sig-prename descclassname"><span class="pre">lys_mat.sympyFuncs.</span></span><span class="sig-name descname"><span class="pre">einsum</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">string</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">arrays</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lys_mat/sympyFuncs.html#einsum"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lys_mat.sympyFuncs.einsum" title="Link to this definition"></a></dt>
+<dt class="sig sig-object py" id="lys_mat.crystal.sympyFuncs.einsum">
+<span class="sig-prename descclassname"><span class="pre">lys_mat.crystal.sympyFuncs.</span></span><span class="sig-name descname"><span class="pre">einsum</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">string</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">arrays</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lys_mat/crystal/sympyFuncs.html#einsum"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lys_mat.crystal.sympyFuncs.einsum" title="Link to this definition"></a></dt>
 <dd><p>Calculates the Einstein summation convention on the given arrays.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -118,8 +117,8 @@ This does not support “…”, list input or repeating the same axes identifie
 </dd></dl>
 
 <dl class="py function">
-<dt class="sig sig-object py" id="lys_mat.sympyFuncs.free_symbols">
-<span class="sig-prename descclassname"><span class="pre">lys_mat.sympyFuncs.</span></span><span class="sig-name descname"><span class="pre">free_symbols</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">obj</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lys_mat/sympyFuncs.html#free_symbols"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lys_mat.sympyFuncs.free_symbols" title="Link to this definition"></a></dt>
+<dt class="sig sig-object py" id="lys_mat.crystal.sympyFuncs.free_symbols">
+<span class="sig-prename descclassname"><span class="pre">lys_mat.crystal.sympyFuncs.</span></span><span class="sig-name descname"><span class="pre">free_symbols</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">obj</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lys_mat/crystal/sympyFuncs.html#free_symbols"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lys_mat.crystal.sympyFuncs.free_symbols" title="Link to this definition"></a></dt>
 <dd><p>Get the free symbols in the given object.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -135,8 +134,8 @@ This does not support “…”, list input or repeating the same axes identifie
 </dd></dl>
 
 <dl class="py function">
-<dt class="sig sig-object py" id="lys_mat.sympyFuncs.isSympyObject">
-<span class="sig-prename descclassname"><span class="pre">lys_mat.sympyFuncs.</span></span><span class="sig-name descname"><span class="pre">isSympyObject</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">obj</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lys_mat/sympyFuncs.html#isSympyObject"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lys_mat.sympyFuncs.isSympyObject" title="Link to this definition"></a></dt>
+<dt class="sig sig-object py" id="lys_mat.crystal.sympyFuncs.isSympyObject">
+<span class="sig-prename descclassname"><span class="pre">lys_mat.crystal.sympyFuncs.</span></span><span class="sig-name descname"><span class="pre">isSympyObject</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">obj</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lys_mat/crystal/sympyFuncs.html#isSympyObject"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lys_mat.crystal.sympyFuncs.isSympyObject" title="Link to this definition"></a></dt>
 <dd><p>Check if the input object is a sympy object.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -152,8 +151,8 @@ This does not support “…”, list input or repeating the same axes identifie
 </dd></dl>
 
 <dl class="py function">
-<dt class="sig sig-object py" id="lys_mat.sympyFuncs.subs">
-<span class="sig-prename descclassname"><span class="pre">lys_mat.sympyFuncs.</span></span><span class="sig-name descname"><span class="pre">subs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">obj</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lys_mat/sympyFuncs.html#subs"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lys_mat.sympyFuncs.subs" title="Link to this definition"></a></dt>
+<dt class="sig sig-object py" id="lys_mat.crystal.sympyFuncs.subs">
+<span class="sig-prename descclassname"><span class="pre">lys_mat.crystal.sympyFuncs.</span></span><span class="sig-name descname"><span class="pre">subs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">obj</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lys_mat/crystal/sympyFuncs.html#subs"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lys_mat.crystal.sympyFuncs.subs" title="Link to this definition"></a></dt>
 <dd><p>Substitute the given arguments and keyword arguments in the sympy objects of the given object.</p>
 <p>If the given object is not an sympy object, it will be returned as is.</p>
 <dl class="field-list simple">
@@ -172,8 +171,8 @@ This does not support “…”, list input or repeating the same axes identifie
 </dd>
 </dl>
 <p>Examples:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">sympy</span> <span class="k">as</span> <span class="nn">sp</span>
-<span class="kn">from</span> <span class="nn">lys_mat</span> <span class="kn">import</span> <span class="n">sympyFuncs</span> <span class="k">as</span> <span class="n">spf</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">sympy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">sp</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">lys_mat</span><span class="w"> </span><span class="kn">import</span> <span class="n">sympyFuncs</span> <span class="k">as</span> <span class="n">spf</span>
 
 <span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">,</span><span class="n">z</span> <span class="o">=</span> <span class="n">sp</span><span class="o">.</span><span class="n">symbols</span><span class="p">(</span><span class="s2">&quot;x,y,z&quot;</span><span class="p">)</span>
 <span class="n">expr</span> <span class="o">=</span> <span class="mi">2</span><span class="o">*</span><span class="n">x</span> <span class="o">+</span> <span class="n">y</span>
@@ -194,8 +193,8 @@ This does not support “…”, list input or repeating the same axes identifie
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="../api.html" class="btn btn-neutral float-left" title="Python API" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="Atom.html" class="btn btn-neutral float-right" title="Atom module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="Symmetry.html" class="btn btn-neutral float-left" title="Symmetry" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../contributing.html" class="btn btn-neutral float-right" title="Contributing" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

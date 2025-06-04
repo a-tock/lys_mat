@@ -8,6 +8,7 @@ from . import sympyFuncs as spf
 class Symmetry(object):
     """
     Symmetry class is used to calculate symmetry information of a crystal structure.
+    All methods in this class can be accessed from :class:`CrystalStructure <lys_mat.crystal.Crystal.CrystalStructure>`, and therefore users do not need to instantiate this class.
 
     Args:
         atoms (Atoms): The Atoms object to get the symmetry information from.
@@ -15,13 +16,16 @@ class Symmetry(object):
 
     Example::
 
-        from lys_mat import Atom, Atoms, CartesianLattice, Symmetry
+        from lys_mat import Atom, CrystalStructure
+
+        # Create crystal
         at1 = Atom("Na", (0, 0, 0))
         at2 = Atom("Na", (0.5, 0.5, 0.5))
-        atoms = Atoms([at1, at2])
-        lat = CartesianLattice([4.2214, 4.2214, 4.2214, 90, 90, 90])
-        sym = Symmetry(atoms, lat)
-        print(sym.symmetryInfo())   #Symmetry: cubic Im-3m (No. 229), Point group: m-3m
+        c = CrystalStructure([4.2214, 4.2214, 4.2214, 90, 90, 90], [at1, at2])
+
+        # You can access symmetryInfo method in this class from CrystalStructure object.
+        print(c.symmetryInfo())  
+        #Symmetry: cubic Im-3m (No. 229), Point group: m-3m
     """
 
     def __init__(self, atoms, lattice):

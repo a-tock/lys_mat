@@ -1,0 +1,224 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Getting Started &mdash; lys_mat  documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=5929fcd5"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Python API" href="api.html" />
+    <link rel="prev" title="Installation" href="install.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            lys_mat
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="install.html">Installation</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Getting Started</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#simple-crystal-structure">Simple crystal structure</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="api.html">Python API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contributing.html">Contributing</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">lys_mat</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Getting Started</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/tutorial.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="getting-started">
+<h1>Getting Started<a class="headerlink" href="#getting-started" title="Link to this heading"></a></h1>
+<section id="simple-crystal-structure">
+<h2>Simple crystal structure<a class="headerlink" href="#simple-crystal-structure" title="Link to this heading"></a></h2>
+<ol class="arabic">
+<li><p>The example code below shows hot to initialize the crystal structure object in lys_mat:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">lys_mat</span><span class="w"> </span><span class="kn">import</span> <span class="n">Atom</span><span class="p">,</span> <span class="n">CrystalStructure</span>
+<span class="n">at1</span> <span class="o">=</span> <span class="n">Atom</span><span class="p">(</span><span class="s2">&quot;Au&quot;</span><span class="p">,</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
+<span class="n">at2</span> <span class="o">=</span> <span class="n">Atom</span><span class="p">(</span><span class="s2">&quot;Au&quot;</span><span class="p">,</span> <span class="p">(</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
+<span class="n">at3</span> <span class="o">=</span> <span class="n">Atom</span><span class="p">(</span><span class="s2">&quot;Au&quot;</span><span class="p">,</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">))</span>
+<span class="n">at4</span> <span class="o">=</span> <span class="n">Atom</span><span class="p">(</span><span class="s2">&quot;Au&quot;</span><span class="p">,</span> <span class="p">(</span><span class="mf">0.5</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">))</span>
+<span class="n">cell</span> <span class="o">=</span> <span class="p">[</span><span class="mf">4.0773</span><span class="p">,</span> <span class="mf">4.0773</span><span class="p">,</span> <span class="mf">4.0773</span><span class="p">,</span> <span class="mi">90</span><span class="p">,</span> <span class="mi">90</span><span class="p">,</span> <span class="mi">90</span><span class="p">]</span>
+<span class="n">crys</span> <span class="o">=</span> <span class="n">CrystalStructure</span><span class="p">(</span><span class="n">cell</span><span class="p">,</span> <span class="p">[</span><span class="n">at1</span><span class="p">,</span> <span class="n">at2</span><span class="p">,</span> <span class="n">at3</span><span class="p">,</span> <span class="n">at4</span><span class="p">])</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">crys</span><span class="p">)</span>
+<span class="c1"># Symmetry: cubic Fm-3m (No. 225), Point group: m-3m</span>
+<span class="c1"># a = 4.07730, b = 4.07730, c = 4.07730, alpha = 90.00000, beta = 90.00000, gamma = 90.00000</span>
+<span class="c1"># --- atoms (4) ---</span>
+<span class="c1"># 1: Au (Z = 79, Occupancy = 1) Pos = (0.00000, 0.00000, 0.00000)</span>
+<span class="c1"># 2: Au (Z = 79, Occupancy = 1) Pos = (0.50000, 0.50000, 0.00000)</span>
+<span class="c1"># 3: Au (Z = 79, Occupancy = 1) Pos = (0.00000, 0.50000, 0.50000)</span>
+<span class="c1"># 4: Au (Z = 79, Occupancy = 1) Pos = (0.50000, 0.00000, 0.50000)</span>
+</pre></div>
+</div>
+</li>
+<li><p>You can transform the crystal:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Primitive cell</span>
+<span class="n">p</span> <span class="o">=</span> <span class="n">crys</span><span class="o">.</span><span class="n">createPrimitiveCell</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
+<span class="c1"># Symmetry: cubic Fm-3m (No. 225), Point group: m-3m</span>
+<span class="c1"># a = 2.88309, b = 2.88309, c = 2.88309, alpha = 60.00000, beta = 60.00000, gamma = 60.00000</span>
+<span class="c1"># --- atoms (1) ---</span>
+<span class="c1"># 1: Au (Z = 79, Occupancy = 1) Pos = (0.00000, 0.00000, 0.00000)</span>
+
+<span class="c1"># Primitive to conventional</span>
+<span class="n">p</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">createConventionalCell</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
+<span class="c1"># Symmetry: cubic Fm-3m (No. 225), Point group: m-3m</span>
+<span class="c1"># a = 4.07730, b = 4.07730, c = 4.07730, alpha = 90.00000, beta = 90.00000, gamma = 90.00000</span>
+<span class="c1"># --- atoms (4) ---</span>
+<span class="c1"># 1: Au (Z = 79, Occupancy = 1) Pos = (0.00000, 0.00000, 0.00000)</span>
+<span class="c1"># 2: Au (Z = 79, Occupancy = 1) Pos = (0.00000, 0.50000, 0.50000)</span>
+<span class="c1"># 3: Au (Z = 79, Occupancy = 1) Pos = (0.50000, 0.00000, 0.50000)</span>
+<span class="c1"># 4: Au (Z = 79, Occupancy = 1) Pos = (0.50000, 0.50000, 0.00000)</span>
+
+<span class="c1"># Supercell</span>
+<span class="n">s</span> <span class="o">=</span> <span class="n">crys</span><span class="o">.</span><span class="n">createSupercell</span><span class="p">([</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+<span class="c1"># Symmetry: cubic Fm-3m (No. 225), Point group: m-3m</span>
+<span class="c1"># a = 8.15460, b = 4.07730, c = 4.07730, alpha = 90.00000, beta = 90.00000, gamma = 90.00000</span>
+<span class="c1"># --- atoms (8) ---</span>
+<span class="c1"># 1: Au (Z = 79, Occupancy = 1) Pos = (0.00000, 0.00000, 0.00000)</span>
+<span class="c1"># 2: Au (Z = 79, Occupancy = 1) Pos = (0.50000, 0.00000, 0.00000)</span>
+<span class="c1"># 3: Au (Z = 79, Occupancy = 1) Pos = (0.25000, 0.50000, 0.00000)</span>
+<span class="c1"># 4: Au (Z = 79, Occupancy = 1) Pos = (0.75000, 0.50000, 0.00000)</span>
+<span class="c1"># 5: Au (Z = 79, Occupancy = 1) Pos = (0.00000, 0.50000, 0.50000)</span>
+<span class="c1"># 6: Au (Z = 79, Occupancy = 1) Pos = (0.50000, 0.50000, 0.50000)</span>
+<span class="c1"># 7: Au (Z = 79, Occupancy = 1) Pos = (0.25000, 0.00000, 0.50000)</span>
+<span class="c1"># 8: Au (Z = 79, Occupancy = 1) Pos = (0.75000, 0.00000, 0.50000)</span>
+
+<span class="c1"># Deformation</span>
+<span class="n">e</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.01</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span> <span class="c1"># xx, yy, zz, xy, yz, zx strain</span>
+<span class="n">d</span> <span class="o">=</span> <span class="n">crys</span><span class="o">.</span><span class="n">createStrainedCrystal</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
+<span class="c1"># Symmetry: tetragonal I4/mmm (No. 139), Point group: 4/mmm</span>
+<span class="c1"># a = 4.11807, b = 4.07730, c = 4.07730, alpha = 90.00000, beta = 90.00000, gamma = 90.00000</span>
+<span class="c1"># --- atoms (4) ---</span>
+<span class="c1"># 1: Au (Z = 79, Occupancy = 1) Pos = (0.00000, 0.00000, 0.00000)</span>
+<span class="c1"># 2: Au (Z = 79, Occupancy = 1) Pos = (0.50000, 0.50000, 0.00000)</span>
+<span class="c1"># 3: Au (Z = 79, Occupancy = 1) Pos = (0.00000, 0.50000, 0.50000)</span>
+<span class="c1"># 4: Au (Z = 79, Occupancy = 1) Pos = (0.50000, 0.00000, 0.50000)</span>
+</pre></div>
+</div>
+</li>
+<li><p>You can create parametrized crystal using sympy:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Define sympy symbols</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">sympy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">sp</span>
+<span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">,</span><span class="n">c</span> <span class="o">=</span> <span class="n">sp</span><span class="o">.</span><span class="n">symbols</span><span class="p">(</span><span class="s2">&quot;a,b,c&quot;</span><span class="p">)</span>
+<span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">,</span><span class="n">z</span> <span class="o">=</span> <span class="n">sp</span><span class="o">.</span><span class="n">symbols</span><span class="p">(</span><span class="s2">&quot;x,y,z&quot;</span><span class="p">)</span>
+
+<span class="c1"># Create parametrized crystal</span>
+<span class="n">at1</span> <span class="o">=</span> <span class="n">Atom</span><span class="p">(</span><span class="s2">&quot;H&quot;</span><span class="p">,</span> <span class="p">[</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">,</span><span class="n">z</span><span class="p">])</span>
+<span class="n">at2</span> <span class="o">=</span> <span class="n">Atom</span><span class="p">(</span><span class="s2">&quot;H&quot;</span><span class="p">,</span> <span class="p">[</span><span class="n">x</span><span class="o">+</span><span class="mf">0.5</span><span class="p">,</span><span class="n">y</span><span class="p">,</span><span class="n">z</span><span class="p">])</span>
+<span class="n">cp</span> <span class="o">=</span> <span class="n">CrystalStructure</span><span class="p">([</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">,</span><span class="n">c</span><span class="p">,</span><span class="mi">90</span><span class="p">,</span><span class="mi">90</span><span class="p">,</span><span class="mi">90</span><span class="p">],</span> <span class="p">[</span><span class="n">at1</span><span class="p">,</span> <span class="n">at2</span><span class="p">])</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">cp</span><span class="p">)</span>
+<span class="c1"># Failed to find symmetry</span>
+<span class="c1"># a = a, b = b, c = c, alpha = 90.00000, beta = 90.00000, gamma = 90.00000</span>
+<span class="c1"># --- atoms (2) ---</span>
+<span class="c1"># 1: H (Z = 1, Occupancy = 1) Pos = (x, y, z)</span>
+<span class="c1"># 2: H (Z = 1, Occupancy = 1) Pos = (x + 0.5, y, z)</span>
+
+<span class="c1"># Substitute parameters</span>
+<span class="n">params</span> <span class="o">=</span> <span class="p">{</span><span class="n">a</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span> <span class="n">b</span><span class="p">:</span><span class="mi">2</span><span class="p">,</span> <span class="n">c</span><span class="p">:</span><span class="mi">3</span><span class="p">,</span> <span class="n">x</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">z</span><span class="p">:</span><span class="mf">0.5</span><span class="p">}</span>
+<span class="n">cp_subs</span> <span class="o">=</span> <span class="n">cp</span><span class="o">.</span><span class="n">subs</span><span class="p">(</span><span class="n">params</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">cp_subs</span><span class="p">)</span>
+<span class="c1"># Symmetry: orthorhombic Pmmm (No. 47), Point group: mmm</span>
+<span class="c1"># a = 1.00000, b = 2.00000, c = 3.00000, alpha = 90.00000, beta = 90.00000, gamma = 90.00000</span>
+<span class="c1"># --- atoms (2) ---</span>
+<span class="c1"># 1: H (Z = 1, Occupancy = 1) Pos = (0.00000, 0.50000, 0.50000)</span>
+<span class="c1"># 2: H (Z = 1, Occupancy = 1) Pos = (0.50000, 0.50000, 0.50000)</span>
+</pre></div>
+</div>
+</li>
+<li><p>You can load crystal from standard cif file:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">c</span> <span class="o">=</span> <span class="n">CrystalStructure</span><span class="o">.</span><span class="n">loadFrom</span><span class="p">(</span><span class="s2">&quot;cif_file.cif&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</li>
+</ol>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="install.html" class="btn btn-neutral float-left" title="Installation" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="api.html" class="btn btn-neutral float-right" title="Python API" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Hidenori Tsuji.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
