@@ -10,6 +10,12 @@ from lys_mat.Supercell import createSupercell, _makeTranslations, _expandAtoms
 from lys_mat.smith import _switchingMatrix, _multiplyingMatrix, _addMatrix, _searchMinElement, _minElementMove, _replaceByRemainder, _processForUndivisible, _smithProcess, smithNormalTransform
 
 class TestSupercell(unittest.TestCase):
+    def test_createSupercell_cubic(self):
+        crys = CrystalStructure.loadFrom("test/DataFiles/Au.cif")
+        P1 =  np.array([[2,0,0],[0,1,0],[0,0,1]])
+        self.__compare(crys, createSupercell(crys,P1))
+
+
     def test_createSuperCell(self):
         crys = CrystalStructure.loadFrom("test/DataFiles/VO2_monoclinic.cif")
 
@@ -30,13 +36,14 @@ class TestSupercell(unittest.TestCase):
         
         TaTe2 = CrystalStructure.loadFrom("test/DataFiles/TaTe2.cif")
         sl = TaTe2.createSupercell(np.array([[1, 0, 0], [0, 1, 0], [1, 0, 3]]).T)
-        self.assertAlmostEqual(TaTe2.density(), sl.density())
+        self.__compare(TaTe2, sl)
         
     def __compare(self, c1, c2):
-        c1 = c1.createConventionalCell()
-        c2 = c2.createConventionalCell()
+        c1 = c1.createPrimitiveCell()
+        c2 = c2.createPrimitiveCell()
         assert_array_almost_equal(c1.cell, c2.cell)
         self.assertEqual(len(c1.atoms), len(c2.atoms))
+        self.assertAlmostEqual(c1.density(), c2.density())
 
     def test_expandAtoms(self):
         crys = CrystalStructure.loadFrom("test/DataFiles/VO2_monoclinic.cif")
