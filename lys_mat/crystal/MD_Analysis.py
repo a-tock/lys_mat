@@ -1,6 +1,5 @@
 import numpy as np
 from joblib import Parallel, delayed
-from lys import Wave
 
 
 def MakePCF(crystal, element1, element2, sig=0.1, dim=3):
