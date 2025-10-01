@@ -1,6 +1,5 @@
 import numpy as np
 from joblib import Parallel, delayed
-from lys import Wave
 
 
 def MakePCF(crystal, element1, element2, sig=0.1, dim=3):
@@ -36,6 +35,8 @@ def _MakePCF_3d(crystal, element1, element2, sig=0.1):
     Returns:
         Wave: The 3D PCF as a Wave object.
     """
+    from lys import Wave
+
     rlist = _MakeRlist(crystal, element1, element2, supercell=(1, 1, 1))
     N = len(rlist)
     rho = N / crystal.Volume()
@@ -133,6 +134,8 @@ def _MakePCF_2d(crys, atom1="Si", atom2="Si", sig=0.01):
     Returns:
         Wave: The 2D PCF as a Wave object.
     """
+    from lys import Wave
+
     rlist = _MakeRlist_R(crys, atom1, atom2, supercell=(1, 1, 1))
     N = len(rlist)
     rho = N / crys.Volume()
