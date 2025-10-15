@@ -28,7 +28,7 @@ def _importSupercell():
 
 def _importIO():
     from .CrystalStructureIO import CrystalStructureIO
-    return CrystalStructureIO
+    return CrystalStructureIO()
 
 
 class CrystalStructure(object):
