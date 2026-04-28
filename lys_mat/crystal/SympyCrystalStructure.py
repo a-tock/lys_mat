@@ -35,7 +35,7 @@ class SympyCS(object):
         else:
             cell = self._crys.cell
         if atoms:
-            atm = [Atom(at.element, self.__createPParam(i, at), U=self.__createUParam(i, U)) for i, at in enumerate(self._crys.atoms)]
+            atm = [Atom(at.element, self.__createPParam(i, at), U = self.__createUParam(i, U) if U else at.Uani, occupancy = at.occupancy) for i, at in enumerate(self._crys.atoms)]
         else:
             atm = copy.deepcopy(self._crys.atoms)
         c = CrystalStructure(cell, atm)
@@ -63,8 +63,8 @@ class SympyCS(object):
         for c1, c2 in zip(p.cell, orig.cell):
             if type(c1) == sp.Symbol:
                 res[c1.name] = c2
-        pos_new = np.array([at.Position for at in p.atoms])
-        pos_orig = np.array([at.Position for at in orig.atoms])
+        pos_new = np.array([at.position for at in p.atoms])
+        pos_orig = np.array([at.position for at in orig.atoms])
         for pos1, pos2 in zip(pos_new, pos_orig):
             for p1, p2 in zip(pos1, pos2):
                 if type(p1) == sp.Symbol:
@@ -111,7 +111,7 @@ class SympyCS(object):
 
         indice, offset = self.__findRelation(orig, R, T)
 
-        pos_new = np.array([at.Position for at in new.atoms])
+        pos_new = np.array([at.position for at in new.atoms])
         symmetrized = pos_new[indice]
         R = np.vectorize(lambda x: sp.Rational(np.round(x * 12), 12))(R)
         T = np.vectorize(lambda x: sp.Rational(np.round(x * 12), 12))(T)
@@ -140,7 +140,7 @@ class SympyCS(object):
         return new.subs(res)
 
     def __findRelation(self, orig, R, T, eps=1e-5):
-        pos_orig = np.array([at.Position for at in orig.atoms])
+        pos_orig = np.array([at.position for at in orig.atoms])
         # apply symmetry ops.
         pos_orig_r = np.einsum("Mij,Nj->MNi", R, pos_orig)        # M: symmetri operatrion, N: atoms, j: x,y,z
         pos_orig_rt = np.array([p + t for p, t in zip(pos_orig_r, T)])

@@ -1,5 +1,3 @@
-from lys import *
-
 import numpy as np
 import sympy as sp
 
@@ -17,7 +15,7 @@ def createSupercell(crys,P):
     Args:
         crys(CrystalStructure):Original CrystalStructure.
         P(array of shape (3,) or (3,3)):Deformation matrix.
-        
+
     Returns:
         CrystalStructure:Supercell CrystalStructure that is deformed by P.
 

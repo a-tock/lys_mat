@@ -1,4 +1,5 @@
 import sympy as sp
+import numpy as np
 import spglib
 import re
 from .Atom import Atom
