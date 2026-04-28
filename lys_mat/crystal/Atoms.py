@@ -81,6 +81,17 @@ class Atoms(object):
         """
         return self._atoms
 
+    def removeAtoms(self, indexes):
+        """
+        Remove atoms from the CrystalStructure.
+
+        Args:
+            indexes (list of int): List of indexes of atoms to remove.
+        """
+        indexes = set(indexes)
+        for i in sorted(indexes, reverse=True):
+            del self._atoms[i]
+
     def getElements(self):
         """
         Get the list of elements in the CrystalStructure.
